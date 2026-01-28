@@ -1,15 +1,25 @@
 # TECHNICAL_SPEC — [Project Name]
 ## Implementation-Level Specification
 
-Version: 1.0  
-Datum: [YYYY-MM-DD]  
+Version: 1.1
+Datum: 2026-01-28
 Status: Released (Golden Standard)
+
+## Änderungshistorie
+
+| Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
+|--------:|------------|-----------|--------------|--------------|
+| 1.0 | [YYYY-MM-DD] | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
+| 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Kontext-Musters zur Erläuterung der Implementierungs-Intention |
 
 ---
 
 ## 1. Core Feature Specifications
 
 ### 1.1 Feature Area [Name]
+
+#### Kontext & User Story Implementation
+[Beschreibe hier kurz, wie die entsprechende User Story technisch angegangen wird und welche architektonischen Entscheidungen dabei zentral sind.]
 
 #### 1.1.1 TECH-SPEC-FEAT-01 — [Feature Name]
 

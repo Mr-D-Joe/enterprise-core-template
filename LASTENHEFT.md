@@ -8,8 +8,8 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
 
-Version: 1.0
-Datum: {{DATE}}
+Version: 1.1
+Datum: 2026-01-28
 Status: Released (Golden Standard)
 
 ## Änderungshistorie
@@ -17,6 +17,7 @@ Status: Released (Golden Standard)
 | Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|------------|-----------|--------------|--------------|
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
+| 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Context/Story-Musters und Schärfung der Atomarität |
 
 ---
 
@@ -36,29 +37,36 @@ Status: Released (Golden Standard)
 
 ## 2. Funktionale Anforderungen
 
-### 2.1 Benutzeroberfläche (Frontend)
+### 2.1 [Name des Funktionsbereichs, z.B. Benutzeroberfläche]
 
-Der Fokus liegt hier auf dem "Was" dargestellt wird, nicht dem "Wie".
+#### Kontext & User Story
+[Beschreibe hier prägnant die User Story und den fachlichen Hintergrund. Erkläre das "Warum" und den systemischen Zusammenhang, um die Intention hinter den Anforderungen zu verdeutlichen.]
 
-#### 2.1.1 UI-REQ-EXAMPLE-01 — Beispielanforderung
-Das System muss [fache Funktion] bereitstellen.
+#### Anforderungen
 
-### 2.2 [Weiterer Funktionsbereich]
+#### 2.1.1 [ID]-REQ-01 — [Kurzbezeichnung]
+Das System muss [atomare fachliche Funktion] bereitstellen.
 
 ---
 
-## 3. Backend / Services
+## 3. Daten & Backend
 
-Diese Sektion definiert die erwarteten funktionalen Fähigkeiten der Dienste.
+#### Kontext & User Story
+[Beschreibe hier den technischen Kontext für APIs, Datenverarbeitung oder Backend-Logik.]
 
-#### 3.1.1 BE-REQ-EXAMPLE-01 — Beispielanforderung
-Das Backend muss eine programmtechnische Schnittstelle für [Zweck] bereitstellen.
+#### Anforderungen
+
+#### 3.1.1 [ID]-BE-REQ-01 — [Kurzbezeichnung]
+Das Backend muss [atomare technische Funktion] bereitstellen.
 
 ---
 
 ## 4. Integration & Plattform
 
-Plattformspezifische Anforderungen (z.B. Desktop, Mobile, Browser).
+#### Kontext & User Story
+[Beschreibe hier den Kontext für die Plattform-Integration (z.B. Desktop-Shell, IPC-Anbindung oder spezifische Betriebssystem-Features).]
+
+#### Anforderungen
 
 #### 4.1.1 TA-REQ-EXAMPLE-01 — Beispielanforderung
 Das System muss als [Plattform] ausführbar sein.

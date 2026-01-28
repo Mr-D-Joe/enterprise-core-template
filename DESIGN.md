@@ -3,8 +3,8 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.0
-Datum: {{DATE}}
+Version: 1.1
+Datum: 2026-01-28
 Status: Released (Golden Standard)
 
 Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
@@ -16,6 +16,7 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 | Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|------------|-----------|--------------|--------------|
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
+| 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
 
 ---
 
@@ -183,6 +184,9 @@ Mehrdeutige Anforderungen werden vor Ableitung oder Implementierung präzisiert.
 
 ### DES-GOV-47 — Normative Gültigkeit freigegebener Versionen
 Normative Gültigkeit besitzen die freigegebenen Versionen von DESIGN.md und LASTENHEFT.md.
+
+### DES-GOV-48 — Struktur funktionaler Anforderungen
+Funktionale Anforderungen in LASTENHEFT.md werden durch einen Abschnitt "Kontext & User Story" eingeleitet, der die Intention und den systemischen Zusammenhang erläutert, gefolgt von einer Liste atomarer Einzelanforderungen.
 
 ---
 
