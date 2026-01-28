@@ -1,0 +1,33 @@
+name: Governance Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main, master]
+
+jobs:
+  governance-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check for DESIGN.md
+        run: |
+          if [ ! -f DESIGN.md ]; then
+            echo "::error file=DESIGN.md::CRITICAL: DESIGN.md is missing! This is the constitution of the project."
+            exit 1
+          fi
+
+      - name: Check for LASTENHEFT.md
+        run: |
+          if [ ! -f LASTENHEFT.md ]; then
+            echo "::error file=LASTENHEFT.md::CRITICAL: LASTENHEFT.md is missing! Requirements must be documented."
+            exit 1
+          fi
+
+      - name: Governance Reminder
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "::notice::Govenance Check: Ensure all changes in this PR comply with DESIGN.md (DES-GOV-01)."
+          echo "If this PR changes architecture, ensure an RFC has been filed."

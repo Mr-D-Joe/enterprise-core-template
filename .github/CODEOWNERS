@@ -1,0 +1,9 @@
+# CODEOWNERS — Enterprise Core Template
+# Defines who must review changes.
+
+# ALL files must be reviewed by the Core Governance Team
+*       @<INSERT-GITHUB-USERNAME-HERE>
+
+# Specific Owners for Subsystems (Optional)
+# /frontend/  @FrontendLead
+# /ai_service/ @AIArchitect

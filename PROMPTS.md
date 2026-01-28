@@ -1,0 +1,55 @@
+# PROMPTS — [Project Name]
+## AI System Prompt Catalog
+
+Version: 1.0  
+Datum: [YYYY-MM-DD]  
+Status: Released (Golden Standard)
+
+---
+
+## 1. Executive Summaries & Analysis
+
+### 1.1 System-Prompt Scope
+
+#### 1.1.1 PROMPT-CAT-SUMMARY-01 — Role Definition
+
+The system prompt positions the AI as an expert in [Domain Name], enabling it to provide high-quality insights with a focus on [Key Characteristic].
+
+#### 1.1.2 PROMPT-CAT-SUMMARY-02 — Structural Guidance
+
+The summary prompt guides the AI to organize output into three distinct sections:
+1.  Introduction/Context
+2.  Main Findings
+3.  Risk/Outlook Assessment
+
+#### 1.1.3 PROMPT-CAT-SUMMARY-03 — Output Formatting
+
+The prompt configuration ensures output is rendered in clean, structured Markdown, omitting conversational fillers to prioritize density of information.
+
+---
+
+## 2. Advanced Tasks (e.g., Essays/Reports)
+
+### 2.1 Narrative Structure
+
+#### 2.1.1 PROMPT-CAT-ESSAY-01 — Stylistic Tone
+
+The essay prompt instructs the AI to adopt a [Style, e.g., professional] tone, ensuring consistency with the project's communication standards.
+
+#### 2.1.2 PROMPT-CAT-ESSAY-02 — Source Integration
+
+The template explicitly directs the AI to weave provided data points and external sources into the argumentation, fostering evidence-based reporting.
+
+---
+
+## 3. Governance & Safety Guidelines
+
+### 3.1 Disclaimer Strategy
+
+#### 3.1.1 PROMPT-CAT-SAFE-01 — Role Limitation
+
+Generated outputs include a disclaimer clarifying that the content provides information rather than [Professional Advice], serving user transparency.
+
+#### 3.1.2 PROMPT-CAT-SAFE-02 — Data Integrity
+
+The instructions require the AI to state "Data not available" when facts are missing, preventing hallucination and maintaining trust in the system's data integrity.
