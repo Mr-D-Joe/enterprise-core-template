@@ -42,7 +42,7 @@ Kopiere den folgenden Prompt und sende ihn als **erste Nachricht** an deine KI (
 ---
 **Kopiere diesen Bereich:**
 
-```text
+```markdown
 Ich starte ein neues Projekt basierend auf dem "Enterprise Core Template".
 Du bist jetzt der Lead Architect und Guardian of Governance für dieses Projekt.
 
@@ -90,6 +90,13 @@ Bestätige kurz, dass du `DESIGN.md` verstanden hast. Starte dann das Skript `./
 
 ## Tipps für die weitere Arbeit
 
-*   **Neue Features:** Wenn du ein neues Feature willst, sage der KI: *"Schreibe bitte erst eine Anforderung ins Lastenheft für Feature X, bevor du codest."*
-*   **Architektur:** Wenn die KI vorschlägt "Wir nehmen Redux", sage: *"Prüfe erst in DESIGN.md, ob das erlaubt ist."* (Regel: `DESIGN.md` gewinnt immer).
-*   ** Governance Check:** Bei jedem Pull Request prüft der Workflow `governance-check.yml`, ob du die Doku vernachlässigt hast.
+*   **Neue Features:** Wenn du ein neues Feature willst, sage der KI:
+    ```markdown
+    Schreibe bitte erst eine Anforderung ins Lastenheft für Feature X, bevor du codest.
+    ```
+*   **Architektur:** Wenn die KI vorschlägt "Wir nehmen Redux", sage:
+    ```markdown
+    Prüfe erst in DESIGN.md, ob das erlaubt ist.
+    ```
+    (Regel: `DESIGN.md` gewinnt immer).
+*   **Governance Check:** Bei jedem Pull Request prüft der Workflow `governance-check.yml`, ob du die Doku vernachlässigt hast.
