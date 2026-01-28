@@ -23,6 +23,7 @@ Sobald dies erledigt ist, erscheint für alle Nutzer der grüne Button **"Use th
 Da dieses Repository als "Template Repository" konfiguriert ist, kopierst du es nicht manuell, sondern instanziierst es sauber über GitHub.
 
 1.  Gehe zur Repository-Hauptseite auf GitHub.
+    *   *Hinweis:* Klicke in deiner Repository-Übersicht auf den **Namen** des Repositories (z. B. `enterprise-core-template`), um hineinzugelangen. Der Button ist **nicht** in der Listenansicht sichtbar.
 2.  Klicke auf den Button **"Use this template"** → **"Create a new repository"**.
 3.  Gib deinem neuen Projekt einen Namen (z. B. `mein-neues-projekt`) und erstelle es.
 4.  **Clone** das neue Repository auf deinen lokalen Rechner:
