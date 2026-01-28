@@ -2,7 +2,23 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
-## 1. Vorbereitung (GitHub Template)
+## 0. Einmalige Einrichtung (Nur für Administratoren)
+
+Damit dieses Repository als Vorlage genutzt werden kann, muss es **einmalig** konfiguriert werden. Wenn du den grünen Button **"Use this template"** oben rechts auf der Hauptseite nicht siehst, führe diese Schritte aus:
+
+1.  Öffne die Hauptseite dieses Repositories auf GitHub.
+2.  Klicke oben in der Leiste auf den Reiter **Settings** (:gear:).
+3.  Du landest im Menüpunkt **General** (in der linken Seitenleiste ganz oben).
+4.  Scrolle im Hauptbereich etwas herunter bis zum Abschnitt, der direkt unter dem Repository-Namen steht.
+5.  Suche die Checkbox mit dem Text **"Template repository"**.
+6.  ✅ **Setze den Haken** bei dieser Checkbox.
+7.  Die Einstellung wird meist sofort automatisch gespeichert (oder klicke unten auf "Save", falls vorhanden).
+
+Sobald dies erledigt ist, erscheint für alle Nutzer der grüne Button **"Use this template"**.
+
+---
+
+## 1. Start eines neuen Projekts (Für Entwickler)
 
 Da dieses Repository als "Template Repository" konfiguriert ist, kopierst du es nicht manuell, sondern instanziierst es sauber über GitHub.
 
