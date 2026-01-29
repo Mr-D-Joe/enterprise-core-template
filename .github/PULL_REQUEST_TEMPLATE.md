@@ -85,3 +85,23 @@ Link related issues, PRs, or design discussions:
 ## Notes for Reviewers
 
 Anything reviewers should pay special attention to?
+
+---
+
+## Lint Signature (Mandatory)
+
+- **Reviewed By:** ______________________
+- **Date (YYYY-MM-DD):** __________________
+- **Strict Mode Confirmed:** ☐ Yes  ☐ No
+- [ ] **Lint Signature completed**
+
+---
+
+## PR Workflow Checklist (Mandatory) — IMMUTABLE SECTION
+
+**This checklist is mandatory and must be completed before merge.**
+
+- [ ] DESIGN.md reviewed for compliance
+- [ ] LASTENHEFT.md updated (if functional change)
+- [ ] CHANGELOG.md updated (version + entry)
+- [ ] Lint Signature completed

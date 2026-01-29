@@ -3,7 +3,7 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.3
+Version: 1.9.0
 Datum: 2026-01-29
 Status: Released (Golden Standard)
 
@@ -19,6 +19,10 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 | 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
 | 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
 | 1.3 | 2026-01-29 | Governance | Erweiterung | Einführung der CI-/Typing-/Test-Determinismus-Regeln (DES-GOV-51 bis DES-GOV-55). |
+| 1.4 | 2026-01-29 | Architektur | Präzisierung | Desktop-Shell-Regeln konditionalisiert; Plattformentscheidung explizit gemacht (DES-ARCH-23). |
+| 1.4.3 | 2026-01-29 | Architektur | Präzisierung | DES-ARCH-23 um Technologie-Auswahlprinzip ergänzt. |
+| 1.5.3 | 2026-01-29 | Governance | Erweiterung | Required Artifacts als verbindliche Dokumentationspflicht (DES-GOV-28A). |
+| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
 
 
 ---
@@ -131,6 +135,9 @@ Das System erzeugt für jede UI-Darstellung ein Sanitization-Trace-Metadatum, da
 ### DES-GOV-28 — Dokumentationsartefakt: SYSTEM_REPORT.md
 Das Projekt führt eine SYSTEM_REPORT.md als deskriptiven Auditbericht pro Systemversion.
 
+### DES-GOV-28A — Dokumentationsartefakte (Required Artifacts)
+Für die Plattformentscheidung (DES-ARCH-23) sind die in README.md definierten Required Artifacts verbindlich; ihre IDs werden im TECHNICAL_SPEC.md referenziert.
+
 ### DES-GOV-29 — Dokumentationsartefakt: README.md
 Das Projekt führt eine README.md als Orientierungsdokument für Zweck, Einstieg und Nutzung.
 
@@ -228,11 +235,11 @@ Daten fließen von Benutzeraktion zu Zustand zu Service zu UI.
 ### DES-ARCH-03 — Schnittstellenbasierte Interaktion
 Frontend und Backend interagieren ausschließlich über definierte Schnittstellen.
 
-### DES-ARCH-04 — Desktop-Shell als Host
-Das System stellt eine Desktop-Shell bereit, die das Frontend hostet.
+### DES-ARCH-04 — Desktop-Shell als Host (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, stellt das System eine Desktop-Shell bereit, die das Frontend hostet.
 
-### DES-ARCH-05 — Systemnahe Fähigkeiten über Desktop-Shell
-Das System stellt IPC, Filesystem-Zugriff, lokalen Cache und Packaging-Fähigkeiten über die Desktop-Shell bereit.
+### DES-ARCH-05 — Systemnahe Fähigkeiten über Desktop-Shell (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, stellt das System IPC, Filesystem-Zugriff, lokalen Cache und Packaging-Fähigkeiten über die Desktop-Shell bereit.
 
 ### DES-ARCH-06 — Service-Schicht als Integrationsgrenze
 Services bilden die Integrationsgrenze zwischen UI-Zustand und externen/Backend-Funktionen.
@@ -240,8 +247,8 @@ Services bilden die Integrationsgrenze zwischen UI-Zustand und externen/Backend-
 ### DES-ARCH-07 — Zustandsgetriebenes Rendering
 UI-Rendering erfolgt auf Basis eines expliziten Zustandsmodells.
 
-### DES-ARCH-08 — Koordination systemnaher Zugriffe
-Systemzugriffe werden durch die Desktop-Shell koordiniert.
+### DES-ARCH-08 — Koordination systemnaher Zugriffe (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, werden Systemzugriffe durch die Desktop-Shell koordiniert.
 
 ### DES-ARCH-09 — Austauschbarkeit des Backends
 Das Backend ist hinter JSON- und IPC-Verträgen austauschbar.
@@ -273,17 +280,20 @@ IPC-Typdefinitionen sind vollständig spezifiziert.
 ### DES-ARCH-18 — Strukturierter IPC-Fehlertransport
 IPC transportiert Fehler als strukturierte, typisierte Fehlobjekte.
 
-### DES-ARCH-19 — Plattformziel Desktop
-Das System ist als Desktop-Anwendung für macOS und Windows ausführbar.
+### DES-ARCH-19 — Plattformziel Desktop (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, ist das System als Desktop-Anwendung für macOS und Windows ausführbar.
 
-### DES-ARCH-20 — Backend-Lifecycle beim App-Start
-Die Desktop-Shell initialisiert den Backend-Prozess beim Start der Anwendung.
+### DES-ARCH-20 — Backend-Lifecycle beim App-Start (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, initialisiert die Desktop-Shell den Backend-Prozess beim Start der Anwendung.
 
-### DES-ARCH-21 — Backend-Verfügbarkeitsprüfung
-Die Desktop-Shell prüft nach Backend-Initialisierung die Erreichbarkeit des Backends über IPC.
+### DES-ARCH-21 — Backend-Verfügbarkeitsprüfung (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, prüft die Desktop-Shell nach Backend-Initialisierung die Erreichbarkeit des Backends über IPC.
 
-### DES-ARCH-22 — Backend-Lifecycle beim App-Ende
-Die Desktop-Shell terminiert den Backend-Prozess beim ordnungsgemäßen Beenden der Anwendung.
+### DES-ARCH-22 — Backend-Lifecycle beim App-Ende (falls Zielplattform Desktop)
+Ist die Zielplattform Desktop, terminiert die Desktop-Shell den Backend-Prozess beim ordnungsgemäßen Beenden der Anwendung.
+
+### DES-ARCH-23 — Plattformentscheidung als Anforderung
+Die Zielplattform (z. B. Desktop, Web, API-only) wird in LASTENHEFT.md als explizite Anforderung dokumentiert; die Architektur leitet sich aus dieser Entscheidung ab und bevorzugt moderne, effiziente Technologien, sofern sie den Anforderungen entsprechen.
 
 ---
 

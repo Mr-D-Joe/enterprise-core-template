@@ -4,8 +4,8 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.0  
-Datum: {{DATE}}  
+Version: 1.9.0  
+Datum: 2026-01-29  
 Status: Released (Golden Standard)
 
 ---
@@ -81,4 +81,3 @@ Depth is conveyed through a combination of **{{SHADOW_TOKEN}}** and distinct bor
 #### 3.2.1 STYLE-TOKEN-UI-03 — Hover Feedback
 
 Interactive elements provide immediate visual feedback via opacity, scale, or shadow changes on hover, enhancing the responsive feel.
-

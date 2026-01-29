@@ -2,6 +2,15 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
+Version: 1.9.0  
+Datum: 2026-01-29  
+Status: Released (Golden Standard)
+
+INIT_STATUS: TEMPLATE
+
+> **Rule:** Set `INIT_STATUS: COMPLETE` only after **all** checklist items in Section 4 are checked and **all placeholders** in the repository are replaced. Partial completion is not allowed.
+> **Strict Mode Parameter (Mandatory):** `strict_mode: true`
+
 ## 0. Einmalige Einrichtung (Nur für Administratoren)
 
 Damit dieses Repository als Vorlage genutzt werden kann, muss es **einmalig** konfiguriert werden. Wenn du den grünen Button **"Use this template"** oben rechts auf der Hauptseite nicht siehst, führe diese Schritte aus:
@@ -59,7 +68,7 @@ Deine Aufgaben für den Start:
     - Frage mich nach den ersten **Kern-Features** (grob).
 
 3.  **Technische Basis legen (Scaffolding):**
-    - Führe das Skript `./scaffold_structure.sh` aus, um die Ordner `/frontend` und `/ai_service` sauber anzulegen (oder zu verifizieren).
+    - Führe das Skript `./scaffold_structure.sh` aus, um die Ordner `/frontend` und `/ai_service` sauber anzulegen (optional auch `/desktop` und `/shared`).
     - Bestätige mir, dass die Ordnerstruktur korrekt ist.
 
 4.  **Dokumente aktualisieren:**
@@ -68,6 +77,7 @@ Deine Aufgaben für den Start:
         - Trage den Projektnamen ein.
         - Ersetze die Beispiel-Requirements durch meine ersten Kern-Features.
         - Weise neuen Requirements eine ID zu (z. B. `UI-REQ-01`).
+        - Lege die Zielplattform explizit fest (z. B. `Desktop`, `Web`, `API-only`).
     - Initialisiere `PROMPTS.md`, `STYLEGUIDE.md` und `TECHNICAL_SPEC.md` mit den Projektdaten.
     - Lasse `DESIGN.md` unverändert.
 
@@ -87,6 +97,23 @@ Bestätige kurz, dass du `DESIGN.md` verstanden hast. Starte dann das Skript `./
 3.  Antworte ihr einfach (z. B. "Das Projekt heißt 'StockBot' und soll Aktienkurse vorhersagen...").
 4.  Die KI wird das `LASTENHEFT.md` schreiben.
 5.  **WICHTIG:** Überprüfe das Lastenheft. Erst wenn dort steht, *was* gebaut werden soll, darf die KI Code schreiben.
+
+---
+
+## 4. Template Initialization Checklist (Mandatory)
+
+- [ ] **Project Name** defined in `README.md` and `LASTENHEFT.md`
+- [ ] **Target Platform** explicitly set in `LASTENHEFT.md` (Desktop/Web/API-only)
+- [ ] **Platform Decision Checklist** completed (LASTENHEFT.md section 1.5)
+- [ ] **Scaffolded Directories** verified (`/frontend`, `/ai_service`, optional `/desktop`, `/shared`)
+- [ ] **Placeholders Replaced** (`{{PROJECT_NAME}}`, `{{DATE}}`, and all document placeholders)
+- [ ] **Changelog Updated** (`CHANGELOG.md` has a new version entry)
+- [ ] **Initialization Status Set** (`INIT_STATUS: COMPLETE` in this file)
+- [ ] **DOC-ID Update Order Enforced** (required order):
+1. `docs/artifact_index.md`
+2. Source artifact file
+3. `TECHNICAL_SPEC.md` Section 6
+4. `CHANGELOG.md`
 
 ## Tipps für die weitere Arbeit
 

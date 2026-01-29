@@ -10,7 +10,7 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
-Version: 1.2  
+Version: 1.9.0  
 Datum: 2026-01-29  
 Status: Released (Golden Standard)
 
@@ -24,8 +24,19 @@ Status: Released (Golden Standard)
 | `{{DATE}}` | Initialization date | "2026-01-29" |
 | `{{PROJECT_GOAL}}` | Core project objective | "Provide financial analysis" |
 | `{{TARGET_USER_1}}` | Primary target user group | "Private Investors" |
+| `{{TARGET_USER_2}}` | Secondary target user group | "Analysts" |
+| `{{PLATFORM_TARGET}}` | Target platform | "Desktop", "Web", "API-only" |
 | `{{FEATURE_AREA}}` | Feature section name | "Stock Search" |
 | `{{REQ_PREFIX}}` | Requirement ID prefix | "UI", "BE", "TA" |
+| `{{USER_STORY_CONTEXT}}` | User story context | "Users need..." |
+| `{{BACKEND_CONTEXT}}` | Backend context | "APIs and data processing..." |
+| `{{PLATFORM_CONTEXT}}` | Platform context | "OS integration details..." |
+| `{{REQUIREMENT_NAME}}` | Requirement title | "Search stocks" |
+| `{{ATOMIC_FUNCTION}}` | Atomic function | "search stocks by ticker" |
+| `{{ATOMIC_TECHNICAL_FUNCTION}}` | Atomic technical function | "cache API responses" |
+| `{{PLATFORM}}` | Platform name | "macOS, Windows" |
+| `{{RESPONSE_TIME_REQUIREMENTS}}` | Response time requirements | "P95 < 200ms" |
+| `{{STABILITY_REQUIREMENTS}}` | Stability & feedback requirements | "Show progress and retry guidance" |
 
 ---
 
@@ -36,6 +47,12 @@ Status: Released (Golden Standard)
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
 | 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Context/Story-Musters und Schärfung der Atomarität |
 | 1.2 | 2026-01-29 | 7 | Erweiterung | Einführung von NFRs für CI-Reproduzierbarkeit und Test-Determinismus (NFR-REQ-08/09). |
+| 1.4.3 | 2026-01-29 | 1 | Harmonisierung | Zielplattform als explizite Anforderung und Platzhalter ergänzt. |
+| 1.4.4 | 2026-01-29 | 7 | Harmonisierung | Fehlende NFR-Platzhalter ergänzt. |
+| 1.4.5 | 2026-01-29 | 1 | Erweiterung | Platform Decision Checklist ergänzt. |
+| 1.4.6 | 2026-01-29 | 1 | Präzisierung | Platform Decision Checklist mit Default-Entscheidungen ergänzt. |
+| 1.5.3 | 2026-01-29 | 1 | Präzisierung | Required Artifacts Mapping als Pflicht ergänzt. |
+| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Checklist-Struktur final konsolidiert. |
 
 ---
 
@@ -55,6 +72,26 @@ Status: Released (Golden Standard)
 
 - {{TARGET_USER_1}}
 - {{TARGET_USER_2}}
+
+### 1.4 Zielplattform
+
+> **LLM Instruction:** Choose the most suitable target platform based on project needs and efficiency.
+
+{{PLATFORM_TARGET}}
+
+### 1.5 Platform Decision Checklist (Mandatory)
+
+> **LLM Instruction:** Fill in each item explicitly. Do not leave blank.
+
+- [ ] **Target Platform** selected: {{PLATFORM_TARGET}}
+- [ ] **Primary Rationale** documented (performance, UX, distribution, constraints).
+- [ ] **Runtime/Framework Choice** documented (e.g., Tauri/Electron for Desktop, SSR/SPA for Web).
+- [ ] **Default Choice (Desktop)**: Tauri (unless explicitly justified otherwise).
+- [ ] **Default Choice (Web)**: Modern SSR/SPA with strict determinism (framework choice + reason).
+- [ ] **Default Choice (API-only)**: Minimal runtime + deterministic stack (framework choice + reason).
+- [ ] **Justification recorded in LASTENHEFT.md** for any non-default choice (e.g., Electron).
+- [ ] **Required directories** aligned with platform (see README Platform Matrix).
+- [ ] **Required artifacts** mapped in TECHNICAL_SPEC.md Section 6 (Required Artifacts Mapping).
 
 ---
 
@@ -133,4 +170,3 @@ Tests müssen deterministisch ohne externe Dienste/Binaries laufen oder als Inte
 ---
 
 Ende des Lastenhefts
-

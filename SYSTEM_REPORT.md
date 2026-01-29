@@ -12,6 +12,10 @@
 >
 > It MUST NOT define rules, architecture, or constraints.
 
+Version: 1.9.0  
+Datum: 2026-01-29  
+Status: Released (Golden Standard)
+
 ---
 
 ## Placeholders to Replace
@@ -27,6 +31,18 @@
 | `{{ARCH_STYLE}}` | Architecture style | "Component-Based SPA" |
 | `{{FRONTEND_TECH}}` | Frontend stack | "React + TypeScript" |
 | `{{BACKEND_TECH}}` | Backend stack | "Python + FastAPI" |
+| `{{STYLING_TECH}}` | Styling stack | "Tailwind CSS" |
+| `{{COMPLIANCE_ITEM_1}}` | Compliance item | "IPC layer documented" |
+| `{{COMPLIANCE_ITEM_2}}` | Compliance item | "Mock-first mode enabled" |
+| `{{DES_REF_1}}` | DESIGN.md reference | "DES-ARCH-15" |
+| `{{DES_REF_2}}` | DESIGN.md reference | "DES-GOV-17" |
+| `{{MISSING_FEATURE_1}}` | Missing feature | "Real provider integration" |
+| `{{MISSING_FEATURE_2}}` | Missing feature | "Observability wiring" |
+| `{{RISK_AREA}}` | Risk area | "Security" |
+| `{{RISK_DESCRIPTION}}` | Risk description | "Missing threat model" |
+| `{{RISK_CONTEXT}}` | Risk context | "Pre-production template" |
+| `{{YES_NO}}` | Assessment flag | "Yes/No" |
+| `{{VERDICT_SUMMARY}}` | Final verdict | "Ready for prototype" |
 
 ---
 
@@ -129,4 +145,3 @@ Test systems use this structure to validate that strictly descriptive language i
 
 ### For Humans
 Humans use this report to understand the reality of the system implementation without mistaking it for the design authority.
-

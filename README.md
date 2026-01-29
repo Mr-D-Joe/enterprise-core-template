@@ -4,7 +4,7 @@
 
 [![Template](https://img.shields.io/badge/GitHub-Template-green?style=flat&logo=github)](https://github.com/Mr-D-Joe/enterprise-core-template)
 ![Status](https://img.shields.io/badge/Status-Enterprise%20Ready-blue)
-![Version](https://img.shields.io/badge/Version-1.1-informational)
+![Version](https://img.shields.io/badge/Version-1.9.0-informational)
 
 ---
 
@@ -73,6 +73,12 @@ enterprise-core-template/
 │   └── RELEASE_CHECKLIST.md
 ├── .agent/                      🤖 AI agent workflows
 │   └── workflows/               Slash-command workflows
+├── desktop/                      🧩 Optional desktop shell (if target platform is desktop)
+│   └── README.md                 Desktop shell purpose & constraints
+├── shared/                       🔗 Optional shared contracts (IPC/JSON types)
+│   └── README.md                 Shared contract purpose & constraints
+├── scripts/                      🛡️ Automation placeholders (lint, validation)
+│   └── README.md                 Placeholder for future governance lint scripts
 ├── DESIGN.md                    📜 Project constitution (normative)
 ├── LASTENHEFT.md                📋 Requirements specification (normative)
 ├── CONTRIBUTING.md              🤝 Contribution guidelines
@@ -101,6 +107,28 @@ enterprise-core-template/
 
 **DESIGN.md is the single source of architectural truth.**
 
+**Target platform is defined explicitly in LASTENHEFT.md.**
+**Artifact Index is mandatory reference:** `docs/artifact_index.md` is the single source of truth for DOC-IDs.
+**Where to update DOC-IDs (required order):**
+1. `docs/artifact_index.md` (add new DOC-IDs)
+2. Source artifact file (add matching DOC-IDs)
+3. `TECHNICAL_SPEC.md` Section 6 (map artifacts)
+4. `CHANGELOG.md` (new version entry)
+
+## 🧭 Platform Matrix (Architecture Obligations)
+
+| Target Platform (LASTENHEFT.md) | Required Components | Mandatory Architecture Rules | Required Docs | Required Artifacts | Default Tech Stack |
+|---|---|---|---|---|---|
+| **Desktop** | `/desktop`, `/shared` (IPC contracts) | DES-ARCH-04/05/08/15–22 | `DESIGN.md`, `LASTENHEFT.md`, `TECHNICAL_SPEC.md`, `SYSTEM_REPORT.md` | `shared/ipc_contracts.md`, `desktop/runtime_config.md`, `desktop/packaging.md` | Tauri + React + TypeScript + Python (FastAPI) |
+| **Web** | `/frontend`, optional `/shared` | DES-ARCH-01/02/03/06/07/09/10/11 | `DESIGN.md`, `LASTENHEFT.md`, `TECHNICAL_SPEC.md`, `SYSTEM_REPORT.md` | `docs/api_spec.md`, `frontend/build_config.md` | React + TypeScript + Vite + Python (FastAPI) |
+| **API-only** | `/ai_service`, optional `/shared` | DES-ARCH-01/02/03/06/09/10/11 | `DESIGN.md`, `LASTENHEFT.md`, `TECHNICAL_SPEC.md`, `SYSTEM_REPORT.md` | `docs/api_spec.md`, `ai_service/runtime_config.md` | Python (FastAPI) |
+
+### Platform Examples (Explicit Constraints)
+
+- **Desktop**: Prefer **Tauri** for modern, efficient desktop delivery. **Electron** is allowed only with explicit justification in LASTENHEFT.md (performance, native capability, or ecosystem constraint).
+- **Web**: Prefer modern SPA/SSR stacks that satisfy governance and determinism constraints; choose one and document the rationale in LASTENHEFT.md.
+- **API-only**: Prefer minimal runtime and deterministic infrastructure; document framework choice and operational constraints in LASTENHEFT.md.
+
 ---
 
 ## 💡 Development Philosophy
@@ -112,6 +140,7 @@ This template enforces:
 | **Governance First** | Rules before code | DES-GOV-01 |
 | **Atomic Requirements** | One function per requirement | DES-GOV-33 |
 | **Mock First** | Mock before real API integration | DES-GOV-17 |
+| **Platform Explicitness** | Target platform must be stated in LASTENHEFT.md | DES-ARCH-23 |
 | **LLM Discipline** | Controlled AI integration | DES-LLM-* |
 | **Full Auditability** | Complete change history | DES-GOV-24 |
 | **Deterministic Behavior** | Predictability over convenience | DES-GOV-09 |
@@ -130,6 +159,7 @@ This template enforces:
    - `{{PROJECT_NAME}}` → Your project name
    - `{{DATE}}` → Current date
    - Update example requirements in LASTENHEFT.md
+   - Define target platform explicitly in LASTENHEFT.md (`Desktop`, `Web`, or `API-only`)
 
 3. **Start development** following the governance rules in DESIGN.md
 

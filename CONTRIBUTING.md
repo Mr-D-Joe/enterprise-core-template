@@ -34,6 +34,7 @@ Projects based on this template follow a strict directory layout to maintain sep
 | `/frontend` | User Interface | Only presentation logic. No heavy business calculations. |
 | `/ai_service` | Backend (Mock/Python) | Data aggregation, LLM orchestration. |
 | `/docs` | Documentation | Architecture docs and release checklists. |
+| `/desktop` | (Optional) Desktop Shell | Hosts UI, IPC, filesystem/cache access. Only if target platform is desktop. |
 | `/shared` | (Optional) Contracts | IPC/JSON type definitions shared between layers. |
 
 ---
@@ -45,6 +46,7 @@ Projects based on this template follow a strict directory layout to maintain sep
 1. **Check Requirements:**
    - Is this change covered by [`LASTENHEFT.md`](./LASTENHEFT.md)?
    - Does it violate any [`DESIGN.md`](./DESIGN.md) constraints?
+   - Is the **target platform** explicitly defined in LASTENHEFT.md (DES-ARCH-23)?
 
 2. **Document First:**
    - New features require a requirement in LASTENHEFT.md before implementation
@@ -54,6 +56,20 @@ Projects based on this template follow a strict directory layout to maintain sep
    - Update internal document history in modified files (Chronological: Old -> New).
    - Verify `README.md` is still accurate.
    - **Dev-Dependencies:** Alle für Typprüfung/Test benötigten Stubs/Typing-Pakete müssen in `ai_service/requirements-dev.txt` dokumentiert sein.
+
+### 3.4 PR Requirements (Mandatory)
+
+- **Lint Signature Required:** Every PR must include the Lint Signature section in `.github/PULL_REQUEST_TEMPLATE.md` and mark **“Lint Signature completed”** as checked.
+
+### 3.5 PR Workflow Checklist (Mandatory)
+
+| Item | GOV-LINT ID | Required | Check Regex |
+|------|-------------|----------|-------------|
+| `DESIGN.md` reviewed for compliance | GOV-LINT-01 | Yes | `^\\- \\[ \\] DESIGN\\.md reviewed for compliance$` |
+| `LASTENHEFT.md` updated (if functional change) | GOV-LINT-02 | Yes | `^\\- \\[ \\] LASTENHEFT\\.md updated \\(if functional change\\)$` |
+| `CHANGELOG.md` updated (version + entry) | GOV-LINT-06 | Yes | `^\\- \\[ \\] CHANGELOG\\.md updated \\(version \\+ entry\\)$` |
+| Lint Signature completed in PR template | GOV-LINT-18 | Yes | `^\\- \\[ \\] Lint Signature completed$` |
+| PR template checklist completed (`.github/PULL_REQUEST_TEMPLATE.md`) | GOV-LINT-21 | Yes | `^\\- \\[ \\] PR template checklist completed \\(\\.github\\/PULL_REQUEST_TEMPLATE\\.md\\)$` |
 
 ### 3.2 Branching
 
@@ -138,5 +154,3 @@ See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact ste
 2. **Verify Push:** Check the exit code of `git push`. Local commits are insufficient.
 3. **Remote Verification:** A project conclusion or task completion is only considered "clean" if `git push` has been successfully executed **AND verified**. Verification must be either **visual** (browser check) or **content-based** (explicit `git status`/`diff` check indicating parity).
 4. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
-
-

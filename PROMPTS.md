@@ -4,8 +4,8 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.0  
-Datum: {{DATE}}  
+Version: 1.9.0  
+Datum: 2026-01-29  
 Status: Released (Golden Standard)
 
 ---
@@ -69,4 +69,3 @@ Generated outputs include a disclaimer clarifying that the content provides info
 #### 3.1.2 PROMPT-CAT-SAFE-02 — Data Integrity
 
 The instructions require the AI to state "Data not available" when facts are missing, preventing hallucination and maintaining trust in the system's data integrity.
-

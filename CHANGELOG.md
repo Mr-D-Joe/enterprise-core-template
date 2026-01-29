@@ -7,6 +7,342 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-01-29
+
+### Changed
+- **Version Harmonization** — All template documents aligned to version 1.9.0.
+- **docs/RELEASE_CHECKLIST.md** — Section order normalized; release gates and protocol locked.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Governance lint rules consolidated and version aligned.
+- **Release Gate Mirror Rule** — Label standardized across governance docs.
+- **Must-Pass Alignment** — GOV-LINT must-pass list aligned with release gate map.
+
+## [1.8.4] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map expanded to GOV-LINT-31..35; version updated.
+
+## [1.8.3] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-31..35 added; Must-Pass list and Release Gate Map expanded; version updated.
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-26..35; version updated.
+
+## [1.8.2] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-26..30 added; Must-Pass list and Release Gate Map expanded; version updated.
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-26..30; update protocol added; version updated.
+
+## [1.8.1] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-25 added; Must-Pass list and Release Gate Map expanded; version updated.
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-24/25; version updated.
+
+## [1.8.0] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-23; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Release Gate Map includes GOV-LINT-23; version updated.
+- **.github/PULL_REQUEST_TEMPLATE.md** — PR checklist marked immutable.
+
+## [1.7.9] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate table marked immutable; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-22 header spec tightened; GOV-LINT-23 added; version updated.
+- **CONTRIBUTING.md** — PR checklist table includes regex rules.
+
+## [1.7.8] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-22; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Release Gate Map includes GOV-LINT-21/22; version updated.
+- **CONTRIBUTING.md** — PR checklist table includes GOV-LINT IDs.
+
+## [1.7.7] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-21; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-22 added; Mirror Rule regex added; version updated.
+
+## [1.7.6] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Mirror Rule exact line updated to include GOV-LINT-20 label.
+
+## [1.7.5] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — GOV-LINT-20 added as Must-Pass; Mirror Rule marked with GOV-LINT-20.
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-21 added for PR checklist mandatory line; version updated.
+
+## [1.7.4] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate Map includes GOV-LINT-19; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT-20 added; version updated.
+- **.github/PULL_REQUEST_TEMPLATE.md** — PR checklist marked mandatory.
+
+## [1.7.3] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Release Gate Mirror Rule; GOV-LINT-19 added; version updated.
+- **CONTRIBUTING.md** — PR checklist converted to table.
+
+## [1.7.2] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Mirror rule for Release Gate Map; strict_mode gate added; version updated.
+- **CONTRIBUTING.md** — PR checklist now explicitly requires PR template completion.
+
+## [1.7.1] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Release Gate Map added; strict_mode mandatory clarified.
+- **.github/PULL_REQUEST_TEMPLATE.md** — PR Workflow Checklist added.
+
+## [1.7.0] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Release Gate (Must-Pass) table added; version updated.
+- **CONTRIBUTING.md** — PR workflow checklist added.
+- **TEMPLATE_USAGE_GUIDE.md** — strict_mode mandatory flag highlighted; version updated.
+
+## [1.6.9] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Must-Pass Enforcement section added.
+- **CONTRIBUTING.md** — Lint Signature required for PRs.
+- **docs/RELEASE_CHECKLIST.md** — strict_mode immutability mirrored; version updated.
+
+## [1.6.8] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Must-Pass GOV-LINT table and sign-off gate added; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — strict_mode immutable config noted.
+
+## [1.6.7] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — GOV-LINT reference table added; version updated.
+- **TEMPLATE_USAGE_GUIDE.md** — strict_mode parameter mirrored; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Lint Signature checkbox rule added.
+
+## [1.6.6] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT index table added.
+- **docs/RELEASE_CHECKLIST.md** — Strict mode parameter included in lint signature; version updated.
+- **.github/PULL_REQUEST_TEMPLATE.md** — Lint signature completion checkbox added.
+
+## [1.6.5] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — GOV-LINT IDs referenced; version updated.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Strict mode YAML block added.
+- **.github/PULL_REQUEST_TEMPLATE.md** — Lint Signature mandatory section added.
+
+## [1.6.4] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — GOV-LINT IDs added; strict_mode flag defined.
+- **docs/RELEASE_CHECKLIST.md** — Lint signature section added; version updated.
+
+## [1.6.3] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Strict mode default enabled; immutable header policy lint rule added.
+- **docs/RELEASE_CHECKLIST.md** — Regex checks now include file-scope references; version updated.
+
+## [1.6.2] - 2026-01-29
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Lint readiness regex list added; version updated.
+- **docs/artifact_index.md** — Immutable header block policy section added.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Strict mode section added.
+
+## [1.6.1] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Exact header block rules updated for immutable marker.
+- **docs/RELEASE_CHECKLIST.md** — Lint readiness checklist detailed with file/regex checks.
+- **docs/artifact_index.md** — DO NOT EDIT marker added to immutable header block.
+
+## [1.6.0] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Strict Update-Protocol regex and immutable header line rules added.
+- **docs/artifact_index.md** — Immutable header block marker added.
+- **docs/RELEASE_CHECKLIST.md** — Lint readiness checklist added; version updated.
+
+## [1.5.9] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Numbered Update-Protocol regex and ORDER LOCKED line rule added.
+- **TEMPLATE_USAGE_GUIDE.md** — DOC-ID update order mirrored as mandatory checklist.
+
+## [1.5.8] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Update Protocol lint checks added.
+- **docs/RELEASE_CHECKLIST.md** — Artifact Index marker check added; version updated.
+- **README.md** — DOC-ID update order documented.
+
+## [1.5.7] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — ORDER LOCKED regex rule added.
+- **docs/artifact_index.md** — Update Protocol section added.
+- **README.md** — Artifact Index mandatory reference added.
+
+## [1.5.6] - 2026-01-29
+
+### Changed
+- **docs/artifact_index.md** — ORDER LOCKED marker added.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Prefix section regex rule added.
+- **TECHNICAL_SPEC.md** — DOC-ID references added per artifact row.
+
+## [1.5.5] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Artifact Index as single source of truth and ordering rules added.
+- **TECHNICAL_SPEC.md** — Artifact Index reference added.
+
+## [1.5.4] - 2026-01-29
+
+### Added
+- **docs/artifact_index.md** — Central DOC-ID index added.
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Status value regex and artifact index checks added.
+- **docs/RELEASE_CHECKLIST.md** — Artifacts Mapping Gate added; version updated.
+
+## [1.5.3] - 2026-01-29
+
+### Added
+- **docs/GOVERNANCE_LINT_SPEC.md** — DOC-ID Regex validation rules added.
+- **DESIGN.md** — Required Artifacts mandated (DES-GOV-28A).
+
+### Changed
+- **TECHNICAL_SPEC.md** — Allowed status values constrained (Draft/Final/Deprecated).
+- **LASTENHEFT.md** — Required Artifacts Mapping required in Platform Decision Checklist.
+
+## [1.5.2] - 2026-01-29
+
+### Added
+- **docs/GOVERNANCE_LINT_SPEC.md** — YAML Section Order list added.
+- **TECHNICAL_SPEC.md** — Required Artifacts Mapping section added.
+
+### Changed
+- **docs/api_spec.md** — Added normative IDs for sections.
+- **shared/ipc_contracts.md** — Added normative IDs for sections.
+- **desktop/runtime_config.md** — Added normative IDs for sections.
+- **desktop/packaging.md** — Added normative IDs for sections.
+- **frontend/build_config.md** — Added normative IDs for sections.
+- **ai_service/runtime_config.md** — Added normative IDs for sections.
+
+## [1.5.1] - 2026-01-29
+
+### Changed
+- **docs/api_spec.md** — Placeholder with minimal required sections added.
+- **shared/ipc_contracts.md** — Placeholder with minimal required sections added.
+- **desktop/runtime_config.md** — Placeholder with minimal required sections added.
+- **desktop/packaging.md** — Placeholder with minimal required sections added.
+- **frontend/build_config.md** — Placeholder with minimal required sections added.
+- **ai_service/runtime_config.md** — Placeholder with minimal required sections added.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Expected section order rules added.
+- **docs/RELEASE_CHECKLIST.md** — INIT_STATUS control added.
+
+## [1.5.0] - 2026-01-29
+
+### Added
+- **docs/api_spec.md** — Placeholder artifact for API specification.
+- **shared/ipc_contracts.md** — Placeholder artifact for IPC contracts.
+- **desktop/runtime_config.md** — Placeholder artifact for desktop runtime configuration.
+- **desktop/packaging.md** — Placeholder artifact for desktop packaging.
+- **frontend/build_config.md** — Placeholder artifact for frontend build configuration.
+- **ai_service/runtime_config.md** — Placeholder artifact for service runtime configuration.
+
+### Changed
+- **TEMPLATE_USAGE_GUIDE.md** — Rule for INIT_STATUS: COMPLETE clarified.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Exact content markers required for artifacts.
+
+## [1.4.9] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Required artifacts mit exakten Dateipfaden ergänzt; Init-Status als Placeholder-Guard.
+- **README.md** — Platform Matrix um Default Tech Stack und exakte Artefaktpfade ergänzt.
+- **TEMPLATE_USAGE_GUIDE.md** — Version aktualisiert.
+
+## [1.4.8] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Path- und Section-Parser-Regeln ergänzt.
+- **README.md** — Platform Matrix um Required Artifacts erweitert.
+- **TEMPLATE_USAGE_GUIDE.md** — Template Initialization Checklist ergänzt.
+- **TEMPLATE_USAGE_GUIDE.md** — Version/Datum/Status ergänzt.
+
+## [1.4.7] - 2026-01-29
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Regex-Kriterien für deterministische Checks ergänzt.
+- **README.md** — Platform Matrix um Required Docs erweitert; scripts-Verzeichnis dokumentiert.
+- **scripts/README.md** — Platzhalter für künftige Governance-Lint Automation hinzugefügt.
+
+## [1.4.6] - 2026-01-29
+
+### Changed
+- **LASTENHEFT.md** — Platform Decision Checklist mit Default-Entscheidungen ergänzt.
+- **TECHNICAL_SPEC.md** — Tech Choice Justification Vorlage ergänzt.
+- **docs/GOVERNANCE_LINT_SPEC.md** — Governance-Lint Spezifikation hinzugefügt (ohne Code).
+- **docs/RELEASE_CHECKLIST.md** — Governance-Lint Verweis ergänzt.
+- **README.md** — Version-Badge aktualisiert.
+
+## [1.4.5] - 2026-01-29
+
+### Changed
+- **README.md** — Platform Matrix um konkrete Technologiebeispiele ergänzt.
+- **LASTENHEFT.md** — Platform Decision Checklist ergänzt (pflichtig).
+- **docs/RELEASE_CHECKLIST.md** — Governance-Lint Checkliste ergänzt.
+- **docs/RELEASE_CHECKLIST.md** — Version/Datum/Status ergänzt.
+
+## [1.4.4] - 2026-01-29
+
+### Changed
+- **README.md** — Platform Matrix ergänzt; Version-Badge aktualisiert.
+- **CONTRIBUTING.md** — Platform Decision Gate ergänzt (DES-ARCH-23).
+- **LASTENHEFT.md** — NFR-Platzhalter ergänzt; Version angehoben.
+- **TECHNICAL_SPEC.md** — Platzhalter-Referenzen vollständig; Version angehoben.
+- **SYSTEM_REPORT.md** — Platzhalter-Referenzen vollständig; Version angehoben.
+- **STYLEGUIDE.md** — Version angehoben.
+- **PROMPTS.md** — Version angehoben.
+
+## [1.4.3] - 2026-01-29
+
+### Changed
+- **README.md** — Governance/Philosophy ergänzt um explizite Plattformentscheidung.
+- **TEMPLATE_USAGE_GUIDE.md** — Lastenheft-Anweisung um Zielplattform ergänzt.
+- **DESIGN.md** — Version angehoben; DES-ARCH-23 mit Technologieprinzip präzisiert.
+- **LASTENHEFT.md** — Version angehoben; Änderungshistorie ergänzt.
+- **TECHNICAL_SPEC.md** — Version/Datum harmonisiert; Änderungshistorie ergänzt.
+- **STYLEGUIDE.md** — Version/Datum harmonisiert.
+- **PROMPTS.md** — Version/Datum harmonisiert.
+- **SYSTEM_REPORT.md** — Version/Datum harmonisiert.
+- **scaffold_structure.sh** — Optionale Ordner `/desktop` und `/shared` werden angelegt.
+- **desktop/README.md** — Platzhalter für Desktop-Shell-Zweck und Governance hinzugefügt.
+- **shared/README.md** — Platzhalter für Shared-Contract-Zweck und Governance hinzugefügt.
+
+## [1.4.2] - 2026-01-29
+
+### Changed
+- **DESIGN.md** — Desktop-Shell-Architektur regelt jetzt konditional; neue Anforderung zur Plattformentscheidung.
+- **README.md** — Version-Badge aktualisiert; optionale Verzeichnisse `/desktop` und `/shared` dokumentiert.
+- **CONTRIBUTING.md** — Verzeichnisstruktur um optionalen Desktop-Shell-Hinweis ergänzt.
+- **TEMPLATE_USAGE_GUIDE.md** — Scaffolding-Hinweis auf optionale Ordner ergänzt.
+- **scaffold_structure.sh** — Optionale Ordner `/desktop` und `/shared` werden mit angelegt.
+- **LASTENHEFT.md** — Zielplattform als explizite Anforderung und fehlende Platzhalter ergänzt.
+
 ## [1.4.1] - 2026-01-29
 
 ### Changed
@@ -75,4 +411,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial project structure based on Enterprise Core Template.
-
