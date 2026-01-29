@@ -109,6 +109,8 @@ See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact ste
 > A task is only considered "Complete" when changes are **pushed and verified** on GitHub.
 
 1. **Always Push:** Code does not exist until it is on the remote.
-2. **Verify Push:** Do not rely on valid local `git commit`. Check the exit code of `git push`.
-3. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
+2. **Verify Push:** Check the exit code of `git push`. Local commits are insufficient.
+3. **Remote Verification:** A project conclusion or task completion is only considered "clean" if `git push` has been successfully executed **AND verified** (e.g., via browser check or explicit `git status` check indicating parity).
+4. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
+
 
