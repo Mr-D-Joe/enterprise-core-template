@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NFR-REQ-08** — MANDATORY: CI reproducibility (no manual steps).
 - **NFR-REQ-09** — MANDATORY: Test determinism (no implicit external deps).
 - **Compliance** — Aligned functional NFRs with governance rules DES-GOV-51 and DES-GOV-55.
+- **CONTRIBUTING.md** — Adopted strict "Local Quality Gates" (Sec 5) and clarified AI typing/test rules.
 
 ## [1.3.0] - 2026-01-29
 

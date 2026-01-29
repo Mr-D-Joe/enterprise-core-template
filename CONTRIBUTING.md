@@ -53,6 +53,7 @@ Projects based on this template follow a strict directory layout to maintain sep
    - Update `CHANGELOG.md` (Reverse-Chronological: New -> Old).
    - Update internal document history in modified files (Chronological: Old -> New).
    - Verify `README.md` is still accurate.
+   - **Dev-Dependencies:** Alle für Typprüfung/Test benötigten Stubs/Typing-Pakete müssen in `ai_service/requirements-dev.txt` dokumentiert sein.
 
 ### 3.2 Branching
 
@@ -88,10 +89,30 @@ If you are an AI agent working on this repository:
 | **No Hallucinations** | If a file or function is not present, ask before creating it. Do not invent architectural layers not specified in `DESIGN.md` |
 | **Mock First** | If adding a new data feature, implement it as a **Mock** first (see `DES-GOV-17`) |
 | **Requirements First** | No code without a documented requirement in LASTENHEFT.md |
+| **Typing & CI** | Keine neuen `Any`‑Typen ohne dokumentierte Ausnahme; benötigte Typing‑Stubs gehören in `requirements-dev.txt`. |
+| **Test‑Determinismus** | Keine Tests mit externen Binaries ohne CI‑Install‑Step oder Mock/Fallback. |
 
 ---
 
-## 5. Template-Specific Notes
+## 5. Local Quality Gates (Required)
+
+Vor jedem Commit müssen diese Checks lokal laufen:
+
+- Frontend:
+  - `cd frontend && npm run lint`
+  - `cd frontend && npm run typecheck`
+- Backend:
+  - `cd ai_service && ruff check .`
+  - `cd ai_service && mypy . --ignore-missing-imports`
+  - `cd ai_service && pytest -q`
+
+Hinweis:
+- Browser‑abhängige Tests müssen entweder in CI explizit installierte Binaries nutzen (z. B. Playwright) oder als Integrationstests markiert und separat ausführbar sein.
+- `typing.Any` ist nur mit dokumentierter Ausnahme erlaubt (Reason + Scope).
+
+---
+
+## 6. Template-Specific Notes
 
 When contributing to **the template itself** (not a derived project):
 
@@ -102,13 +123,13 @@ When contributing to **the template itself** (not a derived project):
 
 ---
 
-## 6. Release Process
+## 7. Release Process
 
 See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact steps to cut a new version.
 
 ---
 
-## 7. Deployment & Sync Policy
+## 8. Deployment & Sync Policy
 
 > **USER DIRECTIVE (2026-01-29):**
 > A task is only considered "Complete" when changes are **pushed and verified** on GitHub.
