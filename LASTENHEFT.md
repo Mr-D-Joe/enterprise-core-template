@@ -10,8 +10,8 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
-Version: 1.1  
-Datum: 2026-01-28  
+Version: 1.2  
+Datum: 2026-01-29  
 Status: Released (Golden Standard)
 
 ---
@@ -35,6 +35,7 @@ Status: Released (Golden Standard)
 |--------:|-------|-----------|--------------|--------------|
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
 | 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Context/Story-Musters und Schärfung der Atomarität |
+| 1.2 | 2026-01-29 | 7 | Erweiterung | Einführung von NFRs für CI-Reproduzierbarkeit und Test-Determinismus (NFR-REQ-08/09). |
 
 ---
 
@@ -120,6 +121,14 @@ Das System muss als {{PLATFORM}} ausführbar sein.
 > **LLM Instruction:** Define how the system communicates processing status positively to users.
 
 {{STABILITY_REQUIREMENTS}}
+
+### 7.3 NFR-REQ-08 — CI-Reproduzierbarkeit
+
+Die CI muss ohne manuelle Setup-Schritte reproduzierbar laufen; alle Test-Dependencies müssen in der CI installierbar sein.
+
+### 7.4 NFR-REQ-09 — Test-Determinismus
+
+Tests müssen deterministisch ohne externe Dienste/Binaries laufen oder als Integrationstests markiert und getrennt ausführbar sein.
 
 ---
 
