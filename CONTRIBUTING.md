@@ -110,7 +110,7 @@ See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact ste
 
 1. **Always Push:** Code does not exist until it is on the remote.
 2. **Verify Push:** Check the exit code of `git push`. Local commits are insufficient.
-3. **Remote Verification:** A project conclusion or task completion is only considered "clean" if `git push` has been successfully executed **AND verified** (e.g., via browser check or explicit `git status` check indicating parity).
+3. **Remote Verification:** A project conclusion or task completion is only considered "clean" if `git push` has been successfully executed **AND verified**. Verification must be either **visual** (browser check) or **content-based** (explicit `git status`/`diff` check indicating parity).
 4. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
 
 
