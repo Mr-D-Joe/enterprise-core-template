@@ -49,6 +49,11 @@ Projects based on this template follow a strict directory layout to maintain sep
 2. **Document First:**
    - New features require a requirement in LASTENHEFT.md before implementation
 
+3. **Update Documentation (Synchronicity):**
+   - Update `CHANGELOG.md` (Reverse-Chronological: New -> Old).
+   - Update internal document history in modified files (Chronological: Old -> New).
+   - Verify `README.md` is still accurate.
+
 ### 3.2 Branching
 
 Use descriptive branch names:

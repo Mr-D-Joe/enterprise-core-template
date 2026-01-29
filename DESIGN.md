@@ -17,6 +17,8 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 |--------:|------------|-----------|--------------|--------------|
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
 | 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
+| 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
+
 
 ---
 
@@ -188,7 +190,16 @@ Normative Gültigkeit besitzen die freigegebenen Versionen von DESIGN.md und LAS
 ### DES-GOV-48 — Struktur funktionaler Anforderungen
 Funktionale Anforderungen in LASTENHEFT.md werden durch einen Abschnitt "Kontext & User Story" eingeleitet, der die Intention und den systemischen Zusammenhang erläutert, gefolgt von einer Liste atomarer Einzelanforderungen.
 
+### DES-GOV-49 — Dokumentations-Synchronität
+Jede Änderung am Systemcode oder der Architektur erfordert zwingend eine synchrone Aktualisierung der Dokumentation (CHANGELOG.md, README.md, LASTENHEFT.md). Code-Änderungen ohne Dokumentations-Update gelten als unvollständig.
+
+### DES-GOV-50 — Historien-Ordnung
+Dokumentationshistorien folgen einer strikten Sortierordnung:
+- **Interne Dokumentenhistorien:** Chronologisch aufsteigend (Alt → Neu).
+- **Projektweites CHANGELOG (CHANGELOG.md):** Chronologisch absteigend (Neu → Alt).
+
 ---
+
 
 ## Architektur
 

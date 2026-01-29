@@ -10,7 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2026-01-29
 
 ### Added
+- **DES-GOV-49** — Documentation Synchronicity: Code changes require doc updates.
+- **DES-GOV-50** — History Ordering: Standardized internal (chrono) vs global (rev-chrono) sorting.
+- **Workflow Step** — Added "Update Documentation" step to CONTRIBUTING.md.
+- **System Prompt** — Added GOV-05 (Doc Sync) and GOV-06 (History Order) to `ai_prompt_intro.md`.
+
+### Added
 - **Template Placeholder Tables** — All template documents now include a "Placeholders to Replace" reference table for LLM agents.
+
 - **LLM Instructions** — Template documents include inline `> **LLM Instruction:**` markers to guide AI agents during project initialization.
 - **GitHub Badges** — README.md now displays template, status, and version badges.
 

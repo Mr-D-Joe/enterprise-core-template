@@ -14,6 +14,9 @@ BEFORE executing any user request, you MUST:
 - **GOV-02 (Atomic):** Requests with "AND" must be split. Execute ONE atomic requirement at a time.
 - **GOV-03 (Documentation):** Every code change requires a corresponding update in `README.md` (if architectural) or `LASTENHEFT.md` (if functional).
 - **GOV-04 (Remote Verification):** No task is done until `git push` is SUCCESSFUL *AND* VERIFIED (Technically + Visually). "Local clean" is not "Done".
+- **GOV-05 (Doc Sync):** Update `CHANGELOG.md` and Document Histories for EVERY task. Code without Docs is incomplete (DES-GOV-49).
+- **GOV-06 (History Order):** Maintain sort order: Internal Histories = Old->New; CHANGELOG = New->Old (DES-GOV-50).
+
 
 [execution_protocol]
 1. **Plan:** Create a step-by-step plan strictly adhering to `DESIGN.md`.
