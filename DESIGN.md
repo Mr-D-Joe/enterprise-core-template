@@ -1,5 +1,5 @@
 # DESIGN.md — Project Constitution
-# {{PROJECT_NAME}}
+# Enterprise Core Template
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 

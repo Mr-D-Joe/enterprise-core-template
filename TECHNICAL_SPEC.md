@@ -1,37 +1,55 @@
-# TECHNICAL_SPEC — [Project Name]
+# TECHNICAL_SPEC — Enterprise Core Template
 ## Implementation-Level Specification
 
-Version: 1.1
-Datum: 2026-01-28
+> **⚠️ TEMPLATE DOCUMENT**  
+> This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
+
+Version: 1.1  
+Datum: 2026-01-28  
 Status: Released (Golden Standard)
+
+---
+
+## Placeholders to Replace
+
+| Placeholder | Description | Example |
+|-------------|-------------|---------|
+| `{{PROJECT_NAME}}` | Your project name | "StockBot Pro" |
+| `{{DATE}}` | Initialization date | "2026-01-29" |
+| `{{FEATURE_NAME}}` | Feature being specified | "Stock Search" |
+| `{{REQ_ID}}` | Requirement ID from LASTENHEFT.md | "UI-REQ-01" |
+| `{{ENDPOINT_NAME}}` | API endpoint name | "/api/v1/search" |
+| `{{ERROR_CASE}}` | Error scenario name | "API Timeout" |
+| `{{DES_REF}}` | DESIGN.md reference | "DES-ARCH-10" |
+
+---
 
 ## Änderungshistorie
 
-| Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
-|--------:|------------|-----------|--------------|--------------|
-| 1.0 | [YYYY-MM-DD] | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
+| Version | Datum | Abschnitt | Änderungstyp | Beschreibung |
+|--------:|-------|-----------|--------------|--------------|
+| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
 | 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Kontext-Musters zur Erläuterung der Implementierungs-Intention |
 
 ---
 
 ## 1. Core Feature Specifications
 
-### 1.1 Feature Area [Name]
+### 1.1 Feature Area: {{FEATURE_NAME}}
 
 #### Kontext & User Story Implementation
-[Beschreibe hier kurz, wie die entsprechende User Story technisch angegangen wird und welche architektonischen Entscheidungen dabei zentral sind.]
 
-#### 1.1.1 TECH-SPEC-FEAT-01 — [Feature Name]
+> **LLM Instruction:** Describe here how the corresponding user story is technically approached and which architectural decisions are central.
 
-**Implements Requirements:** [ID from LASTENHEFT.md, e.g., UI-REQ-01]
+{{IMPLEMENTATION_CONTEXT}}
 
-[Description of the specific technical implementation chosen to fulfill the requirements. E.g., "The feature uses a virtualized list to render..."]
+#### 1.1.1 TECH-SPEC-FEAT-01 — {{FEATURE_NAME}}
 
-#### 1.1.2 TECH-SPEC-FEAT-02 — [Feature Name]
+**Implements Requirements:** {{REQ_ID}}
 
-**Implements Requirements:** [ID from LASTENHEFT.md]
+> **LLM Instruction:** Describe the specific technical implementation chosen to fulfill the requirements.
 
-[Description of the technical implementation.]
+{{IMPLEMENTATION_DESCRIPTION}}
 
 ---
 
@@ -39,11 +57,13 @@ Status: Released (Golden Standard)
 
 ### 2.1 Endpoint Definitions
 
-#### 2.1.1 TECH-SPEC-API-01 — [Endpoint Name]
+#### 2.1.1 TECH-SPEC-API-01 — {{ENDPOINT_NAME}}
 
-- **Method**: [GET/POST]
-- **Payload**: [Structure]
-- **Response**: [Structure]
+| Property | Value |
+|----------|-------|
+| **Method** | {{HTTP_METHOD}} |
+| **Payload** | {{PAYLOAD_STRUCTURE}} |
+| **Response** | {{RESPONSE_STRUCTURE}} |
 
 ---
 
@@ -51,11 +71,13 @@ Status: Released (Golden Standard)
 
 ### 3.1 Failure Scenarios
 
-#### 3.1.1 TECH-SPEC-ERROR-01 — [Error Case Name]
+#### 3.1.1 TECH-SPEC-ERROR-01 — {{ERROR_CASE}}
 
-**Related Governance:** [ID from DESIGN.md, e.g., DES-ARCH-10]
+**Related Governance:** {{DES_REF}}
 
-[Description of the error handling mechanism. E.g., "The system catches this error using the global boundary and displays..."]
+> **LLM Instruction:** Describe the error handling mechanism for this scenario.
+
+{{ERROR_HANDLING_DESCRIPTION}}
 
 ---
 
@@ -63,6 +85,9 @@ Status: Released (Golden Standard)
 
 ### 4.1 Constraints
 
-#### 4.1.1 TECH-SPEC-PERF-01 — [Limit Name]
+#### 4.1.1 TECH-SPEC-PERF-01 — {{LIMIT_NAME}}
 
-[Description of specific performance constraints or limits implemented.]
+> **LLM Instruction:** Describe specific performance constraints or limits implemented.
+
+{{PERFORMANCE_CONSTRAINTS}}
+

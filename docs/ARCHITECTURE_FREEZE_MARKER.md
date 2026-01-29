@@ -1,5 +1,10 @@
 # ARCHITECTURE FREEZE MARKER
 
+> **⚠️ TEMPLATE DOCUMENT**  
+> Replace `{{DATE}}` with the freeze date when locking architecture.
+
+---
+
 > **STATUS: FROZEN**  
 > **Effective Date:** {{DATE}}
 
@@ -14,4 +19,5 @@ The core architecture of this system is **FROZEN**.
 ---
 
 **Authorized by:** Project Governance Team  
-**Reference:** `DESIGN.md`
+**Reference:** [`DESIGN.md`](../DESIGN.md)
+

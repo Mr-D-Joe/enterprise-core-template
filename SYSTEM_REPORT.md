@@ -1,17 +1,32 @@
-# SYSTEM REPORT — [Project Name]
-# =============================
+# SYSTEM REPORT — Enterprise Core Template
 
-⚠️ NON-NORMATIVE / DESCRIPTIVE DOCUMENT
+> **⚠️ NON-NORMATIVE / DESCRIPTIVE DOCUMENT**
+>
+> This document is a **System Report**.
+>
+> It is:
+> - DESCRIPTIVE (Describes what is)
+> - NON-NORMATIVE (Does not define what must be)
+> - NON-AUTHORITATIVE (Derived from observation)
+> - REGENERATABLE (Snapshot in time)
+>
+> It MUST NOT define rules, architecture, or constraints.
 
-This document is a **System Report**.
+---
 
-It is:
-- DESCRIPTIVE (Describes what is)
-- NON-NORMATIVE (Does not define what must be)
-- NON-AUTHORITATIVE (Derived from observation)
-- REGENERATABLE (Snapshot in time)
+## Placeholders to Replace
 
-It MUST NOT define rules, architecture, or constraints.
+| Placeholder | Description | Example |
+|-------------|-------------|---------|
+| `{{PROJECT_NAME}}` | Your project name | "StockBot Pro" |
+| `{{APP_TYPE}}` | Application type | "Desktop Application" |
+| `{{CORE_PURPOSE}}` | What it does | "Financial Analysis Tool" |
+| `{{PRIORITY_1}}` | First priority | "Data Accuracy" |
+| `{{PRIORITY_2}}` | Second priority | "User Privacy" |
+| `{{PRIORITY_3}}` | Third priority | "Performance" |
+| `{{ARCH_STYLE}}` | Architecture style | "Component-Based SPA" |
+| `{{FRONTEND_TECH}}` | Frontend stack | "React + TypeScript" |
+| `{{BACKEND_TECH}}` | Backend stack | "Python + FastAPI" |
 
 ---
 
@@ -37,42 +52,48 @@ The System Report serves to:
 
 ## 1. Executive Summary
 
-[Project Name] is a [Type of Application] that functions as [Core Purpose].
+**{{PROJECT_NAME}}** is a **{{APP_TYPE}}** that functions as **{{CORE_PURPOSE}}**.
 
 The system demonstrates a focus on:
-- [Priority 1]
-- [Priority 2]
-- [Priority 3]
+- {{PRIORITY_1}}
+- {{PRIORITY_2}}
+- {{PRIORITY_3}}
 
 ---
 
 ## 2. System Architecture
 
-## Observed Architecture Style
-[e.g., Component-Based Monolithic SPA]
+### Observed Architecture Style
 
-## Observed Technology Stack
-- [Frontend Framework]
-- [Backend/Runtime]
-- [Styling Library]
+{{ARCH_STYLE}}
+
+### Observed Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | {{FRONTEND_TECH}} |
+| Backend | {{BACKEND_TECH}} |
+| Styling | {{STYLING_TECH}} |
 
 ---
 
 ## 3. Module Overview
 
-Note: Detailed module inspection is intentionally omitted in this report style. This report focuses on architectural compliance.
+> **Note:** Detailed module inspection is intentionally omitted in this report style. This report focuses on architectural compliance.
 
 ---
 
 ## 4. Compliance with DESIGN.md
 
 ### Observed Compliance
-- [Compliance Item 1] (Matches DES-ARCH-XX)
-- [Compliance Item 2] (Matches DES-FE-XX)
+
+- {{COMPLIANCE_ITEM_1}} (Matches {{DES_REF_1}})
+- {{COMPLIANCE_ITEM_2}} (Matches {{DES_REF_2}})
 
 ### Not Yet Implemented
-- [Missing Feature 1]
-- [Missing Feature 2]
+
+- {{MISSING_FEATURE_1}}
+- {{MISSING_FEATURE_2}}
 
 ---
 
@@ -80,30 +101,32 @@ Note: Detailed module inspection is intentionally omitted in this report style. 
 
 | Area | Risk | Observation |
 |------|------|-------------|
-| [Area Name] | [Description of Risk] | [Observed Context] |
+| {{RISK_AREA}} | {{RISK_DESCRIPTION}} | {{RISK_CONTEXT}} |
 
 ---
 
 ## 6. Final Assessment
 
-Internal consistency: [YES/NO]
-Extensibility: [YES/NO]
-Production readiness: [YES/NO]
+| Criterion | Status |
+|-----------|--------|
+| Internal consistency | {{YES_NO}} |
+| Extensibility | {{YES_NO}} |
+| Production readiness | {{YES_NO}} |
 
-**Verdict:**
-[Brief summary of the system's current state]
+**Verdict:** {{VERDICT_SUMMARY}}
 
 ---
 
-# SYSTEM REPORT GOVERNANCE EFFECT
+## SYSTEM REPORT GOVERNANCE EFFECT
 
 This System Report standard ensures:
 
-## For LLM Systems
+### For LLM Systems
 LLMs use this structure to generate reports without introducing normative rules, strictly referencing DESIGN.md as the authority.
 
-## For Automated Test Systems
+### For Automated Test Systems
 Test systems use this structure to validate that strictly descriptive language is employed.
 
-## For Humans
+### For Humans
 Humans use this report to understand the reality of the system implementation without mistaking it for the design authority.
+
