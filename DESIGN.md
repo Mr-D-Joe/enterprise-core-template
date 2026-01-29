@@ -3,8 +3,8 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.1
-Datum: 2026-01-28
+Version: 1.3
+Datum: 2026-01-29
 Status: Released (Golden Standard)
 
 Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
@@ -18,6 +18,7 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
 | 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
 | 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
+| 1.3 | 2026-01-29 | Governance | Erweiterung | Einführung der CI-/Typing-/Test-Determinismus-Regeln (DES-GOV-51 bis DES-GOV-55). |
 
 
 ---
@@ -197,6 +198,21 @@ Jede Änderung am Systemcode oder der Architektur erfordert zwingend eine synchr
 Dokumentationshistorien folgen einer strikten Sortierordnung:
 - **Interne Dokumentenhistorien:** Chronologisch aufsteigend (Alt → Neu).
 - **Projektweites CHANGELOG (CHANGELOG.md):** Chronologisch absteigend (Neu → Alt).
+
+### DES-GOV-51 — CI-Toolchain-Vollständigkeit
+Alle in CI verwendeten Tools und Abhängigkeiten sind im Repository dokumentiert und in CI reproduzierbar installierbar.
+
+### DES-GOV-52 — Externe Binaries in Tests
+Tests dürfen keine externen Binaries voraussetzen, es sei denn die CI installiert sie explizit oder der Code bietet einen Mock/Fallback-Pfad.
+
+### DES-GOV-53 — Verbot von typing.Any ohne Ausnahme
+typing.Any ist verboten, außer es existiert eine dokumentierte Ausnahme mit Begründung und Scope.
+
+### DES-GOV-54 — Typing-Abhängigkeiten als Dev-Dependencies
+Alle für die Typprüfung notwendigen Stubs/Typing-Pakete sind in den Dev-Dependencies geführt.
+
+### DES-GOV-55 — Test-Determinismus und Isolation
+Tests laufen deterministisch ohne Netzwerk- oder Browser-Abhängigkeiten, es sei denn sie sind explizit als Integrationstests markiert und getrennt ausführbar.
 
 ---
 

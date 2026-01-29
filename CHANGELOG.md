@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-01-29
+
+### Added
+- **LICENSE** — Added MIT License (Copyright 2026 Joern) to satisfy compliance.
+- **DES-GOV-51** — CI Toolchain Completeness.
+- **DES-GOV-52** — No undeclared external binaries in tests.
+- **DES-GOV-53** — Prohibition of `typing.Any` (strict typing).
+- **DES-GOV-54** — Typing stubs must be in `dev-dependencies`.
+- **DES-GOV-55** — Test determinism and isolation (no implicit network/browser).
+
 ## [1.2.0] - 2026-01-29
 
 ### Added
