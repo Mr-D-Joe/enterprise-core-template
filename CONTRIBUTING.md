@@ -100,3 +100,15 @@ When contributing to **the template itself** (not a derived project):
 ## 6. Release Process
 
 See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact steps to cut a new version.
+
+---
+
+## 7. Deployment & Sync Policy
+
+> **USER DIRECTIVE (2026-01-29):**
+> A task is only considered "Complete" when changes are **pushed and verified** on GitHub.
+
+1. **Always Push:** Code does not exist until it is on the remote.
+2. **Verify Push:** Do not rely on valid local `git commit`. Check the exit code of `git push`.
+3. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
+
