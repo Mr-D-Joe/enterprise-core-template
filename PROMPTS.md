@@ -4,7 +4,7 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.9.3  
+Version: 1.9.4  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -69,3 +69,19 @@ Generated outputs include a disclaimer clarifying that the content provides info
 #### 3.1.2 PROMPT-CAT-SAFE-02 — Data Integrity
 
 The instructions require the AI to state "Data not available" when facts are missing, preventing hallucination and maintaining trust in the system's data integrity.
+
+---
+
+## 4. Low-Spec LLM Profile (Mandatory)
+
+Use this profile when the model has limited context, tool access, or reasoning depth.
+
+### 4.1 PROMPT-CAT-LOW-01 — Output Discipline
+- Use fixed, short sections: **Assumptions**, **Steps**, **Result**, **Open Questions**.
+- If data is missing, output exactly: `Data not available` and ask a single clarifying question.
+- Avoid speculative phrases; do not infer architecture or requirements.
+
+### 4.2 PROMPT-CAT-LOW-02 — Token Budgeting
+- Keep responses under 250 tokens unless explicitly requested.
+- Prefer bullet lists with one sentence per bullet.
+- Never output code before requirements exist in `LASTENHEFT.md`.

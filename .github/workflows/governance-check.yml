@@ -32,7 +32,21 @@ jobs:
           echo "::notice::Govenance Check: Ensure all changes in this PR comply with DESIGN.md (DES-GOV-01)."
           echo "If this PR changes architecture, ensure an RFC has been filed."
 
+      - name: Install Shellcheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: Shellcheck Scripts
+        run: |
+          shellcheck scripts/*.sh
+
       - name: Run Governance Lint
         shell: bash
         run: |
           ./scripts/governance_lint.sh
+
+      - name: Run Consistency Check
+        shell: bash
+        run: |
+          ./scripts/consistency_check.sh

@@ -4,7 +4,7 @@
 
 [![Template](https://img.shields.io/badge/GitHub-Template-green?style=flat&logo=github)](https://github.com/Mr-D-Joe/enterprise-core-template)
 ![Status](https://img.shields.io/badge/Status-Enterprise%20Ready-blue)
-![Version](https://img.shields.io/badge/Version-1.9.3-informational)
+![Version](https://img.shields.io/badge/Version-1.9.4-informational)
 
 ---
 

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.4] - 2026-01-30
+
+### Added
+- **CI Shellcheck** — Script linting for `scripts/*.sh` in governance workflow.
+
+### Changed
+- **docs/RELEASE_CHECKLIST.md** — Added consistency script check.
+- **TEMPLATE_USAGE_GUIDE.md** — Platform-specific scaffold examples.
+- **PROMPTS.md** — Low-spec LLM profile for deterministic outputs.
+- **.github/workflows/governance-check.yml** — Runs consistency check in CI.
+- **Version alignment** — Core template docs aligned to 1.9.4.
+
 ## [1.9.3] - 2026-01-30
 
 ### Added
