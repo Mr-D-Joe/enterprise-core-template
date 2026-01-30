@@ -3,7 +3,7 @@
 **Target Audience:** Release Managers & Automation Agents  
 **Scope:** Creating a new versioned release (e.g., `v1.3`).
 
-Version: 1.9.4  
+Version: 1.9.5  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -31,6 +31,7 @@ Status: Released (Golden Standard)
 - [ ] **Governance-Lint Spec:** `docs/GOVERNANCE_LINT_SPEC.md` reviewed for completeness.
 - [ ] **Governance Lint Script:** `./scripts/governance_lint.sh` passes.
 - [ ] **Consistency Script:** `./scripts/consistency_check.sh` passes.
+- [ ] **Shellcheck (CI parity):** `shellcheck scripts/*.sh` passes (if available).
 - [ ] **Initialization Status:** `INIT_STATUS: COMPLETE` set only after checklist completion.
 - [ ] **Artifacts Mapping Gate:** `TECHNICAL_SPEC.md` Section 6 completed for required artifacts.
 - [ ] **Artifact Index Marker:** `docs/artifact_index.md` contains `ORDER LOCKED`.

@@ -6,21 +6,17 @@
 echo "Enterprise Core Template - Scaffolding"
 echo "======================================"
 
-platform="default"
+platform=""
 
 if [ "${1:-}" = "--platform" ] && [ -n "${2:-}" ]; then
     platform="$2"
 fi
 
 case "$platform" in
-    default)
-        echo "[WARN] No platform specified. Creating only /frontend and /ai_service."
-        echo "[HINT] Use: ./scaffold_structure.sh --platform desktop|web|api-only"
-        ;;
     desktop|web|api-only)
         ;;
     *)
-        echo "[ERROR] Unknown platform: $platform"
+        echo "[ERROR] Missing or unknown platform: ${platform:-<none>}"
         echo "[HINT] Use: ./scaffold_structure.sh --platform desktop|web|api-only"
         exit 1
         ;;
@@ -31,11 +27,11 @@ create_ai_service=false
 create_desktop=false
 create_shared=false
 
-if [ "$platform" = "default" ] || [ "$platform" = "desktop" ] || [ "$platform" = "web" ]; then
+if [ "$platform" = "desktop" ] || [ "$platform" = "web" ]; then
     create_frontend=true
 fi
 
-if [ "$platform" = "default" ] || [ "$platform" = "desktop" ] || [ "$platform" = "web" ] || [ "$platform" = "api-only" ]; then
+if [ "$platform" = "desktop" ] || [ "$platform" = "web" ] || [ "$platform" = "api-only" ]; then
     create_ai_service=true
 fi
 

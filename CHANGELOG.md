@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.5] - 2026-01-30
+
+### Added
+- **ai_prompt_intro.md** — Low-spec mandatory profile for constrained models.
+
+### Changed
+- **.github/workflows/governance-check.yml** — Shellcheck best-effort with skip notice; added consistency check in CI.
+- **docs/RELEASE_CHECKLIST.md** — Shellcheck parity added.
+- **scaffold_structure.sh** — Platform flag now mandatory (no default behavior).
+- **TEMPLATE_USAGE_GUIDE.md** — Scaffold flag marked mandatory.
+- **Version alignment** — Core template docs aligned to 1.9.5.
+
 ## [1.9.4] - 2026-01-30
 
 ### Added

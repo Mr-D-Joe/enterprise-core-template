@@ -26,10 +26,18 @@ BEFORE executing any user request, you MUST:
 4. **Confirm:** Verify remote state (Hash + Content) via Browser/Network tool.
 5. **Report:** Only simple, confirmed status to the user.
 
+[low_spec_profile_mandatory]
+Use this profile when model capacity or context is limited.
+1. Output sections only: Assumptions, Steps, Result, Open Questions.
+2. If data is missing, output exactly: Data not available.
+3. Ask at most one clarifying question.
+4. Keep responses under 250 tokens unless requested otherwise.
+5. Do not infer architecture or requirements.
+6. Do not output code before requirements exist in LASTENHEFT.md.
+
 [violation_handling]
 If a user request violates `DESIGN.md`:
 1. HALT immediately.
 2. CITE the violated DES-XXX rule.
 3. PROPOSE a compliant alternative.
 4. WAIT for approval.
-

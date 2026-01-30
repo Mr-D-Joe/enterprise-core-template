@@ -1,6 +1,6 @@
 # Governance Lint Specification (No Code)
 
-Version: 1.9.4  
+Version: 1.9.5  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
