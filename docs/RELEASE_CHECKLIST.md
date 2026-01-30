@@ -3,7 +3,7 @@
 **Target Audience:** Release Managers & Automation Agents  
 **Scope:** Creating a new versioned release (e.g., `v1.3`).
 
-Version: 1.9.6  
+Version: 1.9.7  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 

@@ -2,7 +2,7 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
-Version: 1.9.6  
+Version: 1.9.7  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -41,6 +41,15 @@ Da dieses Repository als "Template Repository" konfiguriert ist, kopierst du es 
     cd mein-neues-projekt
     ```
 5.  Öffne das Projekt in deiner IDE (VS Code, Cursor, Windsurf, etc.).
+
+### 1.1 Quickstart (Derived Project Example)
+
+**Beispielablauf (kurz):**
+1. Repository als Template instanziieren und lokal klonen.
+2. `./scaffold_structure.sh --platform web` ausführen.
+3. `LASTENHEFT.md` mit Projektname + Zielplattform ausfüllen.
+4. `PROMPTS.md` Low‑Spec‑Snippet in dein System‑Prompt übernehmen.
+5. `./scripts/governance_lint.sh` und `./scripts/consistency_check.sh` ausführen.
 
 ---
 

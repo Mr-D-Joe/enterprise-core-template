@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.7] - 2026-01-30
+
+### Added
+- **Makefile** — `make validate` wrapper for governance and consistency checks.
+- **TEMPLATE_USAGE_GUIDE.md** — Quickstart derived-project example.
+
+### Changed
+- **Version alignment** — Core template docs aligned to 1.9.7.
+
 ## [1.9.6] - 2026-01-30
 
 ### Added
