@@ -32,18 +32,14 @@ jobs:
           echo "::notice::Govenance Check: Ensure all changes in this PR comply with DESIGN.md (DES-GOV-01)."
           echo "If this PR changes architecture, ensure an RFC has been filed."
 
-      - name: Install Shellcheck (Best Effort)
+      - name: Install Shellcheck
         run: |
-          sudo apt-get update || true
-          sudo apt-get install -y shellcheck || true
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
 
       - name: Shellcheck Scripts
         run: |
-          if command -v shellcheck >/dev/null 2>&1; then
-            shellcheck scripts/*.sh
-          else
-            echo "::notice::Shellcheck not available; skipping script lint."
-          fi
+          shellcheck scripts/*.sh
 
       - name: Run Governance Lint
         shell: bash

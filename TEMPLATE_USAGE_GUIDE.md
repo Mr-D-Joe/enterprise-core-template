@@ -2,7 +2,7 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
-Version: 1.9.5  
+Version: 1.9.6  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -125,6 +125,13 @@ Bestätige kurz, dass du `DESIGN.md` verstanden hast. Starte dann das Skript `./
 - [ ] **Release checklist updated** after governance rule changes.
 - [ ] **Scaffold platform selected** and only required directories created.
 - [ ] **Run consistency script:** `./scripts/consistency_check.sh`
+
+## 4.2 LLM Capability Check (Mandatory)
+
+- [ ] **Context Window:** ≥ 8k tokens (or split tasks).
+- [ ] **Tool Access:** Terminal access enabled.
+- [ ] **Determinism:** No browsing unless explicitly needed.
+- [ ] **Low-Spec Profile:** Enabled if model is constrained.
 
 ## Tipps für die weitere Arbeit
 

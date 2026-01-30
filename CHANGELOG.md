@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.6] - 2026-01-30
+
+### Added
+- **PROMPTS.md** — Low-spec system prompt snippet.
+- **TEMPLATE_USAGE_GUIDE.md** — LLM capability checklist.
+
+### Changed
+- **.github/workflows/governance-check.yml** — Shellcheck now required (hard gate).
+- **Version alignment** — Core template docs aligned to 1.9.6.
+
 ## [1.9.5] - 2026-01-30
 
 ### Added
