@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.3] - 2026-01-30
+
+### Added
+- **scripts/consistency_check.sh** — Ensures core template docs share identical version/date headers.
+
+### Changed
+- **TEMPLATE_USAGE_GUIDE.md** — Consistency checklist now includes script run.
+- **Version alignment** — Core template docs aligned to 1.9.3.
+
 ## [1.9.2] - 2026-01-30
 
 ### Changed
