@@ -2,8 +2,8 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
-Version: 1.9.0  
-Datum: 2026-01-29  
+Version: 1.9.1  
+Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
 INIT_STATUS: TEMPLATE
@@ -110,10 +110,11 @@ Bestätige kurz, dass du `DESIGN.md` verstanden hast. Starte dann das Skript `./
 - [ ] **Changelog Updated** (`CHANGELOG.md` has a new version entry)
 - [ ] **Initialization Status Set** (`INIT_STATUS: COMPLETE` in this file)
 - [ ] **DOC-ID Update Order Enforced** (required order):
-1. `docs/artifact_index.md`
-2. Source artifact file
-3. `TECHNICAL_SPEC.md` Section 6
-4. `CHANGELOG.md`
+1. Add new DOC-IDs in `docs/artifact_index.md`
+2. Update the source artifact file
+3. Keep order locked
+4. Update `TECHNICAL_SPEC.md` Section 6
+5. Update `CHANGELOG.md`
 
 ## Tipps für die weitere Arbeit
 

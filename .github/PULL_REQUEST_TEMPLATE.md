@@ -105,3 +105,4 @@ Anything reviewers should pay special attention to?
 - [ ] LASTENHEFT.md updated (if functional change)
 - [ ] CHANGELOG.md updated (version + entry)
 - [ ] Lint Signature completed
+- [ ] PR template checklist completed (.github/PULL_REQUEST_TEMPLATE.md)

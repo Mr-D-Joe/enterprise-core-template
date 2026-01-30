@@ -5,10 +5,10 @@
 
 ---
 
-> **STATUS: FROZEN**  
+> **STATUS: TEMPLATE**  
 > **Effective Date:** {{DATE}}
 
-The core architecture of this system is **FROZEN**.
+The core architecture of this system is **NOT YET FROZEN**.
 
 ## What does this mean?
 
@@ -20,4 +20,3 @@ The core architecture of this system is **FROZEN**.
 
 **Authorized by:** Project Governance Team  
 **Reference:** [`DESIGN.md`](../DESIGN.md)
-

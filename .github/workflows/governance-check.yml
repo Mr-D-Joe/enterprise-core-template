@@ -31,3 +31,7 @@ jobs:
         run: |
           echo "::notice::Govenance Check: Ensure all changes in this PR comply with DESIGN.md (DES-GOV-01)."
           echo "If this PR changes architecture, ensure an RFC has been filed."
+
+      - name: Run Governance Lint
+        run: |
+          ./scripts/governance_lint.sh

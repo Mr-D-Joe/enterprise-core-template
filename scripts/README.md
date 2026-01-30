@@ -1,10 +1,8 @@
 # Scripts (Placeholder)
 
-This directory is reserved for future automation (e.g., governance lint).
-No executable scripts are provided here.
+This directory includes automation helpers for governance lint.
 
 ## Intended Use
-- Governance lint execution
+- Governance lint execution (`scripts/governance_lint.sh`)
 - Template validation
 - CI helper scripts
-

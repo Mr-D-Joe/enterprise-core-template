@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.1] - 2026-01-30
+
+### Added
+- **scripts/governance_lint.sh** — Deterministic governance lint script wired into CI.
+- **ai_service/requirements-dev.txt** — Placeholder for typing/test dependencies.
+
+### Changed
+- **docs/GOVERNANCE_LINT_SPEC.md** — Clarified derived-project applicability; aligned artifact headings and release gate map.
+- **docs/artifact_index.md** — Protocol steps normalized to strict lint format.
+- **TEMPLATE_USAGE_GUIDE.md** — DOC-ID update order aligned with artifact index protocol.
+- **.github/PULL_REQUEST_TEMPLATE.md** — Added explicit PR checklist completion item.
+- **docs/ARCHITECTURE_FREEZE_MARKER.md** — Template status clarified (not frozen).
+- **docs/GOVERNANCE_SETUP.md** — Updated example release commit message.
+- **README.md** — Version badge updated to 1.9.1.
+- **.github/workflows/governance-check.yml** — Executes governance lint script.
+
 ## [1.9.0] - 2026-01-29
 
 ### Changed

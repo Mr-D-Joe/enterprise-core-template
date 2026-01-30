@@ -14,11 +14,11 @@ IMMUTABLE HEADER BLOCK (LINES 1–3) — DO NOT EDIT
 
 ## Artifact Index Update Protocol
 
-1. **Add new DOC-IDs** only in `docs/artifact_index.md` first.
-2. **Update the source artifact file** with the new DOC-ID section.
-3. **Keep order locked**: sections and IDs must remain in the defined order.
-4. **Update TECHNICAL_SPEC.md** Section 6 mapping when artifacts change.
-5. **Update CHANGELOG.md** with a new version entry.
+1. Add new DOC-IDs
+2. Update the source artifact file
+3. Keep order locked
+4. Update TECHNICAL_SPEC.md
+5. Update CHANGELOG.md
 
 ## DOC-API
 - DOC-API-01 — Overview (docs/api_spec.md)

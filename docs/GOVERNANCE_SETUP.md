@@ -29,6 +29,6 @@ Go to **Settings** → **General**.
 2.  Push to GitHub:
     ```bash
     git add .
-    git commit -m "chore(release): finalize enterprise core template v1.1"
+    git commit -m "chore(release): finalize enterprise core template v1.9.1"
     git push origin main
     ```

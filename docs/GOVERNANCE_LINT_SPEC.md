@@ -1,7 +1,7 @@
 # Governance Lint Specification (No Code)
 
-Version: 1.9.0  
-Datum: 2026-01-29  
+Version: 1.9.1  
+Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
 ---
@@ -38,6 +38,7 @@ strict_mode: true
    - Path rule: must exist at repository root
 
 3. **GOV-LINT-03 — Target Platform Declared**
+    - Applies only when `INIT_STATUS: COMPLETE` (derived project).
     - `LASTENHEFT.md` contains a non-empty `{{PLATFORM_TARGET}}` replacement.
     - Platform Decision Checklist is fully completed (no unchecked items).
     - Regex: `^{{PLATFORM_TARGET}}$` must be replaced by one of: `Desktop|Web|API-only`
@@ -48,6 +49,7 @@ strict_mode: true
    - Section rule: every checklist item in this section must be checked
 
 4. **GOV-LINT-04 — Platform Matrix Compliance**
+   - Applies only when `INIT_STATUS: COMPLETE` (derived project).
    - If platform == Desktop:
      - `/desktop` exists
      - `/shared` exists
@@ -76,27 +78,28 @@ strict_mode: true
      - File: `docs/api_spec.md`
      - File: `ai_service/runtime_config.md`
    - Content markers (Desktop artifacts):
-     - `shared/ipc_contracts.md` must include headings: `# IPC Contracts`, `## Message Types`, `## Error Objects`, `## Versioning`
-     - `desktop/runtime_config.md` must include headings: `# Desktop Runtime Configuration`, `## Runtime Choice`, `## IPC Bridge`, `## Local Storage`, `## Packaging Hooks`
-     - `desktop/packaging.md` must include headings: `# Desktop Packaging`, `## Build Targets`, `## Signing`, `## Distribution`
+     - `shared/ipc_contracts.md` must include headings: `# IPC Contracts`, `## DOC-IPC-01 — Message Types`, `## DOC-IPC-02 — Error Objects`, `## DOC-IPC-03 — Versioning`
+     - `desktop/runtime_config.md` must include headings: `# Desktop Runtime Configuration`, `## DOC-DESK-01 — Runtime Choice`, `## DOC-DESK-02 — IPC Bridge`, `## DOC-DESK-03 — Local Storage`, `## DOC-DESK-04 — Packaging Hooks`
+     - `desktop/packaging.md` must include headings: `# Desktop Packaging`, `## DOC-PACK-01 — Build Targets`, `## DOC-PACK-02 — Signing`, `## DOC-PACK-03 — Distribution`
      - Expected order (Desktop artifacts):
-       - `shared/ipc_contracts.md`: `# IPC Contracts` → `## Message Types` → `## Error Objects` → `## Versioning`
-       - `desktop/runtime_config.md`: `# Desktop Runtime Configuration` → `## Runtime Choice` → `## IPC Bridge` → `## Local Storage` → `## Packaging Hooks`
-       - `desktop/packaging.md`: `# Desktop Packaging` → `## Build Targets` → `## Signing` → `## Distribution`
+       - `shared/ipc_contracts.md`: `# IPC Contracts` → `## DOC-IPC-01 — Message Types` → `## DOC-IPC-02 — Error Objects` → `## DOC-IPC-03 — Versioning`
+       - `desktop/runtime_config.md`: `# Desktop Runtime Configuration` → `## DOC-DESK-01 — Runtime Choice` → `## DOC-DESK-02 — IPC Bridge` → `## DOC-DESK-03 — Local Storage` → `## DOC-DESK-04 — Packaging Hooks`
+       - `desktop/packaging.md`: `# Desktop Packaging` → `## DOC-PACK-01 — Build Targets` → `## DOC-PACK-02 — Signing` → `## DOC-PACK-03 — Distribution`
    - Content markers (Web artifacts):
-     - `docs/api_spec.md` must include headings: `# API Specification`, `## Overview`, `## Endpoints`, `## Error Model`, `## Versioning`
-     - `frontend/build_config.md` must include headings: `# Frontend Build Configuration`, `## Build Tool`, `## Environment Variables`, `## Output Targets`
+     - `docs/api_spec.md` must include headings: `# API Specification`, `## DOC-API-01 — Overview`, `## DOC-API-02 — Endpoints`, `## DOC-API-03 — Error Model`, `## DOC-API-04 — Versioning`
+     - `frontend/build_config.md` must include headings: `# Frontend Build Configuration`, `## DOC-FE-01 — Build Tool`, `## DOC-FE-02 — Environment Variables`, `## DOC-FE-03 — Output Targets`
      - Expected order (Web artifacts):
-       - `docs/api_spec.md`: `# API Specification` → `## Overview` → `## Endpoints` → `## Error Model` → `## Versioning`
-       - `frontend/build_config.md`: `# Frontend Build Configuration` → `## Build Tool` → `## Environment Variables` → `## Output Targets`
+       - `docs/api_spec.md`: `# API Specification` → `## DOC-API-01 — Overview` → `## DOC-API-02 — Endpoints` → `## DOC-API-03 — Error Model` → `## DOC-API-04 — Versioning`
+       - `frontend/build_config.md`: `# Frontend Build Configuration` → `## DOC-FE-01 — Build Tool` → `## DOC-FE-02 — Environment Variables` → `## DOC-FE-03 — Output Targets`
    - Content markers (API-only artifacts):
-     - `docs/api_spec.md` must include headings: `# API Specification`, `## Overview`, `## Endpoints`, `## Error Model`, `## Versioning`
-     - `ai_service/runtime_config.md` must include headings: `# Service Runtime Configuration`, `## Runtime`, `## Dependencies`, `## Environment Variables`, `## Deployment`
+     - `docs/api_spec.md` must include headings: `# API Specification`, `## DOC-API-01 — Overview`, `## DOC-API-02 — Endpoints`, `## DOC-API-03 — Error Model`, `## DOC-API-04 — Versioning`
+     - `ai_service/runtime_config.md` must include headings: `# Service Runtime Configuration`, `## DOC-BE-01 — Runtime`, `## DOC-BE-02 — Dependencies`, `## DOC-BE-03 — Environment Variables`, `## DOC-BE-04 — Deployment`
      - Expected order (API-only artifacts):
-       - `docs/api_spec.md`: `# API Specification` → `## Overview` → `## Endpoints` → `## Error Model` → `## Versioning`
-       - `ai_service/runtime_config.md`: `# Service Runtime Configuration` → `## Runtime` → `## Dependencies` → `## Environment Variables` → `## Deployment`
+       - `docs/api_spec.md`: `# API Specification` → `## DOC-API-01 — Overview` → `## DOC-API-02 — Endpoints` → `## DOC-API-03 — Error Model` → `## DOC-API-04 — Versioning`
+       - `ai_service/runtime_config.md`: `# Service Runtime Configuration` → `## DOC-BE-01 — Runtime` → `## DOC-BE-02 — Dependencies` → `## DOC-BE-03 — Environment Variables` → `## DOC-BE-04 — Deployment`
 
 5. **GOV-LINT-05 — Non-Default Desktop Runtime Justification**
+   - Applies only when `INIT_STATUS: COMPLETE` (derived project) and platform == Desktop.
    - If Desktop runtime != Tauri, LASTENHEFT.md contains explicit justification.
    - Regex (default): `^\\- \\[x\\] \\*\\*Default Choice \\(Desktop\\)\\*\\*: Tauri`
    - Regex (justification required): `^\\- \\[x\\] \\*\\*Justification recorded in LASTENHEFT\.md\\*\\*`
@@ -207,7 +210,7 @@ strict_mode: true
 
 24. **GOV-LINT-24 — PR Checklist Immutable Section**
    - `.github/PULL_REQUEST_TEMPLATE.md` must include the exact line:
-     - `PR Workflow Checklist (Mandatory) — IMMUTABLE SECTION`
+     - `## PR Workflow Checklist (Mandatory) — IMMUTABLE SECTION`
 
 25. **GOV-LINT-25 — PR Checklist Items Exact**
    - `.github/PULL_REQUEST_TEMPLATE.md` must include the exact checklist items:
@@ -215,6 +218,7 @@ strict_mode: true
      - `- [ ] LASTENHEFT.md updated (if functional change)`
      - `- [ ] CHANGELOG.md updated (version + entry)`
      - `- [ ] Lint Signature completed`
+     - `- [ ] PR template checklist completed (.github/PULL_REQUEST_TEMPLATE.md)`
 
 26. **GOV-LINT-26 — Release Gate Immutable Marker**
    - `docs/RELEASE_CHECKLIST.md` must include the exact line:
@@ -277,37 +281,37 @@ strict_mode: true
 artifacts:
   docs/api_spec.md:
     - "# API Specification"
-    - "## Overview"
-    - "## Endpoints"
-    - "## Error Model"
-    - "## Versioning"
+    - "## DOC-API-01 — Overview"
+    - "## DOC-API-02 — Endpoints"
+    - "## DOC-API-03 — Error Model"
+    - "## DOC-API-04 — Versioning"
   shared/ipc_contracts.md:
     - "# IPC Contracts"
-    - "## Message Types"
-    - "## Error Objects"
-    - "## Versioning"
+    - "## DOC-IPC-01 — Message Types"
+    - "## DOC-IPC-02 — Error Objects"
+    - "## DOC-IPC-03 — Versioning"
   desktop/runtime_config.md:
     - "# Desktop Runtime Configuration"
-    - "## Runtime Choice"
-    - "## IPC Bridge"
-    - "## Local Storage"
-    - "## Packaging Hooks"
+    - "## DOC-DESK-01 — Runtime Choice"
+    - "## DOC-DESK-02 — IPC Bridge"
+    - "## DOC-DESK-03 — Local Storage"
+    - "## DOC-DESK-04 — Packaging Hooks"
   desktop/packaging.md:
     - "# Desktop Packaging"
-    - "## Build Targets"
-    - "## Signing"
-    - "## Distribution"
+    - "## DOC-PACK-01 — Build Targets"
+    - "## DOC-PACK-02 — Signing"
+    - "## DOC-PACK-03 — Distribution"
   frontend/build_config.md:
     - "# Frontend Build Configuration"
-    - "## Build Tool"
-    - "## Environment Variables"
-    - "## Output Targets"
+    - "## DOC-FE-01 — Build Tool"
+    - "## DOC-FE-02 — Environment Variables"
+    - "## DOC-FE-03 — Output Targets"
   ai_service/runtime_config.md:
     - "# Service Runtime Configuration"
-    - "## Runtime"
-    - "## Dependencies"
-    - "## Environment Variables"
-    - "## Deployment"
+    - "## DOC-BE-01 — Runtime"
+    - "## DOC-BE-02 — Dependencies"
+    - "## DOC-BE-03 — Environment Variables"
+    - "## DOC-BE-04 — Deployment"
 ```
 
 ---
@@ -403,6 +407,8 @@ The following GOV-LINT checks are **mandatory** and must pass for any release:
 | GOV-LINT-16 | Yes |
 | GOV-LINT-17 | Yes |
 | GOV-LINT-18 | Yes |
+| GOV-LINT-19 | Yes |
+| GOV-LINT-20 | Yes |
 | GOV-LINT-21 | Yes |
 | GOV-LINT-22 | Yes |
 | GOV-LINT-23 | Yes |
