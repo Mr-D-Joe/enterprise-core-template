@@ -1,8 +1,10 @@
-# Anleitung zur Nutzung des Enterprise Core Templates
+# Anleitung zur Nutzung des Enterprise Core Templates (für Einsteiger)
 
-Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
+Diese Anleitung zeigt dir Schritt für Schritt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest – auch wenn du keine Informatik‑Erfahrung hast.
 
-Version: 1.9.7  
+**Kurz gesagt:** Du erstellst ein neues Projekt aus dieser Vorlage, öffnest es und sagst der KI deine Idee. Den Rest übernimmt die KI nach klaren Regeln.
+
+Version: 1.9.8  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -27,7 +29,7 @@ Sobald dies erledigt ist, erscheint für alle Nutzer der grüne Button **"Use th
 
 ---
 
-## 1. Start eines neuen Projekts (Für Entwickler)
+## 1. Start eines neuen Projekts (Einfach erklärt)
 
 Da dieses Repository als "Template Repository" konfiguriert ist, kopierst du es nicht manuell, sondern instanziierst es sauber über GitHub.
 
@@ -35,21 +37,45 @@ Da dieses Repository als "Template Repository" konfiguriert ist, kopierst du es 
     *   *Hinweis:* Klicke in deiner Repository-Übersicht auf den **Namen** des Repositories (z. B. `enterprise-core-template`), um hineinzugelangen. Der Button ist **nicht** in der Listenansicht sichtbar.
 2.  Klicke auf den Button **"Use this template"** → **"Create a new repository"**.
 3.  Gib deinem neuen Projekt einen Namen (z. B. `mein-neues-projekt`) und erstelle es.
-4.  **Clone** das neue Repository auf deinen lokalen Rechner:
+4.  **Kopiere** das neue Repository auf deinen lokalen Rechner (das nennt man „klonen“):
     ```bash
     git clone https://github.com/DEIN-USER/mein-neues-projekt.git
     cd mein-neues-projekt
     ```
-5.  Öffne das Projekt in deiner IDE (VS Code, Cursor, Windsurf, etc.).
+5.  Öffne das Projekt in einem Editor (z. B. VS Code, Cursor, Windsurf).
 
-### 1.1 Quickstart (Derived Project Example)
+### 1.1 Quickstart (kurz und sicher)
 
 **Beispielablauf (kurz):**
-1. Repository als Template instanziieren und lokal klonen.
-2. `./scaffold_structure.sh --platform web` ausführen.
+1. Repository als Template instanziieren und lokal kopieren.
+2. `./scaffold_structure.sh --platform web` ausführen (erzeugt die richtige Ordnerstruktur).
 3. `LASTENHEFT.md` mit Projektname + Zielplattform ausfüllen.
-4. `PROMPTS.md` Low‑Spec‑Snippet in dein System‑Prompt übernehmen.
+4. Low‑Spec‑Snippet aus `PROMPTS.md` in deinen System‑Prompt übernehmen.
 5. `./scripts/governance_lint.sh` und `./scripts/consistency_check.sh` ausführen.
+
+---
+
+## 1.2 Nur die Idee eingeben (für komplette Anfänger)
+
+Wenn du **nur deine Idee** eingeben willst, nutze dieses Beispiel als **erste Nachricht** an die KI:
+
+```text
+Ich bin Anfänger. Ich habe eine Idee und will ein neues Projekt starten.
+Bitte führe mich Schritt für Schritt und frage mich nur das Nötigste.
+
+Meine Idee:
+Ich möchte eine App, die {DEINE_IDEE_HIER} macht.
+```
+
+**Beispiel (ausgefüllt):**
+
+```text
+Ich bin Anfänger. Ich habe eine Idee und will ein neues Projekt starten.
+Bitte führe mich Schritt für Schritt und frage mich nur das Nötigste.
+
+Meine Idee:
+Ich möchte eine App, die meinen Trainingsplan verwaltet und mich täglich erinnert.
+```
 
 ---
 
