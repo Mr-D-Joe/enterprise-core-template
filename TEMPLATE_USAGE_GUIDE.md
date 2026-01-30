@@ -2,7 +2,7 @@
 
 Diese Anleitung beschreibt, wie du aus dem **Enterprise Core Template** (Golden Standard) ein neues Projekt startest und es mithilfe von KI initialisierst.
 
-Version: 1.9.1  
+Version: 1.9.2  
 Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
@@ -68,7 +68,7 @@ Deine Aufgaben für den Start:
     - Frage mich nach den ersten **Kern-Features** (grob).
 
 3.  **Technische Basis legen (Scaffolding):**
-    - Führe das Skript `./scaffold_structure.sh` aus, um die Ordner `/frontend` und `/ai_service` sauber anzulegen (optional auch `/desktop` und `/shared`).
+    - Führe das Skript `./scaffold_structure.sh --platform desktop|web|api-only` aus, um nur die für die Plattform nötigen Ordner anzulegen.
     - Bestätige mir, dass die Ordnerstruktur korrekt ist.
 
 4.  **Dokumente aktualisieren:**
@@ -115,6 +115,12 @@ Bestätige kurz, dass du `DESIGN.md` verstanden hast. Starte dann das Skript `./
 3. Keep order locked
 4. Update `TECHNICAL_SPEC.md` Section 6
 5. Update `CHANGELOG.md`
+
+## 4.1 Template Consistency Check (Prepare)
+
+- [ ] **Versions aligned** across DESIGN/LASTENHEFT/TECHNICAL_SPEC/STYLEGUIDE/PROMPTS/SYSTEM_REPORT/RELEASE_CHECKLIST.
+- [ ] **Release checklist updated** after governance rule changes.
+- [ ] **Scaffold platform selected** and only required directories created.
 
 ## Tipps für die weitere Arbeit
 

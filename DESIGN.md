@@ -3,8 +3,8 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.9.0
-Datum: 2026-01-29
+Version: 1.9.2
+Datum: 2026-01-30
 Status: Released (Golden Standard)
 
 Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.

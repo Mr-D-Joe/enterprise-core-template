@@ -33,5 +33,6 @@ jobs:
           echo "If this PR changes architecture, ensure an RFC has been filed."
 
       - name: Run Governance Lint
+        shell: bash
         run: |
           ./scripts/governance_lint.sh

@@ -10,8 +10,8 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
-Version: 1.9.0  
-Datum: 2026-01-29  
+Version: 1.9.2  
+Datum: 2026-01-30  
 Status: Released (Golden Standard)
 
 ---
