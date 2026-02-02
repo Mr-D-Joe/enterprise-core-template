@@ -10,8 +10,8 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
-Version: 1.9.8  
-Datum: 2026-01-30  
+Version: 1.9.9  
+Datum: 2026-02-02  
 Status: Released (Golden Standard)
 
 ---
@@ -53,6 +53,7 @@ Status: Released (Golden Standard)
 | 1.4.6 | 2026-01-29 | 1 | Präzisierung | Platform Decision Checklist mit Default-Entscheidungen ergänzt. |
 | 1.5.3 | 2026-01-29 | 1 | Präzisierung | Required Artifacts Mapping als Pflicht ergänzt. |
 | 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Checklist-Struktur final konsolidiert. |
+| 1.9.9 | 2026-02-02 | Gesamt | Harmonisierung | Versionsstand auf 1.9.9 konsolidiert. |
 
 ---
 

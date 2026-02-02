@@ -4,8 +4,8 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.9.8  
-Datum: 2026-01-30  
+Version: 1.9.9  
+Datum: 2026-02-02  
 Status: Released (Golden Standard)
 
 ---
@@ -58,6 +58,7 @@ Status: Released (Golden Standard)
 | Version | Datum | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|-------|-----------|--------------|--------------|
 | 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
+| 1.9.9 | 2026-02-02 | Gesamt | Harmonisierung | Versionsstand auf 1.9.9 konsolidiert. |
 | 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Kontext-Musters zur Erläuterung der Implementierungs-Intention |
 | 1.4.3 | 2026-01-29 | Gesamt | Harmonisierung | Versions- und Datumsstand an Template-Release angeglichen |
 | 1.4.4 | 2026-01-29 | Gesamt | Harmonisierung | Platzhalter-Referenztabelle vervollständigt |

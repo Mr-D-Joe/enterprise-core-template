@@ -3,8 +3,8 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.9.8
-Datum: 2026-01-30
+Version: 1.9.9
+Datum: 2026-02-02
 Status: Released (Golden Standard)
 
 Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
@@ -23,6 +23,7 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 | 1.4.3 | 2026-01-29 | Architektur | Präzisierung | DES-ARCH-23 um Technologie-Auswahlprinzip ergänzt. |
 | 1.5.3 | 2026-01-29 | Governance | Erweiterung | Required Artifacts als verbindliche Dokumentationspflicht (DES-GOV-28A). |
 | 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
+| 1.9.9 | 2026-02-02 | Governance | Erweiterung | Task-Paketierung innerhalb einer Anforderung zulaessig, sofern Verifikation pro Task erhalten bleibt. |
 
 
 ---
@@ -220,6 +221,9 @@ Alle für die Typprüfung notwendigen Stubs/Typing-Pakete sind in den Dev-Depend
 
 ### DES-GOV-55 — Test-Determinismus und Isolation
 Tests laufen deterministisch ohne Netzwerk- oder Browser-Abhängigkeiten, es sei denn sie sind explizit als Integrationstests markiert und getrennt ausführbar.
+
+### DES-GOV-56 — Task-Paketierung innerhalb einer Anforderung
+Mehrere Tasks dürfen in einem Umsetzungspaket bearbeitet werden, sofern sie eindeutig derselben LASTENHEFT-Anforderung zugeordnet sind und ihre Verifikation getrennt dokumentiert bleibt.
 
 ---
 
