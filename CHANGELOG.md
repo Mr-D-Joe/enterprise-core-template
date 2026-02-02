@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Documented frontend ESLint config guidance (avoid `@typescript-eslint/eslint-plugin` hangs; use `tsc` for unused/undef checks).
+- Added recommended API interface consolidation and type-guard practices.
 
 ## [1.9.8] - 2026-01-30
 
