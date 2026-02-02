@@ -115,7 +115,7 @@ If you are an AI agent working on this repository:
 Vor jedem Commit müssen diese Checks lokal laufen:
 
 - **Node Version:** Use LTS Node for frontend tooling to avoid lint/toolchain incompatibilities.
-- **ESLint Config Note:** Prefer direct parser/plugin imports in ESLint config. Avoid the `typescript-eslint` meta-package if it causes hangs under Node LTS.
+- **ESLint Config Note:** Prefer direct parser imports and avoid `@typescript-eslint/eslint-plugin` if it hangs under Node LTS. In TS projects, rely on `tsc` for unused/undef checks and disable ESLint core rules accordingly.
 
 - Frontend:
   - `cd frontend && npm run lint`

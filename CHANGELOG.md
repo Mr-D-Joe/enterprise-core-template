@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- Documented frontend ESLint config guidance (avoid `typescript-eslint` meta-package if it hangs under Node LTS).
+- Documented frontend ESLint config guidance (avoid `@typescript-eslint/eslint-plugin` hangs; use `tsc` for unused/undef checks).
 
 ## [1.9.8] - 2026-01-30
 
