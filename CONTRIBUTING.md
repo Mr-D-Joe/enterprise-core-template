@@ -114,6 +114,10 @@ If you are an AI agent working on this repository:
 
 Vor jedem Commit müssen diese Checks lokal laufen:
 
+- **Node Version:** Use LTS Node for frontend tooling to avoid lint/toolchain incompatibilities.
+- **ESLint Config Note:** Prefer direct parser imports and avoid `@typescript-eslint/eslint-plugin` if it hangs under Node LTS. In TS projects, rely on `tsc` for unused/undef checks and disable ESLint core rules accordingly.
+- **API Interface Guidance (Recommended):** Consolidate service APIs behind a single interface and avoid ad-hoc casts. Prefer explicit type guards for external payloads.
+
 - Frontend:
   - `cd frontend && npm run lint`
   - `cd frontend && npm run typecheck`
