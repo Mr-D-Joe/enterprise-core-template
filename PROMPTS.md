@@ -4,7 +4,7 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.10.0  
+Version: 1.10.1  
 Datum: 2026-02-03  
 Status: Released (Golden Standard)
 

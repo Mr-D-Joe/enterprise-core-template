@@ -4,7 +4,7 @@
 > **⚠️ TEMPLATE DOCUMENT**  
 > This document uses `{{PLACEHOLDER}}` markers. Replace these when initializing a new project.
 
-Version: 1.10.0  
+Version: 1.10.1  
 Datum: 2026-02-03  
 Status: Released (Golden Standard)
 
@@ -57,6 +57,7 @@ Status: Released (Golden Standard)
 
 | Version | Datum | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|-------|-----------|--------------|--------------|
+| 1.10.1 | 2026-02-03 | Gesamt | Governance-Compliance | Version/Datum mit Governance-Update synchronisiert. |
 | 1.10.0 | 2026-02-03 | Gesamt | Governance-Compliance | Änderungshistorie neu sortiert (neueste oben) und Header-Version synchronisiert. |
 | 1.9.9 | 2026-02-02 | Gesamt | Harmonisierung | Versionsstand auf 1.9.9 konsolidiert. |
 | 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Artefakt-Mapping final konsolidiert |

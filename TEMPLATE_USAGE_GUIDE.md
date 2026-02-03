@@ -4,7 +4,7 @@ Diese Anleitung zeigt dir Schritt für Schritt, wie du aus dem **Enterprise Core
 
 **Kurz gesagt:** Du erstellst ein neues Projekt aus dieser Vorlage, öffnest es und sagst der KI deine Idee. Den Rest übernimmt die KI nach klaren Regeln.
 
-Version: 1.10.0  
+Version: 1.10.1  
 Datum: 2026-02-03  
 Status: Released (Golden Standard)
 

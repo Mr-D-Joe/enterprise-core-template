@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added recommended API interface consolidation and type-guard practices.
 - Governance: Allowed task bundling within a single requirement when per-task verification is preserved.
 - Governance: Standardized internal history ordering to "newest first" and aligned DES-GOV-50, lint spec, and release checklist; version headers synced to 1.10.0.
+- Governance: Clarified atomic requirements and allowed multi-requirement implementation packages with explicit mapping and context.
 
 ## [1.9.8] - 2026-01-30
 

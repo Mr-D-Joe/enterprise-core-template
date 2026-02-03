@@ -12,7 +12,7 @@
 >
 > It MUST NOT define rules, architecture, or constraints.
 
-Version: 1.10.0  
+Version: 1.10.1  
 Datum: 2026-02-03  
 Status: Released (Golden Standard)
 

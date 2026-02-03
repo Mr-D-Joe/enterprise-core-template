@@ -3,7 +3,7 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.10.0
+Version: 1.10.1
 Datum: 2026-02-03
 Status: Released (Golden Standard)
 
@@ -15,6 +15,7 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 
 | Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|------------|-----------|--------------|--------------|
+| 1.10.1 | 2026-02-03 | Governance | Präzisierung | Atomaritäts- und Bündelungsregeln für Requirements geschärft (Umsetzungspakete mit Kontextpflicht). |
 | 1.10.0 | 2026-02-03 | Governance | Präzisierung | Historien-Ordnung auf "neueste zuerst" vereinheitlicht und Atomaritätsregeln für normative Anforderungen geschärft. |
 | 1.9.9 | 2026-02-02 | Governance | Erweiterung | Task-Paketierung innerhalb einer Anforderung zulaessig, sofern Verifikation pro Task erhalten bleibt. |
 | 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
@@ -223,8 +224,15 @@ Alle für die Typprüfung notwendigen Stubs/Typing-Pakete sind in den Dev-Depend
 ### DES-GOV-55 — Test-Determinismus und Isolation
 Tests laufen deterministisch ohne Netzwerk- oder Browser-Abhängigkeiten, es sei denn sie sind explizit als Integrationstests markiert und getrennt ausführbar.
 
-### DES-GOV-56 — Task-Paketierung innerhalb einer Anforderung
-Mehrere Tasks dürfen in einem Umsetzungspaket bearbeitet werden, sofern sie eindeutig derselben LASTENHEFT-Anforderung zugeordnet sind und ihre Verifikation getrennt dokumentiert bleibt.
+### DES-GOV-56 — Umsetzungspaket mit Requirement-Buendelung
+Mehrere Requirements duerfen in einem Umsetzungspaket gebuendelt werden, sofern:
+- jede Anforderung eine eigene Requirement-ID behaelt,
+- die Zuordnung Umsetzungspaket → Requirement-IDs explizit dokumentiert ist,
+- die Verifikation je Requirement getrennt moeglich und dokumentiert bleibt,
+- die Buendelung einen klaren fachlichen oder technischen Zusammenhang herstellt.
+
+### DES-GOV-57 — Kontextpflicht fuer Requirement-Buendelung
+Jedes Umsetzungspaket mit mehreren Requirements enthaelt eine kurze Kontextbegruendung, warum die Buendelung notwendig oder sinnvoll ist (z. B. gemeinsame Schnittstelle, Migration, UI/API-Kohaerenz).
 
 ---
 
