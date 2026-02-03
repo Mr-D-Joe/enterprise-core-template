@@ -1,7 +1,7 @@
 # Governance Lint Specification (No Code)
 
-Version: 1.9.9  
-Datum: 2026-02-02  
+Version: 1.10.0  
+Datum: 2026-02-03  
 Status: Released (Golden Standard)
 
 ---
@@ -111,7 +111,7 @@ strict_mode: true
    - Path rule: changes outside `*.md` trigger check for CHANGELOG update
 
 7. **GOV-LINT-07 — History Ordering**
-   - Internal doc histories are ascending (old → new).
+   - Internal doc histories are descending (new → old).
    - CHANGELOG is descending (new → old).
    - Regex (CHANGELOG): newest version must appear first under `## [Unreleased]`.
    - Section parser: in `CHANGELOG.md`, version headers must be in descending order

@@ -3,8 +3,8 @@
 **Target Audience:** Release Managers & Automation Agents  
 **Scope:** Creating a new versioned release (e.g., `v1.3`).
 
-Version: 1.9.9  
-Datum: 2026-02-02  
+Version: 1.10.0  
+Datum: 2026-02-03  
 Status: Released (Golden Standard)
 
 ---
@@ -27,7 +27,7 @@ Status: Released (Golden Standard)
 - [ ] **Desktop Conditionality:** If platform is Desktop, `DES-ARCH-04/05/08/15–22` are addressed and `/desktop` exists.
 - [ ] **Non-Default Desktop Choice:** If Electron is used, explicit justification is recorded in `LASTENHEFT.md`.
 - [ ] **Documentation Sync:** Updated docs per DES-GOV-49 (CHANGELOG/README/LASTENHEFT).
-- [ ] **History Order:** Internal histories are ascending, CHANGELOG descending (DES-GOV-50).
+- [ ] **History Order:** Internal histories are descending, CHANGELOG descending (DES-GOV-50).
 - [ ] **Governance-Lint Spec:** `docs/GOVERNANCE_LINT_SPEC.md` reviewed for completeness.
 - [ ] **Governance Lint Script:** `./scripts/governance_lint.sh` passes.
 - [ ] **Consistency Script:** `./scripts/consistency_check.sh` passes.

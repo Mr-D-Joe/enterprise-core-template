@@ -3,8 +3,8 @@
 
 ⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
 
-Version: 1.9.9
-Datum: 2026-02-02
+Version: 1.10.0
+Datum: 2026-02-03
 Status: Released (Golden Standard)
 
 Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
@@ -15,15 +15,16 @@ Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance 
 
 | Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|------------|-----------|--------------|--------------|
-| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
-| 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
-| 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
-| 1.3 | 2026-01-29 | Governance | Erweiterung | Einführung der CI-/Typing-/Test-Determinismus-Regeln (DES-GOV-51 bis DES-GOV-55). |
-| 1.4 | 2026-01-29 | Architektur | Präzisierung | Desktop-Shell-Regeln konditionalisiert; Plattformentscheidung explizit gemacht (DES-ARCH-23). |
-| 1.4.3 | 2026-01-29 | Architektur | Präzisierung | DES-ARCH-23 um Technologie-Auswahlprinzip ergänzt. |
-| 1.5.3 | 2026-01-29 | Governance | Erweiterung | Required Artifacts als verbindliche Dokumentationspflicht (DES-GOV-28A). |
-| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
+| 1.10.0 | 2026-02-03 | Governance | Präzisierung | Historien-Ordnung auf "neueste zuerst" vereinheitlicht und Atomaritätsregeln für normative Anforderungen geschärft. |
 | 1.9.9 | 2026-02-02 | Governance | Erweiterung | Task-Paketierung innerhalb einer Anforderung zulaessig, sofern Verifikation pro Task erhalten bleibt. |
+| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
+| 1.5.3 | 2026-01-29 | Governance | Erweiterung | Required Artifacts als verbindliche Dokumentationspflicht (DES-GOV-28A). |
+| 1.4.3 | 2026-01-29 | Architektur | Präzisierung | DES-ARCH-23 um Technologie-Auswahlprinzip ergänzt. |
+| 1.4 | 2026-01-29 | Architektur | Präzisierung | Desktop-Shell-Regeln konditionalisiert; Plattformentscheidung explizit gemacht (DES-ARCH-23). |
+| 1.3 | 2026-01-29 | Governance | Erweiterung | Einführung der CI-/Typing-/Test-Determinismus-Regeln (DES-GOV-51 bis DES-GOV-55). |
+| 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
+| 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
+| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
 
 
 ---
@@ -152,7 +153,7 @@ Das Projekt führt eine STYLEGUIDE.md zur Dokumentation visueller Standards, UX-
 Das Projekt führt eine PROMPTS.md zur Versionierung und Dokumentation der im System verwendeten LLM-Prompts.
 
 ### DES-GOV-33 — Atomare Anforderung
-Jede normative Anforderung beschreibt genau eine fachliche oder technische Eigenschaft.
+Jede normative Anforderung (in DESIGN.md und LASTENHEFT.md) beschreibt genau eine fachliche oder technische Eigenschaft; Sammelanforderungen sind unzulässig.
 
 ### DES-GOV-34 — Eigenständige Verifizierbarkeit
 Jede normative Anforderung ist unabhängig prüfbar und eindeutig verifizierbar.
@@ -204,7 +205,7 @@ Jede Änderung am Systemcode oder der Architektur erfordert zwingend eine synchr
 
 ### DES-GOV-50 — Historien-Ordnung
 Dokumentationshistorien folgen einer strikten Sortierordnung:
-- **Interne Dokumentenhistorien:** Chronologisch aufsteigend (Alt → Neu).
+- **Interne Dokumentenhistorien:** Chronologisch absteigend (Neu → Alt).
 - **Projektweites CHANGELOG (CHANGELOG.md):** Chronologisch absteigend (Neu → Alt).
 
 ### DES-GOV-51 — CI-Toolchain-Vollständigkeit

@@ -10,8 +10,8 @@ Architektur-, Governance-, LLM- und Systemverhaltensregeln werden ausschließlic
 
 Im Konfliktfall besitzt DESIGN.md Vorrang.
 
-Version: 1.9.9  
-Datum: 2026-02-02  
+Version: 1.10.0  
+Datum: 2026-02-03  
 Status: Released (Golden Standard)
 
 ---
@@ -44,16 +44,17 @@ Status: Released (Golden Standard)
 
 | Version | Datum | Abschnitt | Änderungstyp | Beschreibung |
 |--------:|-------|-----------|--------------|--------------|
-| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
-| 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Context/Story-Musters und Schärfung der Atomarität |
-| 1.2 | 2026-01-29 | 7 | Erweiterung | Einführung von NFRs für CI-Reproduzierbarkeit und Test-Determinismus (NFR-REQ-08/09). |
-| 1.4.3 | 2026-01-29 | 1 | Harmonisierung | Zielplattform als explizite Anforderung und Platzhalter ergänzt. |
-| 1.4.4 | 2026-01-29 | 7 | Harmonisierung | Fehlende NFR-Platzhalter ergänzt. |
-| 1.4.5 | 2026-01-29 | 1 | Erweiterung | Platform Decision Checklist ergänzt. |
-| 1.4.6 | 2026-01-29 | 1 | Präzisierung | Platform Decision Checklist mit Default-Entscheidungen ergänzt. |
-| 1.5.3 | 2026-01-29 | 1 | Präzisierung | Required Artifacts Mapping als Pflicht ergänzt. |
-| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Checklist-Struktur final konsolidiert. |
+| 1.10.0 | 2026-02-03 | Gesamt | Governance-Compliance | Änderungshistorie neu sortiert (neueste oben) und Header-Version synchronisiert. |
 | 1.9.9 | 2026-02-02 | Gesamt | Harmonisierung | Versionsstand auf 1.9.9 konsolidiert. |
+| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Checklist-Struktur final konsolidiert. |
+| 1.5.3 | 2026-01-29 | 1 | Präzisierung | Required Artifacts Mapping als Pflicht ergänzt. |
+| 1.4.6 | 2026-01-29 | 1 | Präzisierung | Platform Decision Checklist mit Default-Entscheidungen ergänzt. |
+| 1.4.5 | 2026-01-29 | 1 | Erweiterung | Platform Decision Checklist ergänzt. |
+| 1.4.4 | 2026-01-29 | 7 | Harmonisierung | Fehlende NFR-Platzhalter ergänzt. |
+| 1.4.3 | 2026-01-29 | 1 | Harmonisierung | Zielplattform als explizite Anforderung und Platzhalter ergänzt. |
+| 1.2 | 2026-01-29 | 7 | Erweiterung | Einführung von NFRs für CI-Reproduzierbarkeit und Test-Determinismus (NFR-REQ-08/09). |
+| 1.1 | 2026-01-28 | Gesamt | Refactoring | Einführung des Context/Story-Musters und Schärfung der Atomarität |
+| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Strukturübernahme aus Enterprise Core Template |
 
 ---
 

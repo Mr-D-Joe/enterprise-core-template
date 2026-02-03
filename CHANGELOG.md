@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documented frontend ESLint config guidance (avoid `@typescript-eslint/eslint-plugin` hangs; use `tsc` for unused/undef checks).
 - Added recommended API interface consolidation and type-guard practices.
 - Governance: Allowed task bundling within a single requirement when per-task verification is preserved.
+- Governance: Standardized internal history ordering to "newest first" and aligned DES-GOV-50, lint spec, and release checklist; version headers synced to 1.10.0.
 
 ## [1.9.8] - 2026-01-30
 
