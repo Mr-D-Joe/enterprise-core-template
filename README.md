@@ -35,12 +35,16 @@ Supportive templates/checklists live in `docs/governance/*.md`.
 1. Create a new project from this template:
    - `./bootstrap_project.sh [target_parent_dir]`
    - Script asks only for project name.
-1. Fill `DESIGN.md`.
-2. Fill `AGENTS.md` and `CONTRIBUTING.md`.
-3. Fill `LASTENHEFT.md`.
-4. Author requirements in `docs/specs/*.md`.
-5. Maintain traceability matrix in `docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md`.
-6. Run quality checks:
+2. Fill `DESIGN.md`.
+3. Fill `AGENTS.md` and `CONTRIBUTING.md`.
+4. Fill `LASTENHEFT.md`.
+5. Author requirements in `docs/specs/*.md`.
+6. Maintain traceability matrix in `docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md`.
+7. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `system_reports/gates/runtime_bootstrap.env`).
+8. Tooling decision checkpoint starts with `system_reports/gates/tooling_decision_template.env` (agent-maintained):
+   - set `application_profile` first,
+   - then set stack choices + official source evidence.
+9. Run quality checks:
    - `./scripts/spec_lint.sh --strict`
    - `./scripts/prompt_firewall_check.sh`
    - `./scripts/audit_readiness_check.sh`

@@ -32,20 +32,36 @@ PO is the single customer interface and the only role allowed to trigger DEV and
 PO must:
 1. translate customer request into atomic requirement packet;
 2. choose `EXECUTION_MODE` based on project state;
-3. pass only approved scope and evidence to the active mode;
-4. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
+3. ensure tooling decision checkpoint exists before DEV execution;
+4. pass only approved scope and evidence to the active mode;
+5. keep customer interaction free from manual runtime/toolchain setup requests;
+6. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
 
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
-1. implement only PO-approved scope;
-2. maintain REQ -> Design -> Code -> Test traceability;
-3. produce DEV evidence on committed state;
-4. hand over only machine-readable evidence artifacts.
+1. run runtime bootstrap protocol before implementation:
+   - create `.env` from `.env.template` if `.env` is missing,
+   - initialize only runtimes required by active `REQ_IDS` and test vectors,
+   - create `.venv` automatically when Python runtime is required and `.venv` is missing,
+   - write machine-readable runtime evidence artifact;
+2. run tooling decision checkpoint before implementation:
+   - create/update `system_reports/gates/tooling_decision_template.env`,
+   - select `application_profile` from `DESIGN.md` section 1.1 before selecting tools,
+   - decide tools for frontend/UI, backend, data, and mobile (if in scope),
+   - keep production choices on stable/LTS channels unless PO-approved exception exists,
+   - verify decisions against official sources within tooling currency window,
+   - write machine-readable tooling decision evidence;
+3. implement only PO-approved scope;
+4. maintain REQ -> Design -> Code -> Test traceability;
+5. produce DEV evidence on committed state;
+6. hand over only machine-readable evidence artifacts.
 
 DEV mode must not:
 - self-approve release readiness;
 - consume audit findings before DEV gate completion;
 - output secrets, keys, tokens, or personal data into chat/logs/artifacts.
+- ask customer to run manual environment/setup commands.
+- ask customer to decide framework/toolchain details unless PO explicitly requests options.
 
 In DEV mode the agent must never output secrets, keys, tokens, or personal data into chat, logs, or release artifacts.
 
@@ -71,6 +87,10 @@ Forbidden input set:
 - Any independence violation => `FINAL_STATUS=FAIL`.
 - Any mode-mixing or wrong role packet => `FINAL_STATUS=FAIL`.
 - Missing/invalid role packet artifact or key mismatch => `FINAL_STATUS=FAIL`.
+- Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.
+- Missing tooling decision evidence for active scope => `FINAL_STATUS=FAIL`.
+- Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
+- Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.
 - Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`.
 - Any unresolved blocker/major finding => `FINAL_STATUS=FAIL`.
