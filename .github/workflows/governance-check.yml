@@ -1,0 +1,34 @@
+name: Governance Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+
+jobs:
+  governance-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check normative files
+        run: |
+          for f in AGENTS.md DESIGN.md CONTRIBUTING.md PROMPTS.md LASTENHEFT.md; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::CRITICAL: missing normative file: $f"
+              exit 1
+            fi
+          done
+
+      - name: Run Spec Lint (strict)
+        run: ./scripts/spec_lint.sh --strict
+
+      - name: Run Prompt Firewall Check
+        run: ./scripts/prompt_firewall_check.sh
+
+      - name: Run Audit Readiness Check
+        run: ./scripts/audit_readiness_check.sh
+
+      - name: Run Pipeline Order Check
+        run: ./scripts/pipeline_order_check.sh
