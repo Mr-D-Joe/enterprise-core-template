@@ -1,160 +1,60 @@
-# Contributing to Enterprise Core Template
+# CONTRIBUTING — Delivery and Release Rules
 
-> **This document provides contribution guidelines for both the template itself and for projects derived from this template.**
+This document is normative and binding.
 
----
+## 1. Mandatory delivery sequence (no skip, no reorder)
+1. Requirement definition and approval (PO)
+2. Implementation on approved scope (DEV)
+3. DEV gate evidence (DEV)
+4. Independent Audit gate (AUDIT)
+5. Pull request update/check
+6. Merge authorization (PO based on AUDIT APPROVE)
+7. Version/tag and release note
 
-<for_ai_agents>
+No step may be skipped or reordered.
 
-> **🤖 For AI Agents:**  
-> STOP. Read [`DESIGN.md`](./DESIGN.md) explicitly before generating any code.  
-> `DESIGN.md` contains the rigid, normative rules for this project.  
-> **Do not ask user permission** to follow these rules—they are the law.
-> Do not infer architecture. Do not hallucinate patterns. Follow the rules defined there.
+## 2. Entry criteria per phase
+- Requirement phase (PO):
+  - work packet exists with `REQ_IDS`,
+  - machine-readable PO role packet exists with required keys,
+  - acceptance criteria and test vectors are explicit,
+  - security/privacy impact is explicit (data class, secrets, retention, redaction).
+- DEV phase:
+  - changes are traceable to `REQ_IDS`,
+  - deterministic tests executed and linked,
+  - security/privacy checks executed and linked (secret scan, dependency risk check, privacy/logging tests).
+- AUDIT phase:
+  - independent identity and input firewall enforced,
+  - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
+  - findings include severity and evidence,
+  - ISO-conform security/data control evidence is validated before decision,
+  - security baseline freshness check is validated before decision.
 
-</for_ai_agents>
+## 3. Hard blockers (automatic FAIL)
+- Missing `REQ_IDS` trace chain (REQ -> Design -> Code -> Test -> Gate).
+- DEV identity attempts own audit approval or release approval.
+- Audit not independent or based on forbidden DEV-private context.
+- Missing or wrong `EXECUTION_MODE` role packet for active phase.
+- Missing required role packet keys (`execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`, `allowed_inputs_hash`, `target_commit_sha`, `po_agent_id`, `created_at_utc`).
+- Missing security/privacy traceability or missing security/privacy evidence.
+- Hardcoded secrets/keys/tokens or unredacted personal data in code, tests, logs, or artifacts.
+- Missing ISO security/data control verdicts in audit report.
+- Security baseline age exceeds configured maximum age.
+- Unresolved blocker/major findings.
+- Missing required gate evidence artifacts.
 
----
+## 4. PR policy
+- PR must include:
+  - `REQ_IDS`,
+  - traceability references,
+  - DEV gate artifact reference,
+  - AUDIT gate artifact reference,
+  - explicit audit decision,
+  - security/privacy evidence references,
+  - ISO security/data control verdict references.
 
-## 1. The Golden Rule
-
-**DESIGN.md is the Constitution.**
-
-All code, all refactoring, and all new features must comply with the requirements in [`DESIGN.md`](./DESIGN.md).  
-If you find a conflict between "best practices" and `DESIGN.md`, **`DESIGN.md` wins**.
-
----
-
-## 2. Repository Structure
-
-Projects based on this template follow a strict directory layout to maintain separation of concerns:
-
-| Directory | Purpose | Rules |
-|-----------|---------|-------|
-| `/frontend` | User Interface | Only presentation logic. No heavy business calculations. |
-| `/ai_service` | Backend (Mock/Python) | Data aggregation, LLM orchestration. |
-| `/docs` | Documentation | Architecture docs and release checklists. |
-| `/desktop` | (Optional) Desktop Shell | Hosts UI, IPC, filesystem/cache access. Only if target platform is desktop. |
-| `/shared` | (Optional) Contracts | IPC/JSON type definitions shared between layers. |
-
----
-
-## 3. Workflow for Changes
-
-### 3.1 Before Coding
-
-1. **Check Requirements:**
-   - Is this change covered by [`LASTENHEFT.md`](./LASTENHEFT.md)?
-   - Does it violate any [`DESIGN.md`](./DESIGN.md) constraints?
-   - Is the **target platform** explicitly defined in LASTENHEFT.md (DES-ARCH-23)?
-
-2. **Document First:**
-   - New features require a requirement in LASTENHEFT.md before implementation
-
-3. **Update Documentation (Synchronicity):**
-   - Update `CHANGELOG.md` (Reverse-Chronological: New -> Old).
-   - Update internal document history in modified files (Chronological: Old -> New).
-   - Verify `README.md` is still accurate.
-   - **Dev-Dependencies:** Alle für Typprüfung/Test benötigten Stubs/Typing-Pakete müssen in `ai_service/requirements-dev.txt` dokumentiert sein.
-
-### 3.4 PR Requirements (Mandatory)
-
-- **Lint Signature Required:** Every PR must include the Lint Signature section in `.github/PULL_REQUEST_TEMPLATE.md` and mark **“Lint Signature completed”** as checked.
-
-### 3.5 PR Workflow Checklist (Mandatory)
-
-| Item | GOV-LINT ID | Required | Check Regex |
-|------|-------------|----------|-------------|
-| `DESIGN.md` reviewed for compliance | GOV-LINT-01 | Yes | `^\\- \\[ \\] DESIGN\\.md reviewed for compliance$` |
-| `LASTENHEFT.md` updated (if functional change) | GOV-LINT-02 | Yes | `^\\- \\[ \\] LASTENHEFT\\.md updated \\(if functional change\\)$` |
-| `CHANGELOG.md` updated (version + entry) | GOV-LINT-06 | Yes | `^\\- \\[ \\] CHANGELOG\\.md updated \\(version \\+ entry\\)$` |
-| Lint Signature completed in PR template | GOV-LINT-18 | Yes | `^\\- \\[ \\] Lint Signature completed$` |
-| PR template checklist completed (`.github/PULL_REQUEST_TEMPLATE.md`) | GOV-LINT-21 | Yes | `^\\- \\[ \\] PR template checklist completed \\(\\.github\\/PULL_REQUEST_TEMPLATE\\.md\\)$` |
-
-### 3.2 Branching
-
-Use descriptive branch names:
-- `feat/new-feature`
-- `fix/bug-name`
-- `docs/update-readme`
-
-### 3.3 Commit Messages
-
-Use [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-type(scope): description
-```
-
-Examples:
-- `feat(ui): add new component`
-- `fix(api): correct rate limiting logic`
-- `docs(spec): update governance rules`
-- `chore(deps): update dependencies`
-
----
-
-## 4. Instructions for AI Coding Assistants
-
-If you are an AI agent working on this repository:
-
-| Rule | Description |
-|------|-------------|
-| **Context Loading** | Always load `DESIGN.md` and `LASTENHEFT.md` into your context first |
-| **Atomic Changes** | Do not refactor unrelated files "while you are at it". Stick to the user's prompt |
-| **No Hallucinations** | If a file or function is not present, ask before creating it. Do not invent architectural layers not specified in `DESIGN.md` |
-| **Mock First** | If adding a new data feature, implement it as a **Mock** first (see `DES-GOV-17`) |
-| **Requirements First** | No code without a documented requirement in LASTENHEFT.md |
-| **Typing & CI** | Keine neuen `Any`‑Typen ohne dokumentierte Ausnahme; benötigte Typing‑Stubs gehören in `requirements-dev.txt`. |
-| **Test‑Determinismus** | Keine Tests mit externen Binaries ohne CI‑Install‑Step oder Mock/Fallback. |
-
----
-
-## 5. Local Quality Gates (Required)
-
-Vor jedem Commit müssen diese Checks lokal laufen:
-
-- **Node Version:** Use LTS Node for frontend tooling to avoid lint/toolchain incompatibilities.
-- **ESLint Config Note:** Prefer direct parser imports and avoid `@typescript-eslint/eslint-plugin` if it hangs under Node LTS. In TS projects, rely on `tsc` for unused/undef checks and disable ESLint core rules accordingly.
-- **API Interface Guidance (Recommended):** Consolidate service APIs behind a single interface and avoid ad-hoc casts. Prefer explicit type guards for external payloads.
-
-- Frontend:
-  - `cd frontend && npm run lint`
-  - `cd frontend && npm run typecheck`
-- Backend:
-  - `cd ai_service && ruff check .`
-  - `cd ai_service && mypy . --ignore-missing-imports`
-  - `cd ai_service && pytest -q`
-
-Hinweis:
-- Browser‑abhängige Tests müssen entweder in CI explizit installierte Binaries nutzen (z. B. Playwright) oder als Integrationstests markiert und separat ausführbar sein.
-- `typing.Any` ist nur mit dokumentierter Ausnahme erlaubt (Reason + Scope).
-
----
-
-## 6. Template-Specific Notes
-
-When contributing to **the template itself** (not a derived project):
-
-- Keep all documents generic and placeholder-ready
-- Use `{{PROJECT_NAME}}` and `{{DATE}}` as placeholders where appropriate
-- Test changes by creating a new project from the template
-- Update [`TEMPLATE_USAGE_GUIDE.md`](./TEMPLATE_USAGE_GUIDE.md) if workflow changes
-
----
-
-## 7. Release Process
-
-See [`docs/RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md) for the exact steps to cut a new version.
-
----
-
-## 8. Deployment & Sync Policy
-
-> **USER DIRECTIVE (2026-01-29):**
-> A task is only considered "Complete" when changes are **pushed and verified** on GitHub.
-
-1. **Always Push:** Code does not exist until it is on the remote.
-2. **Verify Push:** Check the exit code of `git push`. Local commits are insufficient.
-3. **Remote Verification:** A project conclusion or task completion is only considered "clean" if `git push` has been successfully executed **AND verified**. Verification must be either **visual** (browser check) or **content-based** (explicit `git status`/`diff` check indicating parity).
-4. **Report Sync:** When finishing a task, explicitly confirm: "Synced with GitHub: ✅".
+## 5. Merge and release policy
+- Merge requires `AUDIT=APPROVE` and all mandatory checks green.
+- Merge authority remains with PO governance decision.
+- Release/versioning requires final release-readiness evidence.
+- If any mandatory control fails, status is `NOT_READY_FOR_RELEASE`.
