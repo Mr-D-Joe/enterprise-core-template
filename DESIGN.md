@@ -14,14 +14,46 @@ All files in `docs/governance/` are supportive templates/checklists unless expli
 
 ## 1. Architecture baseline
 
-### 1.1 Stack matrix
-| Layer | Technology | Notes |
-|---|---|---|
-| Frontend | React + TypeScript | Vite |
-| Backend | Python + FastAPI | API/service layer |
-| Persistence | SQLite/PostgreSQL | per project needs |
+### 1.1 Technology profile matrix (2026 default)
+Tooling must start with one profile selection before implementation.
 
-### 1.2 Repository structure
+| Profile ID | UI/Frontend | Backend/API | Data | Mobile | Apply when |
+|---|---|---|---|---|---|
+| `PROFILE_WEB_DEFAULT` | Next.js + React + TypeScript | FastAPI | PostgreSQL | Optional React Native + Expo | Default for customer-facing web products/SaaS |
+| `PROFILE_ENTERPRISE_PORTAL` | Angular + TypeScript | FastAPI | PostgreSQL | Optional React Native + Expo | Data-heavy internal workflows with strict structure |
+| `PROFILE_SERVER_RENDERED_LIGHT` | htmx + server-rendered templates | FastAPI | PostgreSQL or SQLite | none | Form/workflow apps where low client complexity is a goal |
+| `PROFILE_MOBILE_CROSS_PLATFORM` | React Native + Expo + TypeScript | FastAPI | PostgreSQL | iOS + Android from one codebase | iOS+Android parity required with one team |
+| `PROFILE_MOBILE_IOS_FIRST` | SwiftUI (iOS) + minimal web admin UI | FastAPI | PostgreSQL | Native iOS first, Android optional later | iPhone quality and platform integration are priority |
+
+### 1.2 Tool selection rules (simple, hard)
+1. Select one `application_profile` from section 1.1 before any code change.
+2. Production web UI must be type-safe (`TypeScript`-based stack). Plain JavaScript is allowed only for static/minimal pages.
+3. Production dependencies must be stable/LTS (no beta/rc/canary) unless PO explicitly accepts risk.
+4. Tool decisions must be backed by official sources and verification date within tooling age window.
+5. If mobile is in scope:
+   - use `PROFILE_MOBILE_CROSS_PLATFORM` by default;
+   - use `PROFILE_MOBILE_IOS_FIRST` only when iOS-first quality/integration is explicit.
+6. If no profile matches exactly, choose the nearest profile and document deviation in tooling decision evidence.
+
+### 1.3 Tooling decision packet schema (mandatory)
+`system_reports/gates/tooling_decision_template.env` must include at least:
+- `decision_packet_id`
+- `decision_status`
+- `scope_req_ids`
+- `application_profile`
+- `frontend_ui_choice`
+- `backend_choice`
+- `data_choice`
+- `mobile_choice`
+- `stability_target`
+- `official_source_1`
+- `official_source_2`
+- `source_verified_utc`
+- `tooling_source_max_age_days`
+- `selection_rationale`
+- `created_at_utc`
+
+### 1.4 Repository structure
 - `frontend/` frontend application code.
 - `backend/` backend services and API.
 - `docs/specs/` modular requirement documents.
@@ -102,10 +134,28 @@ AUDIT must issue explicit PASS/FAIL verdicts for security and data controls (cla
 ### GOV-23 Security Baseline Freshness Gate
 Audit readiness is `FAIL` when security baseline review age exceeds `SECURITY_BASELINE_MAX_AGE_DAYS`.
 
+### GOV-24 Technology Decision Before Build
+Before implementation, each change package must include an explicit tool decision for UI/frontend, backend, data, and (if applicable) mobile.
+
+### GOV-25 Currency and Stability Gate
+Tool decisions must prefer stable/LTS releases and be verified against official source material within `TOOLING_SOURCE_MAX_AGE_DAYS`.
+
+### GOV-26 Official Source Requirement for Tooling
+Tooling decisions must reference primary official sources only (official docs, official release notes, official version matrices).
+
+### GOV-27 Profile-First Tool Selection
+Before implementation, DEV must bind the change package to one `application_profile` from section 1.1 and use it as default decision baseline.
+
+### GOV-28 Type-Safe UI Default
+For production web scope, the UI stack must be TypeScript-based. Non-typed UI stacks require explicit PO risk acceptance in evidence artifacts.
+
 ## 3. Security baseline metadata (mandatory)
 `SECURITY_BASELINE_REVIEW_UTC=2026-02-25`
 `SECURITY_BASELINE_MAX_AGE_DAYS=90`
 `SECURITY_BASELINE_SOURCES=OWASP_ASVS_5.0.0;OWASP_API_TOP_10;OWASP_TOP_10;NIST_SSDF_SP_800_218;NIST_CSF_2_0;NIST_AI_RMF_GENAI_PROFILE`
+`TOOLING_DECISION_REVIEW_UTC=2026-02-25`
+`TOOLING_SOURCE_MAX_AGE_DAYS=90`
+`TOOLING_ALLOWED_SOURCE_TYPES=official_docs;official_release_notes;official_version_matrix`
 
 ## 4. Hardening expectations for gate scripts
 
@@ -118,3 +168,5 @@ Gate scripts must enforce the following checks at minimum:
 6. security/privacy controls (classification, secrets, retention, redaction, verification evidence);
 7. ISO-conform security/data control verdicts in audit artifacts;
 8. hard-fail behavior when controls are missing or violated.
+9. tooling decision checkpoint before implementation with official-source and currency evidence.
+10. tooling decision packet schema completeness (`application_profile`, stack choices, stability target, source verification fields).

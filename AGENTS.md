@@ -14,6 +14,8 @@ This document is normative and binding.
 - Maintains REQ -> Design -> Code -> Test traceability.
 - Produces implementation evidence and DEV gate artifacts.
 - Must not approve, release, or merge own implementation.
+- Must execute runtime bootstrap autonomously (no customer terminal setup required).
+- Must execute a tooling decision checkpoint before code changes.
 
 ### AUDIT (Independent) — execution strand
 - Performs independent audit against normative docs and approved evidence.
@@ -59,3 +61,19 @@ This document is normative and binding.
 - AUDIT must reject releases with missing security/privacy evidence or unresolved high-risk findings.
 - AUDIT must execute the ISO-conform security/data checklist defined in `docs/governance/INDEPENDENT_AUDIT_POLICY.md`.
 - AUDIT decision is invalid if `docs/governance/AUDIT_REPORT_TEMPLATE.md` security/data control section is incomplete.
+
+## 7. Runtime bootstrap autonomy (customer-safe)
+- DEV must create `.env` from `.env.template` automatically when missing.
+- DEV must prepare only required runtimes based on active `REQ_IDS` and test vectors.
+- Python requirements must trigger automatic `.venv` creation when missing.
+- Customer-facing instructions to run setup commands manually are forbidden.
+- Missing required toolchains must be reported as explicit blocker evidence with `FINAL_STATUS=FAIL`.
+
+## 8. Tooling decision autonomy (customer-safe)
+- DEV must create/update `system_reports/gates/tooling_decision_template.env` before implementation starts.
+- DEV must select `application_profile` from `DESIGN.md` before choosing concrete tools.
+- The tooling decision must include UI/frontend, backend, data, and mobile decision fields (if mobile scope exists).
+- Decision evidence must reference official sources and verification date.
+- Tool/version decisions must target stable/LTS releases only (no beta/rc/canary for production scope).
+- If official-source or currency evidence is missing, implementation must hard-fail.
+- Customer-facing framework/tool selection prompts are forbidden unless PO explicitly requests alternatives.
