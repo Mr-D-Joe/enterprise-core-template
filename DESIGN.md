@@ -1,478 +1,120 @@
-# DESIGN.md — Project Constitution
-# Enterprise Core Template
+# DESIGN — Architecture and Governance
 
-⚠️ THIS DOCUMENT IS NORMATIVE AND BINDING
+This document is normative and binding.
 
-Version: 1.10.1
-Datum: 2026-02-03
-Status: Released (Golden Standard)
+## Normative hierarchy
+1. AGENTS.md
+2. DESIGN.md
+3. CONTRIBUTING.md
+4. PROMPTS.md
+5. LASTENHEFT.md
+6. docs/specs/*.md
 
-Dieses Dokument definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
+All files in `docs/governance/` are supportive templates/checklists unless explicitly referenced by the four normative control files above.
 
----
+## 1. Architecture baseline
 
-## Änderungshistorie
+### 1.1 Stack matrix
+| Layer | Technology | Notes |
+|---|---|---|
+| Frontend | React + TypeScript | Vite |
+| Backend | Python + FastAPI | API/service layer |
+| Persistence | SQLite/PostgreSQL | per project needs |
 
-| Version | Datum       | Abschnitt | Änderungstyp | Beschreibung |
-|--------:|------------|-----------|--------------|--------------|
-| 1.10.1 | 2026-02-03 | Governance | Präzisierung | Atomaritäts- und Bündelungsregeln für Requirements geschärft (Umsetzungspakete mit Kontextpflicht). |
-| 1.10.0 | 2026-02-03 | Governance | Präzisierung | Historien-Ordnung auf "neueste zuerst" vereinheitlicht und Atomaritätsregeln für normative Anforderungen geschärft. |
-| 1.9.9 | 2026-02-02 | Governance | Erweiterung | Task-Paketierung innerhalb einer Anforderung zulaessig, sofern Verifikation pro Task erhalten bleibt. |
-| 1.9.0 | 2026-01-29 | Gesamt | Harmonisierung | Versionsstand und Governance-Alignment final konsolidiert. |
-| 1.5.3 | 2026-01-29 | Governance | Erweiterung | Required Artifacts als verbindliche Dokumentationspflicht (DES-GOV-28A). |
-| 1.4.3 | 2026-01-29 | Architektur | Präzisierung | DES-ARCH-23 um Technologie-Auswahlprinzip ergänzt. |
-| 1.4 | 2026-01-29 | Architektur | Präzisierung | Desktop-Shell-Regeln konditionalisiert; Plattformentscheidung explizit gemacht (DES-ARCH-23). |
-| 1.3 | 2026-01-29 | Governance | Erweiterung | Einführung der CI-/Typing-/Test-Determinismus-Regeln (DES-GOV-51 bis DES-GOV-55). |
-| 1.2 | 2026-01-29 | Governance | Erweiterung | Einführung der Regeln DES-GOV-49 (Sync) und DES-GOV-50 (Sortierung) |
-| 1.1 | 2026-01-28 | Governance | Erweiterung | Einführung der Regel DES-GOV-48 (Kontext-Story-Muster) |
-| 1.0 | {{DATE}} | Gesamt | Initialisierung | Initiale Übernahme der Enterprise Core Governance Standards aus dem Golden Template |
+### 1.2 Repository structure
+- `frontend/` frontend application code.
+- `backend/` backend services and API.
+- `docs/specs/` modular requirement documents.
+- `docs/governance/` governance and audit artifacts.
 
+## 2. Governance rules
 
----
+### GOV-01 Agent Contract First
+Implementation must follow the requirement-level agent contract target and data flow.
 
-## Dokumenthierarchie (informativ)
+### GOV-02 No Silent Scope Expansion
+No unrelated file changes without explicit requirement trace mapping.
 
-1. DESIGN.md — normative Architektur- und Governance-Quelle
-2. LASTENHEFT.md — normative funktionale Spezifikation auf Basis von DESIGN.md
-3. SYSTEM_REPORT.md — deskriptiver Auditbericht
-4. README.md — Orientierung
-5. übrige Dokumente — informativ
+### GOV-03 Deterministic Verification
+Each requirement must provide a deterministic test vector.
 
----
+### GOV-04 Traceability Mandatory
+Every implemented requirement must map to REQ -> Design -> Code -> Test -> Gate.
 
-## Requirement-Typen
+### GOV-05 Lean Contracts
+Only relevant contract fields are allowed. Placeholder/noise fields are prohibited in finalized specs.
 
-Alle Anforderungen in diesem Dokument gehören genau zu einem der folgenden Typen:
+### GOV-06 Independent Audit Mandatory
+Release decisions require an Independent Audit role, separate from implementation.
 
-- DES-GOV — Governance
-- DES-ARCH — Architektur
-- DES-FE — Frontend
-- DES-BE — Backend
-- DES-LLM — LLM
+### GOV-07 Four-Eyes Enforcement
+DEV and AUDIT must use distinct identities and produce separate artifacts.
 
----
+### GOV-08 Audit Input Separation
+AUDIT must only use approved input set (contract docs, change set, test evidence, gate reports).
 
-## Governance
+### GOV-09 Nonconformity and CAPA
+Audit findings must be classified, tracked, and closed with corrective action evidence.
 
-### DES-GOV-01 — Normative Autorität von DESIGN.md
-DESIGN.md definiert die verbindlichen Regeln für Architektur, Governance und Implementierung des Systems.
+### GOV-10 ISO-Aligned Control Evidence
+Process must maintain evidence suitable for ISO-aligned quality, security, and AI-governance audits.
 
-### DES-GOV-02 — Vorrang von DESIGN.md
-DESIGN.md besitzt Vorrang gegenüber allen anderen Projektdokumenten und Ausgaben.
+### GOV-11 PO-Driven Execution
+All DEV and AUDIT execution is driven by PO requirement packets.
 
-### DES-GOV-03 — Rolle von LASTENHEFT.md
-LASTENHEFT.md definiert die verbindlichen funktionalen Anforderungen auf Basis von DESIGN.md.
+### GOV-12 Delivery Sequence Enforcement
+Required sequence is Requirement -> Implementation -> Audit -> PR -> Merge -> Version.
 
-### DES-GOV-04 — Normative Form von Anforderungen
-Normative Wirkung besitzen ausschließlich Anforderungen, die in DESIGN.md oder LASTENHEFT.md als Requirement mit eindeutiger ID formuliert sind.
+### GOV-13 No Self-Approval
+The DEV identity that authored implementation must never issue final audit approval or release authorization.
 
-### DES-GOV-05 — Charakter informativer Artefakte
-SYSTEM_REPORT.md, README.md, TECHNICAL_SPEC.md, PROMPTS.md, STYLEGUIDE.md und Code-Kommentare besitzen informativen Charakter.
+### GOV-14 Mandatory Gate Failure Semantics
+If requirement traceability, independence constraints, or audit quality controls fail, gate status must be `FAIL` with no bypass path.
 
-### DES-GOV-06 — Anpassungsregel bei Abweichungen
-Bei Abweichungen zwischen Systemverhalten und Anforderungen aus DESIGN.md werden Code und Konfiguration so angepasst, dass das Systemverhalten den Anforderungen entspricht.
+### GOV-15 ISO-Aligned Evidence Package
+Each change package must retain machine-readable evidence for:
+- requirement traceability,
+- role separation and independent decision,
+- deterministic verification,
+- final release readiness decision.
 
-### DES-GOV-07 — Klassifikation der Design-Anforderungen
-Jede Anforderung in DESIGN.md verwendet genau einen Requirement-Typ aus der Typenliste.
+### GOV-16 Prompt Mode Separation
+Single-prompt operation is mandatory (`PROMPTS.md`). DEV and AUDIT must run with separate role packets (`EXECUTION_MODE`) and separate input sets. Shared context outside approved artifacts is forbidden.
 
-### DES-GOV-08 — Autorität gegenüber LLM-Ausgaben
-LLM-generierte Inhalte besitzen informativen Charakter im Projektkontext.
+### GOV-17 Committed-State Audit Execution
+AUDIT must execute only on committed state after DEV gate evidence exists. Pre-commit or live DEV-context audits are invalid.
 
-### DES-GOV-09 — Deterministische Aufgabenlösung
-Aufgaben mit deterministisch lösbarer Zielstellung werden durch deterministische Verfahren umgesetzt.
+### GOV-18 Security and Privacy by Default
+All requirements and implementations must define data classification, secret handling, retention/deletion, logging redaction, and encryption expectations where applicable.
 
-### DES-GOV-10 — Ereignisprotokollierung
-Das System erzeugt strukturierte Protokolleinträge für Fehlerereignisse, Integrationsereignisse und LLM-Aufrufereignisse.
+### GOV-19 Security Baseline Currency
+Security and privacy control mapping must be reviewed on a fixed cadence with dated evidence and named reference standards.
 
-### DES-GOV-11 — Abhängigkeitsdokumentation
-Jede hinzugefügte Software-Abhängigkeit wird mit Zweck, Scope und Austauschstrategie dokumentiert.
+### GOV-20 Key and Secret Management
+Credentials must come from approved secret stores or runtime injection. Hardcoded or plaintext credentials are forbidden.
 
-### DES-GOV-12 — Build-Reproduzierbarkeit
-Build-Prozesse erzeugen reproduzierbare Artefakte bei identischem Quellstand und identischer Toolchain-Konfiguration.
+### GOV-21 Privacy and Logging Controls
+Personal/sensitive data processing requires explicit minimization, purpose, retention, deletion, and redaction controls.
 
-### DES-GOV-13 — CI-Qualitäts-Gates
-CI-Pipelines führen Typprüfung und Linting als verpflichtende Qualitäts-Gates aus.
+### GOV-22 ISO-Conform Security/Data Audit Depth
+AUDIT must issue explicit PASS/FAIL verdicts for security and data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk) with evidence references.
 
-### DES-GOV-14 — Release-Rückführbarkeit
-Releases besitzen eine eindeutige Version und sind auf konkrete Commits rückführbar.
-
-### DES-GOV-15 — Generierungskennzeichnung im Systemmodell
-Das Systemmodell klassifiziert Inhalte mit einem expliziten Herkunftsattribut (z. B. generiert, verifiziert, extern).
-
-### DES-GOV-16 — Sanitization vor Darstellung
-Darzustellende Daten werden vor UI-Rendering durch einen Sanitization-Schritt geführt.
-
-### DES-GOV-17 — Mock-Kennzeichnung
-Mock-Daten werden im UI und im Datenmodell als Mock gekennzeichnet.
-
-### DES-GOV-18 — Mock-Austauschbarkeit
-Mock-Datenquellen sind durch Real-Datenquellen austauschbar; UI-Komponenten bleiben dabei unverändert.
-
-### DES-GOV-19 — Mock-Betriebsmodus
-Das System führt einen expliziten Betriebsmodus zur Aktivierung von Mock-Datenquellen.
-
-### DES-GOV-20 — Strukturierung nach Verantwortlichkeiten
-Code-Module und Funktionen sind entlang klar abgegrenzter Verantwortlichkeiten strukturiert.
-
-### DES-GOV-21 — Testbarkeit je Schicht
-Systemkomponenten sind so gestaltet, dass automatisierte Tests pro Schicht möglich sind.
-
-### DES-GOV-22 — Testarten je Schicht
-Das System unterstützt UI-Komponententests, Service-/API-Tests und IPC-Vertragstests als getrennte Testarten.
-
-### DES-GOV-23 — Konfiguration als expliziter Bestandteil
-Konfigurationswerte werden als explizite Konfiguration geführt und versionierbar dokumentiert.
-
-### DES-GOV-24 — Änderungsdokumentation für DESIGN.md
-Änderungen an DESIGN.md werden in der Änderungshistorie dokumentiert.
-
-### DES-GOV-25 — Freigabe für DESIGN.md-Änderungen
-Änderungen an DESIGN.md werden vor Wirksamkeit freigegeben.
-
-### DES-GOV-26 — Konsistenzabgleich DESIGN.md ↔ LASTENHEFT.md
-Änderungen an DESIGN.md werden auf Auswirkungen in LASTENHEFT.md geprüft und bei Bedarf durch korrespondierende Anpassungen konsistent gehalten.
-
-### DES-GOV-27 — Sanitization Traceability
-Das System erzeugt für jede UI-Darstellung ein Sanitization-Trace-Metadatum, das Sanitization-Version und Sanitization-Status referenziert.
-
-### DES-GOV-28 — Dokumentationsartefakt: SYSTEM_REPORT.md
-Das Projekt führt eine SYSTEM_REPORT.md als deskriptiven Auditbericht pro Systemversion.
-
-### DES-GOV-28A — Dokumentationsartefakte (Required Artifacts)
-Für die Plattformentscheidung (DES-ARCH-23) sind die in README.md definierten Required Artifacts verbindlich; ihre IDs werden im TECHNICAL_SPEC.md referenziert.
-
-### DES-GOV-29 — Dokumentationsartefakt: README.md
-Das Projekt führt eine README.md als Orientierungsdokument für Zweck, Einstieg und Nutzung.
-
-### DES-GOV-30 — Dokumentationsartefakt: TECHNICAL_SPEC.md
-Das Projekt führt eine TECHNICAL_SPEC.md zur Dokumentation implementierungsspezifischer Details und technischer Parameter.
-
-### DES-GOV-31 — Dokumentationsartefakt: STYLEGUIDE.md
-Das Projekt führt eine STYLEGUIDE.md zur Dokumentation visueller Standards, UX-Muster und Design-Tokens.
-
-### DES-GOV-32 — Dokumentationsartefakt: PROMPTS.md
-Das Projekt führt eine PROMPTS.md zur Versionierung und Dokumentation der im System verwendeten LLM-Prompts.
-
-### DES-GOV-33 — Atomare Anforderung
-Jede normative Anforderung (in DESIGN.md und LASTENHEFT.md) beschreibt genau eine fachliche oder technische Eigenschaft; Sammelanforderungen sind unzulässig.
-
-### DES-GOV-34 — Eigenständige Verifizierbarkeit
-Jede normative Anforderung ist unabhängig prüfbar und eindeutig verifizierbar.
-
-### DES-GOV-35 — Eigener Anforderungsabschnitt
-Jede normative Anforderung ist als eigener Abschnitt formuliert.
-
-### DES-GOV-36 — Eindeutige Anforderungs-ID
-Jede normative Anforderung besitzt eine eindeutige Anforderungs-ID.
-
-### DES-GOV-37 — Abschnittsbasierte Strukturierung
-Normative Anforderungen werden über Abschnittsnummerierung und Überschriften strukturiert.
-
-### DES-GOV-38 — Einheitliches Überschriftenformat
-Jede normative Anforderung verwendet das Überschriftenformat `<ID> — <Kurzbezeichnung>`.
-
-### DES-GOV-39 — Explizite Anforderungsauflösung
-Die Auflösung einer Anforderung in mehrere Anforderungen wird explizit dokumentiert.
-
-### DES-GOV-40 — Eindeutige ID-Zuordnung bei Auflösung
-Jede aus einer Auflösung hervorgehende Anforderung referenziert eindeutig die ursprüngliche Anforderungs-ID.
-
-### DES-GOV-41 — Anforderungsbasierte Systemänderung
-Jede Änderung, Erweiterung oder Korrektur des Systems basiert auf einer expliziten, normativen Anforderung.
-
-### DES-GOV-42 — Ableitung aus externen Änderungswünschen
-Extern formulierte Änderungswünsche werden vor Implementierung in eine oder mehrere atomare, normative Anforderungen überführt.
-
-### DES-GOV-43 — Freigabe vor Implementierung
-Jede Änderung an normativen Anforderungen wird vor Implementierung freigegeben.
-
-### DES-GOV-44 — Versionierung normativer Änderungen
-Jede normative Änderung wird einer Version und einem Datum zugeordnet.
-
-### DES-GOV-45 — Rückführbarkeit normativer Änderungen
-Jede normative Änderung referenziert die betroffenen Requirement-IDs.
-
-### DES-GOV-46 — Präzisierung vor Ableitung
-Mehrdeutige Anforderungen werden vor Ableitung oder Implementierung präzisiert.
-
-### DES-GOV-47 — Normative Gültigkeit freigegebener Versionen
-Normative Gültigkeit besitzen die freigegebenen Versionen von DESIGN.md und LASTENHEFT.md.
-
-### DES-GOV-48 — Struktur funktionaler Anforderungen
-Funktionale Anforderungen in LASTENHEFT.md werden durch einen Abschnitt "Kontext & User Story" eingeleitet, der die Intention und den systemischen Zusammenhang erläutert, gefolgt von einer Liste atomarer Einzelanforderungen.
-
-### DES-GOV-49 — Dokumentations-Synchronität
-Jede Änderung am Systemcode oder der Architektur erfordert zwingend eine synchrone Aktualisierung der Dokumentation (CHANGELOG.md, README.md, LASTENHEFT.md). Code-Änderungen ohne Dokumentations-Update gelten als unvollständig.
-
-### DES-GOV-50 — Historien-Ordnung
-Dokumentationshistorien folgen einer strikten Sortierordnung:
-- **Interne Dokumentenhistorien:** Chronologisch absteigend (Neu → Alt).
-- **Projektweites CHANGELOG (CHANGELOG.md):** Chronologisch absteigend (Neu → Alt).
-
-### DES-GOV-51 — CI-Toolchain-Vollständigkeit
-Alle in CI verwendeten Tools und Abhängigkeiten sind im Repository dokumentiert und in CI reproduzierbar installierbar.
-
-### DES-GOV-52 — Externe Binaries in Tests
-Tests dürfen keine externen Binaries voraussetzen, es sei denn die CI installiert sie explizit oder der Code bietet einen Mock/Fallback-Pfad.
-
-### DES-GOV-53 — Verbot von typing.Any ohne Ausnahme
-typing.Any ist verboten, außer es existiert eine dokumentierte Ausnahme mit Begründung und Scope.
-
-### DES-GOV-54 — Typing-Abhängigkeiten als Dev-Dependencies
-Alle für die Typprüfung notwendigen Stubs/Typing-Pakete sind in den Dev-Dependencies geführt.
-
-### DES-GOV-55 — Test-Determinismus und Isolation
-Tests laufen deterministisch ohne Netzwerk- oder Browser-Abhängigkeiten, es sei denn sie sind explizit als Integrationstests markiert und getrennt ausführbar.
-
-### DES-GOV-56 — Umsetzungspaket mit Requirement-Buendelung
-Mehrere Requirements duerfen in einem Umsetzungspaket gebuendelt werden, sofern:
-- jede Anforderung eine eigene Requirement-ID behaelt,
-- die Zuordnung Umsetzungspaket → Requirement-IDs explizit dokumentiert ist,
-- die Verifikation je Requirement getrennt moeglich und dokumentiert bleibt,
-- die Buendelung einen klaren fachlichen oder technischen Zusammenhang herstellt.
-
-### DES-GOV-57 — Kontextpflicht fuer Requirement-Buendelung
-Jedes Umsetzungspaket mit mehreren Requirements enthaelt eine kurze Kontextbegruendung, warum die Buendelung notwendig oder sinnvoll ist (z. B. gemeinsame Schnittstelle, Migration, UI/API-Kohaerenz).
-
----
-
-
-## Architektur
-
-### DES-ARCH-01 — Strikte Schichtung
-Das System besteht aus Frontend, Backend und Desktop-Shell mit klarer Trennung.
-
-### DES-ARCH-02 — Unidirektionaler Datenfluss
-Daten fließen von Benutzeraktion zu Zustand zu Service zu UI.
-
-### DES-ARCH-03 — Schnittstellenbasierte Interaktion
-Frontend und Backend interagieren ausschließlich über definierte Schnittstellen.
-
-### DES-ARCH-04 — Desktop-Shell als Host (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, stellt das System eine Desktop-Shell bereit, die das Frontend hostet.
-
-### DES-ARCH-05 — Systemnahe Fähigkeiten über Desktop-Shell (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, stellt das System IPC, Filesystem-Zugriff, lokalen Cache und Packaging-Fähigkeiten über die Desktop-Shell bereit.
-
-### DES-ARCH-06 — Service-Schicht als Integrationsgrenze
-Services bilden die Integrationsgrenze zwischen UI-Zustand und externen/Backend-Funktionen.
-
-### DES-ARCH-07 — Zustandsgetriebenes Rendering
-UI-Rendering erfolgt auf Basis eines expliziten Zustandsmodells.
-
-### DES-ARCH-08 — Koordination systemnaher Zugriffe (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, werden Systemzugriffe durch die Desktop-Shell koordiniert.
-
-### DES-ARCH-09 — Austauschbarkeit des Backends
-Das Backend ist hinter JSON- und IPC-Verträgen austauschbar.
-
-### DES-ARCH-10 — Fehler als modellierte Zustände
-Fehler werden als explizite Systemzustände modelliert und transportiert.
-
-### DES-ARCH-11 — Externe API-Abstraktion
-Externe APIs werden hinter internen Service-Abstraktionen genutzt.
-
-### DES-ARCH-12 — Cache als Systemfunktion
-Caching wird als Systemfunktion mit konsistentem Schlüsselraum umgesetzt.
-
-### DES-ARCH-13 — Rate-Limit als Systemfunktion
-Rate-Limiting wird als Systemfunktion pro externer Quelle konfigurierbar umgesetzt.
-
-### DES-ARCH-14 — Deduplication als Systemfunktion
-Identische In-Flight Requests werden als Systemfunktion dedupliziert.
-
-### DES-ARCH-15 — Typisierte IPC-Verträge
-IPC-Nachrichten besitzen korrespondierende Typdefinitionen auf Frontend- und Backend-Seite.
-
-### DES-ARCH-16 — IPC-Service-Layer
-IPC-Aufrufe erfolgen über eine dedizierte Service-Abstraktionsschicht.
-
-### DES-ARCH-17 — Vollständige IPC-Typdefinitionen
-IPC-Typdefinitionen sind vollständig spezifiziert.
-
-### DES-ARCH-18 — Strukturierter IPC-Fehlertransport
-IPC transportiert Fehler als strukturierte, typisierte Fehlobjekte.
-
-### DES-ARCH-19 — Plattformziel Desktop (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, ist das System als Desktop-Anwendung für macOS und Windows ausführbar.
-
-### DES-ARCH-20 — Backend-Lifecycle beim App-Start (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, initialisiert die Desktop-Shell den Backend-Prozess beim Start der Anwendung.
-
-### DES-ARCH-21 — Backend-Verfügbarkeitsprüfung (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, prüft die Desktop-Shell nach Backend-Initialisierung die Erreichbarkeit des Backends über IPC.
-
-### DES-ARCH-22 — Backend-Lifecycle beim App-Ende (falls Zielplattform Desktop)
-Ist die Zielplattform Desktop, terminiert die Desktop-Shell den Backend-Prozess beim ordnungsgemäßen Beenden der Anwendung.
-
-### DES-ARCH-23 — Plattformentscheidung als Anforderung
-Die Zielplattform (z. B. Desktop, Web, API-only) wird in LASTENHEFT.md als explizite Anforderung dokumentiert; die Architektur leitet sich aus dieser Entscheidung ab und bevorzugt moderne, effiziente Technologien, sofern sie den Anforderungen entsprechen.
-
----
-
-## Frontend
-
-### DES-FE-01 — Komponentenbasierte Architektur
-Das Frontend ist komponentenbasiert aufgebaut.
-
-### DES-FE-02 — Komponenten-Zustandsmodelle
-Frontend-Komponenten verwenden Props, lokalen State oder Context.
-
-### DES-FE-03 — Server-State-Verwaltung
-Server-State wird über ein dediziertes Server-State-Management verwaltet.
-
-### DES-FE-04 — Custom Hooks für Datenzugriff
-Alle Datenzugriffe erfolgen über dedizierte Custom Hooks.
-
-### DES-FE-05 — Service-Layer-Nutzung
-Frontend-Komponenten nutzen Backend- und IPC-Funktionalität über eine Service-Abstraktionsschicht.
-
-### DES-FE-06 — Styling-System
-Styling erfolgt über ein konsistentes, projektweit einheitliches Utility-Class-System.
-
-### DES-FE-07 — Komponenten-Testbarkeit
-UI-Komponenten sind isoliert testbar.
-
-### DES-FE-08 — Render-Ökonomie
-Frontend-Komponenten reduzieren Re-Renders durch stabile Props, selektive State-Abhängigkeiten und gezielte Komponentengrenzen.
-
-### DES-FE-09 — Deklaratives Rendering
-UI-Struktur wird durch deklaratives Rendering beschrieben.
-
-### DES-FE-10 — Latenzmodellierung
-Das Frontend modelliert Lade- und Wartezustände als explizite UI-Zustände.
-
-### DES-FE-11 — Fehlerzustände als UI-Zustände
-Das Frontend stellt Fehlerzustände als explizite UI-Zustände dar.
-
-### DES-FE-12 — Partielle Ergebnisse
-Das Frontend unterstützt die Darstellung partieller Ergebnisse.
-
-### DES-FE-13 — Responsive Verhalten
-Responsive Verhalten wird über CSS-basierte Layoutmechanismen umgesetzt.
-
-### DES-FE-14 — Layoutgrößen als CSS-Verantwortung
-Layoutgrößen werden durch CSS-basierte Mechanismen bestimmt.
-
-### DES-FE-15 — Layoutneutrale Visualisierung
-Visualisierungskomponenten passen sich an verfügbaren Platz an.
-
-### DES-FE-16 — Globaler UI-Zustand als expliziter Store
-Globaler UI-Zustand wird über einen expliziten Store mit klar definiertem Scope geführt.
-
-### DES-FE-17 — Eingabenormalisierung
-Frontend-Eingaben werden vor Service-Aufrufen normalisiert und validiert.
-
-### DES-FE-18 — Datenherkunft in der UI
-Das Frontend stellt die Datenherkunft als Anzeigeinformation dar.
-
-### DES-FE-19 — Memoisierung schwerer Berechnungen
-Wiederkehrende schwere Berechnungen werden memoisiert.
-
-### DES-FE-20 — Rendering-Strategie
-Das Frontend rendert die UI als Funktion des UI-Zustandsmodells.
-
----
-
-## Backend
-
-### DES-BE-01 — JSON APIs
-Das Backend stellt JSON APIs bereit.
-
-### DES-BE-02 — Typisierte Schnittstellen
-APIs besitzen explizite Typdefinitionen.
-
-### DES-BE-03 — Versionierte APIs
-APIs sind versioniert.
-
-### DES-BE-04 — Strukturierte Fehlerobjekte
-Fehler werden als strukturierte Fehlerobjekte geliefert.
-
-### DES-BE-05 — Ergebniszustände und Kennzeichnung
-API-Antworten enthalten explizite Felder zur Kennzeichnung von Erfolg, Teil-Erfolg und Fehler.
-
-### DES-BE-06 — Markierung generierter Inhalte
-Backend-Ausgaben aus LLM-Verarbeitung werden als generiert markiert.
-
-### DES-BE-07 — Trennung von verifizierten und generierten Daten
-Backend-Datenmodelle führen verifizierte Daten und generierte Inhalte als getrennte Kategorien.
-
-### DES-BE-08 — Provider-Modell für externe Quellen
-Externe Datenquellen werden als Provider konfigurierbar eingebunden.
-
-### DES-BE-09 — Konfigurationsbasierte Zugangsdaten
-Zugangsdaten werden zur Laufzeit über Konfigurationsmechanismen bereitgestellt.
-
-### DES-BE-10 — Rate-Limit-Unterstützung
-Backend-Zugriffe auf externe APIs berücksichtigen konfigurierbare Rate-Limits.
-
-### DES-BE-11 — Cache-Unterstützung
-Backend-Zugriffe auf externe APIs nutzen einen Cache zur Wiederverwendung von Ergebnissen.
-
-### DES-BE-12 — Deduplication-Unterstützung
-Zeitgleiche identische externe Anfragen werden dedupliziert.
-
-### DES-BE-13 — Sanitization-Fähigkeit
-Backend-Ausgaben liefern Felder in einer Form, die Sanitization und sichere Darstellung unterstützt.
-
-### DES-BE-14 — Vertragstests für APIs
-Backend-APIs werden durch Vertragstests abgesichert.
-
-### DES-BE-15 — Strukturierte Logs
-Backend-Prozesse liefern strukturierte Logs für Fehler und Integrationsereignisse.
-
-### DES-BE-16 — Observability-Anschlussfähigkeit
-Das Backend liefert strukturierte Ereignisdaten als Grundlage für Observability-Integration.
-
----
-
-## LLM
-
-### DES-LLM-01 — Externe Nichtdeterministik
-LLMs gelten als externe, nichtdeterministische Dienste.
-
-### DES-LLM-02 — Kennzeichnung generierter Inhalte
-LLM-Ausgaben werden als generiert gekennzeichnet.
-
-### DES-LLM-03 — Verifikationstrennung
-Verifizierte Daten und LLM-generierte Inhalte werden getrennt behandelt.
-
-### DES-LLM-04 — Ausweisung fehlender Daten
-Fehlende Daten werden als explizite Lücken ausgewiesen.
-
-### DES-LLM-05 — Zwischenspeicherung von Ergebnissen
-LLM-Ergebnisse werden zwischengespeichert.
-
-### DES-LLM-06 — Deduplication identischer Prompts
-Identische LLM-Anfragen werden dedupliziert.
-
-### DES-LLM-07 — LLM-Aufrufkriterium
-LLM-Aufrufe erfolgen für Aufgaben, deren Ergebnis nicht deterministisch aus Systemdaten ableitbar ist.
-
-### DES-LLM-08 — Tokenverbrauchsprotokollierung
-Der Tokenverbrauch wird pro LLM-Aufruf protokolliert.
-
-### DES-LLM-09 — Deterministische Cache-Schlüssel
-LLM-Cache-Schlüssel werden aus Prompt-Inhalt, Parametern und Modellkonfiguration deterministisch abgeleitet.
-
-### DES-LLM-10 — Provider-Priorisierung
-LLM-Provider werden als priorisierte Kette konfigurierbar ausgewählt.
-
-### DES-LLM-11 — Ergebnis-Metadaten
-LLM-Ergebnisse enthalten Metadaten zu Modell, Zeitpunkt und Eingangsparametern.
-
-### DES-LLM-12 — Token-Budget-Fähigkeit
-Das System unterstützt die Einführung von Token-Budgets durch messbare Token-Telemetrie.
-
-### DES-LLM-13 — Mock-Default zur Kostenkontrolle
-Das System initialisiert den LLM-Betrieb in einem Mock-/Demo-Modus als Standardbetriebsmodus.
-
-### DES-LLM-14 — Warnung bei Aktivierung realer LLM-Aufrufe
-Das System zeigt beim Start eine explizite Warnung, wenn reale LLM-Aufrufe aktiviert sind.
-
-### DES-LLM-15 — Cache-Precheck vor LLM-Aufruf
-Das System prüft vor jedem LLM-Aufruf, ob für die aktuelle Parameterkombination ein valides Ergebnis im Cache vorliegt.
-
----
-
-END OF DESIGN.md
+### GOV-23 Security Baseline Freshness Gate
+Audit readiness is `FAIL` when security baseline review age exceeds `SECURITY_BASELINE_MAX_AGE_DAYS`.
+
+## 3. Security baseline metadata (mandatory)
+`SECURITY_BASELINE_REVIEW_UTC=2026-02-25`
+`SECURITY_BASELINE_MAX_AGE_DAYS=90`
+`SECURITY_BASELINE_SOURCES=OWASP_ASVS_5.0.0;OWASP_API_TOP_10;OWASP_TOP_10;NIST_SSDF_SP_800_218;NIST_CSF_2_0;NIST_AI_RMF_GENAI_PROFILE`
+
+## 4. Hardening expectations for gate scripts
+
+Gate scripts must enforce the following checks at minimum:
+1. presence and integrity of normative files (`AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`);
+2. strict delivery order (Requirement -> DEV -> AUDIT -> Release);
+3. independent audit controls (identity separation + audit input firewall);
+4. prompt mode separation via explicit PO role packet (`EXECUTION_MODE=DEV|AUDIT`);
+5. role-packet artifact schema and key integrity (`execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`, `allowed_inputs_hash`, `target_commit_sha`, `po_agent_id`, `created_at_utc`);
+6. security/privacy controls (classification, secrets, retention, redaction, verification evidence);
+7. ISO-conform security/data control verdicts in audit artifacts;
+8. hard-fail behavior when controls are missing or violated.
