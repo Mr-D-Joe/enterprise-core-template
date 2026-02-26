@@ -43,7 +43,7 @@ Supportive templates/checklists live in `docs/governance/*.md`.
 7. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `system_reports/gates/runtime_bootstrap.env`).
 8. Tooling decision checkpoint starts with `system_reports/gates/tooling_decision_template.env` (agent-maintained):
    - set `application_profile` first,
-   - then set stack choices + official source evidence.
+   - then set stack/runtime/compiler choices + official source evidence (latest stable only).
 9. Run quality checks:
    - `./scripts/spec_lint.sh --strict`
    - `./scripts/prompt_firewall_check.sh`

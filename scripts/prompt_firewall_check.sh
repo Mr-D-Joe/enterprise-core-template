@@ -57,6 +57,9 @@ check_contains "$PROMPTS_FILE" 'Missing runtime bootstrap evidence for active sc
 check_contains "$PROMPTS_FILE" 'select `application_profile` from `DESIGN.md` section 1.1 before selecting tools' "Application profile selection rule present"
 check_contains "$PROMPTS_FILE" "keep production choices on stable/LTS channels unless PO-approved exception exists" "Stable/LTS tooling rule present"
 check_contains "$PROMPTS_FILE" 'Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.' "Application profile fail semantics present"
+check_contains "$PROMPTS_FILE" 'enforce Python venv path at project root `.venv` only' "Root-only Python venv rule present"
+check_contains "$PROMPTS_FILE" "target latest stable runtime/compiler versions unless PO-approved exception exists" "Latest-stable runtime/compiler rule present"
+check_contains "$PROMPTS_FILE" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics present"
 
 if grep -Eiq "chain-of-thought|chat history|private rationale" "$PROMPTS_FILE"; then
   echo "OK   Prompt contract forbids DEV-private context for AUDIT mode"

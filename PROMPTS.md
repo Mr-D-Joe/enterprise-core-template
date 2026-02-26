@@ -43,11 +43,14 @@ When `EXECUTION_MODE=DEV`, the agent must:
    - create `.env` from `.env.template` if `.env` is missing,
    - initialize only runtimes required by active `REQ_IDS` and test vectors,
    - create `.venv` automatically when Python runtime is required and `.venv` is missing,
+   - enforce Python venv path at project root `.venv` only,
    - write machine-readable runtime evidence artifact;
 2. run tooling decision checkpoint before implementation:
    - create/update `system_reports/gates/tooling_decision_template.env`,
    - select `application_profile` from `DESIGN.md` section 1.1 before selecting tools,
    - decide tools for frontend/UI, backend, data, and mobile (if in scope),
+   - decide active runtime/compiler versions (Python/Node/.NET/CC/CXX) for in-scope stack,
+   - target latest stable runtime/compiler versions unless PO-approved exception exists,
    - keep production choices on stable/LTS channels unless PO-approved exception exists,
    - verify decisions against official sources within tooling currency window,
    - write machine-readable tooling decision evidence;
@@ -88,8 +91,10 @@ Forbidden input set:
 - Any mode-mixing or wrong role packet => `FINAL_STATUS=FAIL`.
 - Missing/invalid role packet artifact or key mismatch => `FINAL_STATUS=FAIL`.
 - Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.
+- Python virtual environment path outside project root `.venv` => `FINAL_STATUS=FAIL`.
 - Missing tooling decision evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
+- Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.
 - Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`.
