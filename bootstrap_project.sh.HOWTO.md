@@ -74,6 +74,7 @@ Zusätzlich werden Platzhalter (Projektname, Datum) direkt ersetzt, damit du sof
 1. `system_reports/gates/runtime_bootstrap.env` kurz prüfen (Status/Evidenz).
 2. `system_reports/gates/tooling_decision_template.env` mit Tool-Entscheidung + Quellen füllen (Agent-Aufgabe).
    - zuerst `application_profile` setzen,
-   - dann konkrete Stack-Auswahl + offizielle Quellen eintragen.
+   - dann konkrete Stack-Auswahl + Runtime-/Compiler-Versionen eintragen,
+   - nur neueste stabile Versionen verwenden und mit offiziellen Quellen belegen.
 3. `system_reports/gates/po_role_packet_template.env` mit `REQ_IDS` und Scope ausfüllen.
 4. DEV-Run starten (ohne manuelle Runtime-Setup-Kommandos für den Kunden).

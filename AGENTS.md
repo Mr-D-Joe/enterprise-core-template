@@ -66,6 +66,8 @@ This document is normative and binding.
 - DEV must create `.env` from `.env.template` automatically when missing.
 - DEV must prepare only required runtimes based on active `REQ_IDS` and test vectors.
 - Python requirements must trigger automatic `.venv` creation when missing.
+- Python virtual environment location is fixed to project root `.venv` only.
+- Runtime/compiler selections for active scope must target latest stable versions with dated official-source evidence.
 - Customer-facing instructions to run setup commands manually are forbidden.
 - Missing required toolchains must be reported as explicit blocker evidence with `FINAL_STATUS=FAIL`.
 

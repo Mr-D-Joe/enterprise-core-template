@@ -34,6 +34,8 @@ Tooling must start with one profile selection before implementation.
    - use `PROFILE_MOBILE_CROSS_PLATFORM` by default;
    - use `PROFILE_MOBILE_IOS_FIRST` only when iOS-first quality/integration is explicit.
 6. If no profile matches exactly, choose the nearest profile and document deviation in tooling decision evidence.
+7. Active runtime and compiler versions (Python/Node/.NET/CC/CXX as applicable) must be latest stable at decision time and evidenced with official sources.
+8. Python virtual environment path is fixed to project root `.venv`; nested or alternative venv locations are non-conform.
 
 ### 1.3 Tooling decision packet schema (mandatory)
 `system_reports/gates/tooling_decision_template.env` must include at least:
@@ -46,6 +48,11 @@ Tooling must start with one profile selection before implementation.
 - `data_choice`
 - `mobile_choice`
 - `stability_target`
+- `python_version_choice`
+- `node_version_choice`
+- `dotnet_version_choice`
+- `cc_choice`
+- `cxx_choice`
 - `official_source_1`
 - `official_source_2`
 - `source_verified_utc`
@@ -148,6 +155,12 @@ Before implementation, DEV must bind the change package to one `application_prof
 
 ### GOV-28 Type-Safe UI Default
 For production web scope, the UI stack must be TypeScript-based. Non-typed UI stacks require explicit PO risk acceptance in evidence artifacts.
+
+### GOV-29 Runtime and Compiler Currency
+For active scope, runtime and compiler decisions must target latest stable versions and be evidenced with dated official sources.
+
+### GOV-30 Root-Only Python Environment
+Python virtual environment location is fixed to project root `.venv`; alternative locations are blocked for release readiness.
 
 ## 3. Security baseline metadata (mandatory)
 `SECURITY_BASELINE_REVIEW_UTC=2026-02-25`

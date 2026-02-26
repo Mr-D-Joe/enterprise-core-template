@@ -24,9 +24,11 @@ No step may be skipped or reordered.
 - DEV phase:
   - changes are traceable to `REQ_IDS`,
   - tooling decision packet is updated if stack/runtime choices changed,
+  - active runtime/compiler versions are documented as latest stable with source/date evidence,
   - deterministic tests executed and linked,
   - security/privacy checks executed and linked (secret scan, dependency risk check, privacy/logging tests),
-  - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact.
+  - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact,
+  - Python virtual environment is located at project root `.venv` only.
 - AUDIT phase:
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
@@ -45,7 +47,9 @@ No step may be skipped or reordered.
 - Missing official-source or tooling-currency evidence in tooling decision packet.
 - Missing security/privacy traceability or missing security/privacy evidence.
 - Missing runtime bootstrap evidence for active `REQ_IDS`.
+- Python virtual environment not located at project root `.venv`.
 - Customer-facing manual runtime/setup instructions issued by DEV.
+- Missing latest-stable runtime/compiler evidence for active scope.
 - Hardcoded secrets/keys/tokens or unredacted personal data in code, tests, logs, or artifacts.
 - Missing ISO security/data control verdicts in audit report.
 - Security baseline age exceeds configured maximum age.

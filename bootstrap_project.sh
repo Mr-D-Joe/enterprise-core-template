@@ -133,6 +133,12 @@ backend_choice=FastAPI
 data_choice=PostgreSQL
 mobile_choice=none
 stability_target=stable_or_lts
+python_version_choice=auto_latest_stable
+node_version_choice=auto_latest_stable
+dotnet_version_choice=auto_latest_stable
+cc_choice=auto_latest_stable
+cxx_choice=auto_latest_stable
+python_venv_path=.venv
 official_source_1=
 official_source_2=
 official_source_3=
@@ -156,6 +162,7 @@ RUNTIME_PROFILE=python
 
 # Python
 PYTHON_BIN=python3
+# Fixed policy: Python venv is project-root .venv only.
 PYTHON_VENV_DIR=.venv
 PYTHONPATH=
 
@@ -233,10 +240,13 @@ cat > "$TARGET_DIR/system_reports/gates/runtime_bootstrap.env" <<EOF
 runtime_bootstrap_status=$runtime_bootstrap_status
 runtime_bootstrap_utc=$NOW_UTC_TS
 customer_manual_steps_required=false
+runtime_version_policy=latest_stable_required
 env_template_created=true
 env_file_created=true
 python_bin=${python_bin:-missing}
 python_venv_status=$python_venv_status
+python_venv_path=.venv
+python_venv_root_only=true
 node_bin=${node_bin:-missing}
 dotnet_bin=${dotnet_bin:-missing}
 cc_bin=${cc_bin:-missing}
