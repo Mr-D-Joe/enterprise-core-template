@@ -44,6 +44,7 @@ The system must reject invalid ticker formats before data-provider lookup.
 - Target: `backend/src/...`
 - Data-Flow: `api_request -> schema_validation -> service_handler`
 - Error-State: `validation failure returns deterministic 400 response`
-- Test-Vector: `pytest -q test_be_req_01`
+- Test-Vector-Positive: `pytest -q test_be_req_01_pos`
+- Test-Vector-Negative: `pytest -q test_be_req_01_neg`
 - Security-Privacy: `data_class=internal; pii=none; secrets=runtime_env_only; retention=14d; logging=redacted; encryption=in_transit`
 - Trace: `BE-REQ-01, DES-BE-001, TEST-BE-001, dev_gate:req_trace`

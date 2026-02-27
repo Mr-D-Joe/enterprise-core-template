@@ -44,6 +44,7 @@ The system must persist ticker price snapshots with deterministic retention and 
 - Target: `backend/src/db/...`
 - Data-Flow: `normalized_market_data -> persistence_layer -> snapshot_table`
 - Error-State: `write failure returns retryable error without partial commit`
-- Test-Vector: `pytest -q test_db_req_01`
+- Test-Vector-Positive: `pytest -q test_db_req_01_pos`
+- Test-Vector-Negative: `pytest -q test_db_req_01_neg`
 - Security-Privacy: `data_class=internal; pii=none; secrets=secret_store_only; retention=365d; logging=redacted; encryption=at_rest_and_in_transit`
 - Trace: `DB-REQ-01, DES-DATA-001, TEST-DB-001, audit_gate:req_coverage`

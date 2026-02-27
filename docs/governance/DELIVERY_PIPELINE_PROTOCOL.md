@@ -12,10 +12,12 @@ This protocol is supportive and becomes binding only when referenced by normativ
 
 3. Development gate (DEV)
 - Run quality and traceability checks.
+- Execute and record per active REQ: >=1 positive test and >=1 negative test.
 - Produce DEV report artifact.
 
 4. Independent audit (AUDIT)
 - Validate with approved inputs only.
+- Validate per active REQ positive+negative executed tests and package test count > 0.
 - Produce AUDIT report and decision.
 
 5. GitHub integration
@@ -32,6 +34,7 @@ No step may be skipped or reordered.
 
 ## Required minimum evidence
 - Requirement packet
+- Per-REQ test execution evidence (positive + negative)
 - DEV report
 - AUDIT report
 - PR link

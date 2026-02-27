@@ -44,6 +44,7 @@ The system must show a deterministic validation message when the user submits an
 - Target: `frontend/src/...`
 - Data-Flow: `form_input -> client_validation -> ui_feedback`
 - Error-State: `invalid input keeps user on form and blocks request dispatch`
-- Test-Vector: `npm run test -- ui_req_01`
+- Test-Vector-Positive: `npm run test -- ui_req_01_pos`
+- Test-Vector-Negative: `npm run test -- ui_req_01_neg`
 - Security-Privacy: `data_class=internal; pii=none; secrets=none; retention=not_applicable; logging=redacted; encryption=not_applicable`
 - Trace: `UI-REQ-01, DES-UI-001, TEST-UI-001, dev_gate:req_trace`

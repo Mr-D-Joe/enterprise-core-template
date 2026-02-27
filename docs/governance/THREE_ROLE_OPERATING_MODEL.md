@@ -19,6 +19,7 @@ Mandatory outputs:
 Responsibilities:
 - Implement only approved requirement packet scope.
 - Maintain REQ -> Code -> Test traceability.
+- Execute at least one positive and one negative test per active REQ with evidence.
 - Produce dev evidence and commit implementation changes.
 
 Mandatory outputs:
@@ -30,6 +31,7 @@ Mandatory outputs:
 Responsibilities:
 - Verify independently against normative artifacts.
 - Validate traceability, quality gates, and policy compliance.
+- Validate per active REQ: positive+negative executed test evidence and non-zero test count.
 - Decide APPROVE / REJECT.
 - On APPROVE: authorize PO to execute official PR closure path (merge per policy).
 

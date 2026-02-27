@@ -27,7 +27,7 @@ Concurrent/overlapping change packages are forbidden.
   - changes are traceable to `REQ_IDS`,
   - tooling decision packet is updated if stack/runtime choices changed,
   - active runtime/compiler versions are documented as latest stable with source/date evidence,
-  - deterministic tests executed and linked,
+  - deterministic tests executed and linked with per-`REQ_ID` coverage (minimum one positive and one negative test),
   - security/privacy checks executed and linked (secret scan, dependency risk check, privacy/logging tests),
   - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact,
   - Python virtual environment is located at project root `.venv` only.
@@ -35,6 +35,8 @@ Concurrent/overlapping change packages are forbidden.
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
   - findings include severity and evidence,
+  - each active `REQ_ID` has executed positive+negative test evidence and package test count is greater than zero,
+  - package-level executed positive test count is greater than zero and executed negative test count is greater than zero,
   - ISO-conform security/data control evidence is validated before decision,
   - security baseline freshness check is validated before decision.
 
@@ -52,6 +54,10 @@ Concurrent/overlapping change packages are forbidden.
 - Python virtual environment not located at project root `.venv`.
 - Customer-facing manual runtime/setup instructions issued by DEV.
 - Missing latest-stable runtime/compiler evidence for active scope.
+- Missing per-`REQ_ID` test coverage evidence (minimum one executed positive and one executed negative test).
+- Total executed test count for active package equals zero.
+- Executed positive test count for active package equals zero.
+- Executed negative test count for active package equals zero.
 - Hardcoded secrets/keys/tokens or unredacted personal data in code, tests, logs, or artifacts.
 - Missing ISO security/data control verdicts in audit report.
 - Security baseline age exceeds configured maximum age.
