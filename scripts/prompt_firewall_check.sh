@@ -38,6 +38,7 @@ check_contains "$PROMPTS_FILE" "run runtime bootstrap protocol before implementa
 check_contains "$PROMPTS_FILE" "AUDIT execution mode contract" "AUDIT execution mode section present"
 check_contains "$PROMPTS_FILE" "Allowed input set:" "AUDIT allowed input section present"
 check_contains "$PROMPTS_FILE" "Forbidden input set:" "AUDIT forbidden input section present"
+check_contains "$PROMPTS_FILE" "deterministic positive and negative test vectors and evidence paths." "PO test-vector pair requirement present"
 check_contains "$PROMPTS_FILE" "EXECUTION_MODE=DEV" "DEV execution mode token present"
 check_contains "$PROMPTS_FILE" "EXECUTION_MODE=AUDIT" "AUDIT execution mode token present"
 check_contains "$PROMPTS_FILE" "Role packet artifact (machine-readable, mandatory)" "Role packet artifact section present"
@@ -64,6 +65,15 @@ check_contains "$PROMPTS_FILE" "Only one active change package is allowed at any
 check_contains "$PROMPTS_FILE" "ensure no open package exists before starting a new package;" "PO open-package lock check present"
 check_contains "$PROMPTS_FILE" "start a second package while the current package is not closed through AUDIT -> PR -> Merge -> Version." "DEV overlap prohibition present"
 check_contains "$PROMPTS_FILE" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics present"
+check_contains "$PROMPTS_FILE" 'execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;' "DEV per-REQ positive/negative test execution rule present"
+check_contains "$PROMPTS_FILE" 'verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;' "AUDIT per-REQ positive/negative verification rule present"
+check_contains "$PROMPTS_FILE" "verify total executed tests for active package is greater than zero;" "AUDIT non-zero test count verification rule present"
+check_contains "$PROMPTS_FILE" "verify executed positive test count for active package is greater than zero;" "AUDIT positive test count verification rule present"
+check_contains "$PROMPTS_FILE" "verify executed negative test count for active package is greater than zero;" "AUDIT negative test count verification rule present"
+check_contains "$PROMPTS_FILE" 'Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.' "Per-REQ test coverage fail semantics present"
+check_contains "$PROMPTS_FILE" 'Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-test fail semantics present"
+check_contains "$PROMPTS_FILE" 'Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-positive fail semantics present"
+check_contains "$PROMPTS_FILE" 'Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-negative fail semantics present"
 
 if grep -Eiq "chain-of-thought|chat history|private rationale" "$PROMPTS_FILE"; then
   echo "OK   Prompt contract forbids DEV-private context for AUDIT mode"

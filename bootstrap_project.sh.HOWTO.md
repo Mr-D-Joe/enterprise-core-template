@@ -78,3 +78,4 @@ Zusätzlich werden Platzhalter (Projektname, Datum) direkt ersetzt, damit du sof
    - nur neueste stabile Versionen verwenden und mit offiziellen Quellen belegen.
 3. `system_reports/gates/po_role_packet_template.env` mit `REQ_IDS` und Scope ausfüllen.
 4. DEV-Run starten (ohne manuelle Runtime-Setup-Kommandos für den Kunden).
+5. Traceability-Matrix pflegen: pro aktivem `REQ_ID` mindestens ein Positiv- und ein Negativ-Test mit Evidenz und `PASS`.

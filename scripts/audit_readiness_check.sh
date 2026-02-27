@@ -67,6 +67,7 @@ check_contains "$BASE_DIR/DESIGN.md" "GOV-28 Type-Safe UI Default" "Type-safe UI
 check_contains "$BASE_DIR/DESIGN.md" "GOV-29 Runtime and Compiler Currency" "Runtime/compiler currency rule in DESIGN"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-30 Root-Only Python Environment" "Root-only Python environment rule in DESIGN"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-31 Serial Change Package Lock" "Serial change package lock rule in DESIGN"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-32 Per-Requirement Test Pair Coverage" "Per-REQ test pair coverage rule in DESIGN"
 check_contains "$BASE_DIR/DESIGN.md" "SECURITY_BASELINE_REVIEW_UTC=" "Security baseline review metadata in DESIGN"
 check_contains "$BASE_DIR/DESIGN.md" "SECURITY_BASELINE_MAX_AGE_DAYS=" "Security baseline max-age metadata in DESIGN"
 check_contains "$BASE_DIR/DESIGN.md" "SECURITY_BASELINE_SOURCES=" "Security baseline source metadata in DESIGN"
@@ -88,6 +89,12 @@ check_contains "$BASE_DIR/AGENTS.md" 'Python virtual environment location is fix
 check_contains "$BASE_DIR/AGENTS.md" "Runtime/compiler selections for active scope must target latest stable versions with dated official-source evidence." "Latest-stable runtime/compiler rule in AGENTS"
 check_contains "$BASE_DIR/AGENTS.md" "Single active change package lock" "Single active package section in AGENTS"
 check_contains "$BASE_DIR/AGENTS.md" "PO must not issue a new DEV or AUDIT role packet while the current package is not closed." "PO package lock rule in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" "Per-Requirement test execution minimum" "Per-REQ test execution section in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" 'at least one executed positive test (`PASS`) and' "Per-REQ positive test minimum in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" 'at least one executed negative test (`PASS`).' "Per-REQ negative test minimum in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" "Total executed test count for the active package must be greater than zero." "Non-zero test count rule in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" "Package-level executed positive test count must be greater than zero." "Package-level positive test count rule in AGENTS"
+check_contains "$BASE_DIR/AGENTS.md" "Package-level executed negative test count must be greater than zero." "Package-level negative test count rule in AGENTS"
 check_contains "$BASE_DIR/AGENTS.md" "machine-readable artifact with required keys" "Role packet artifact requirement in AGENTS"
 check_contains "$BASE_DIR/AGENTS.md" "allowed_inputs_hash" "Role packet key list in AGENTS"
 
@@ -110,6 +117,13 @@ check_contains "$BASE_DIR/CONTRIBUTING.md" "Missing required tooling decision ke
 check_contains "$BASE_DIR/CONTRIBUTING.md" 'Python virtual environment not located at project root `.venv`.' "Root-only Python venv blocker in CONTRIBUTING"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Missing latest-stable runtime/compiler evidence for active scope." "Latest-stable runtime/compiler blocker in CONTRIBUTING"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "New package started while previous package is not closed" "Open-package blocker in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'deterministic tests executed and linked with per-`REQ_ID` coverage (minimum one positive and one negative test)' "Per-REQ test coverage criterion in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'each active `REQ_ID` has executed positive+negative test evidence and package test count is greater than zero' "AUDIT per-REQ test coverage criterion in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "package-level executed positive test count is greater than zero and executed negative test count is greater than zero" "AUDIT package-level positive/negative count criterion in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'Missing per-`REQ_ID` test coverage evidence (minimum one executed positive and one executed negative test).' "Per-REQ test coverage blocker in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Total executed test count for active package equals zero." "Zero-test blocker in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Executed positive test count for active package equals zero." "Zero-positive blocker in CONTRIBUTING"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Executed negative test count for active package equals zero." "Zero-negative blocker in CONTRIBUTING"
 
 check_contains "$BASE_DIR/PROMPTS.md" "AUDIT execution mode contract" "AUDIT mode section in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" "Forbidden input set" "Forbidden audit inputs in PROMPTS"
@@ -121,10 +135,20 @@ check_contains "$BASE_DIR/PROMPTS.md" 'enforce Python venv path at project root 
 check_contains "$BASE_DIR/PROMPTS.md" "target latest stable runtime/compiler versions unless PO-approved exception exists" "Latest-stable runtime/compiler rule in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" "Only one active change package is allowed at any time." "Single active package rule in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" "ensure no open package exists before starting a new package;" "PO open-package check in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" "deterministic positive and negative test vectors and evidence paths." "PO positive/negative test vector rule in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;' "DEV per-REQ test execution rule in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;' "AUDIT per-REQ test verification rule in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" "verify total executed tests for active package is greater than zero;" "AUDIT non-zero test count rule in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" "verify executed positive test count for active package is greater than zero;" "AUDIT positive test count rule in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" "verify executed negative test count for active package is greater than zero;" "AUDIT negative test count rule in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime bootstrap fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.' "Application profile fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.' "Per-REQ test coverage fail semantics in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-test fail semantics in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-positive fail semantics in PROMPTS"
+check_contains "$BASE_DIR/PROMPTS.md" 'Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-negative fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Any independence violation => `FINAL_STATUS=FAIL`' "Independence fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Any unresolved blocker/major finding => `FINAL_STATUS=FAIL`' "Blocker fail semantics in PROMPTS"
 check_contains "$BASE_DIR/PROMPTS.md" 'Any mode-mixing or wrong role packet => `FINAL_STATUS=FAIL`' "Execution-mode fail semantics in PROMPTS"
@@ -151,20 +175,38 @@ check_contains "$BASE_DIR/PROMPTS.md" "created_at_utc" "Role packet key created_
 check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "Mandatory ISO-conform security and data checks" "ISO-conform security/data section in audit policy"
 check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" 'Any missing control verdict or failed high-risk control requires `REJECT`.' "Mandatory reject rule in audit policy"
 check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "SECURITY_BASELINE_MAX_AGE_DAYS" "Baseline age control in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "Mandatory requirement-test execution coverage" "Requirement-test coverage section in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" 'at least one executed positive test (`PASS`) per `REQ_ID`;' "Positive test minimum in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" 'at least one executed negative test (`PASS`) per `REQ_ID`;' "Negative test minimum in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "total executed tests for the active package must be greater than zero." "Non-zero test count in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "executed positive test count for the active package must be greater than zero." "Positive test count in audit policy"
+check_contains "$BASE_DIR/docs/governance/INDEPENDENT_AUDIT_POLICY.md" "executed negative test count for the active package must be greater than zero." "Negative test count in audit policy"
 
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "ISO security/data control verdicts (mandatory)" "Security/data section in audit report template"
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" 'Baseline freshness (`SECURITY_BASELINE_REVIEW_UTC` age <= `SECURITY_BASELINE_MAX_AGE_DAYS`): PASS/FAIL' "Baseline freshness line in audit report template"
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Secret/key/token management (no hardcoded secrets): PASS/FAIL" "Secret management line in audit report template"
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Dependency risk/vulnerability review: PASS/FAIL" "Dependency risk line in audit report template"
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "- APPROVE / REJECT" "Binary decision vocabulary in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Requirement test execution coverage (mandatory)" "Requirement test coverage section in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Total executed tests (>0): PASS/FAIL" "Non-zero test count line in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Executed positive tests (>0): PASS/FAIL" "Positive test count line in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Executed negative tests (>0): PASS/FAIL" "Negative test count line in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Positive_Test_ID" "Positive test column in audit report template"
+check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Negative_Test_ID" "Negative test column in audit report template"
 
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Data classification |" "Data classification row in ISO control matrix"
+check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Requirement test execution coverage |" "Requirement test execution coverage row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Data minimization and retention |" "Data minimization/retention row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Secret management |" "Secret management row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Logging redaction |" "Logging redaction row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Encryption controls |" "Encryption row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Dependency risk management |" "Dependency risk row in ISO control matrix"
 check_contains "$BASE_DIR/docs/governance/ISO_CONTROL_MATRIX_TEMPLATE.md" "| Security baseline freshness |" "Baseline freshness row in ISO control matrix"
+check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Pos_ID" "Positive test ID column in traceability matrix template"
+check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Neg_ID" "Negative test ID column in traceability matrix template"
+check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Pos_Result" "Positive test result column in traceability matrix template"
+check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Neg_Result" "Negative test result column in traceability matrix template"
+check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Missing mapping or missing positive/negative coverage is release-blocking." "Traceability matrix positive/negative coverage rule"
 
 check_contains "$BASE_DIR/docs/governance/DELIVERY_PIPELINE_PROTOCOL.md" "PO executes official PR merge path." "PO merge execution in delivery protocol"
 check_contains "$BASE_DIR/docs/governance/GITHUB_RELEASE_PROTOCOL.md" 'Merge execution is performed by PO identity after `AUDIT=APPROVE`.' "PO merge execution in release protocol"
@@ -221,6 +263,122 @@ PY
   else
     echo "OK   security baseline age check ($baseline_age_days <= $baseline_max_age_days days)"
   fi
+fi
+
+latest_po_packet=""
+if [[ -d "$BASE_DIR/system_reports/gates" ]]; then
+  latest_po_packet="$(find "$BASE_DIR/system_reports/gates" -maxdepth 1 -type f -name 'po_role_packet*.env' -print | sort | tail -n1 || true)"
+fi
+
+if [[ -n "$latest_po_packet" ]]; then
+  execution_mode_line="$(grep -E '^execution_mode=' "$latest_po_packet" | head -n1 || true)"
+  execution_mode_value="${execution_mode_line#execution_mode=}"
+  req_ids_line="$(grep -E '^req_ids=' "$latest_po_packet" | head -n1 || true)"
+  req_ids_csv="${req_ids_line#req_ids=}"
+  req_ids_csv="$(printf '%s' "$req_ids_csv" | tr -d '[:space:]')"
+
+  if [[ -z "$req_ids_csv" ]]; then
+    if [[ "$execution_mode_value" == "AUDIT" ]]; then
+      echo "FAIL req_ids is empty in AUDIT PO role packet: $latest_po_packet"
+      EXIT_CODE=1
+    else
+      echo "INFO req_ids is empty in PO role packet ($latest_po_packet); skipping active-package test execution coverage check"
+    fi
+  else
+    trace_matrix_file="$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md"
+    if [[ ! -f "$trace_matrix_file" ]]; then
+      echo "FAIL missing traceability matrix file for test execution coverage check: $trace_matrix_file"
+      EXIT_CODE=1
+    else
+      if ! awk -v req_csv="$req_ids_csv" '
+      BEGIN {
+        rc=0;
+        total_exec=0;
+        positive_exec=0;
+        negative_exec=0;
+        split(req_csv, req_parts, ",");
+        for (i in req_parts) {
+          r=req_parts[i];
+          gsub(/^[ \t]+|[ \t]+$/, "", r);
+          if (r != "") required[r]=1;
+        }
+      }
+      function trim(s) {
+        gsub(/^[ \t]+|[ \t]+$/, "", s);
+        return s;
+      }
+      /^\|/ {
+        line=$0;
+        if (line ~ /^\|---/) next;
+        split(line, c, "|");
+        req=trim(c[2]);
+        if (req == "" || req == "REQ_ID") next;
+        if (!(req in required)) next;
+
+        found[req]=1;
+        pos_id=trim(c[6]);
+        pos_ev=trim(c[7]);
+        pos_res=toupper(trim(c[8]));
+        neg_id=trim(c[9]);
+        neg_ev=trim(c[10]);
+        neg_res=toupper(trim(c[11]));
+
+        if (pos_id == "" || pos_ev == "" || pos_res == "") {
+          printf("FAIL req %s missing positive test id/evidence/result in traceability matrix\n", req);
+          rc=1;
+        } else if (pos_res != "PASS") {
+          printf("FAIL req %s positive test result is not PASS (%s)\n", req, pos_res);
+          rc=1;
+        } else {
+          total_exec++;
+          positive_exec++;
+        }
+
+        if (neg_id == "" || neg_ev == "" || neg_res == "") {
+          printf("FAIL req %s missing negative test id/evidence/result in traceability matrix\n", req);
+          rc=1;
+        } else if (neg_res != "PASS") {
+          printf("FAIL req %s negative test result is not PASS (%s)\n", req, neg_res);
+          rc=1;
+        } else {
+          total_exec++;
+          negative_exec++;
+        }
+      }
+      END {
+        for (r in required) {
+          if (!(r in found)) {
+            printf("FAIL req %s missing from traceability matrix\n", r);
+            rc=1;
+          }
+        }
+        if (total_exec <= 0) {
+          print "FAIL total executed tests for active package is zero";
+          rc=1;
+        } else {
+          printf("OK   active package executed tests count > 0 (%d)\n", total_exec);
+        }
+        if (positive_exec <= 0) {
+          print "FAIL executed positive test count for active package is zero";
+          rc=1;
+        } else {
+          printf("OK   active package positive tests count > 0 (%d)\n", positive_exec);
+        }
+        if (negative_exec <= 0) {
+          print "FAIL executed negative test count for active package is zero";
+          rc=1;
+        } else {
+          printf("OK   active package negative tests count > 0 (%d)\n", negative_exec);
+        }
+        exit rc;
+      }
+      ' "$trace_matrix_file"; then
+        EXIT_CODE=1
+      fi
+    fi
+  fi
+else
+  echo "INFO no PO role packet found in system_reports/gates; skipping active-package test execution coverage check"
 fi
 
 if [[ -x "$BASE_DIR/scripts/prompt_firewall_check.sh" ]]; then

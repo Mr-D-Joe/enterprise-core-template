@@ -10,7 +10,7 @@ This document is normative and binding.
   - `EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`,
   - `REQ_IDS=req_id_1,req_id_2,...`,
   - scope boundaries and acceptance criteria,
-  - deterministic test vectors and evidence paths.
+  - deterministic positive and negative test vectors and evidence paths.
 
 Without a valid PO role packet, DEV/AUDIT execution is forbidden.
 
@@ -58,8 +58,9 @@ When `EXECUTION_MODE=DEV`, the agent must:
    - write machine-readable tooling decision evidence;
 3. implement only PO-approved scope;
 4. maintain REQ -> Design -> Code -> Test traceability;
-5. produce DEV evidence on committed state;
-6. hand over only machine-readable evidence artifacts.
+5. execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;
+6. produce DEV evidence on committed state;
+7. hand over only machine-readable evidence artifacts.
 
 DEV mode must not:
 - self-approve release readiness;
@@ -75,8 +76,12 @@ In DEV mode the agent must never output secrets, keys, tokens, or personal data 
 When `EXECUTION_MODE=AUDIT`, the agent must:
 1. verify independently against normative docs, committed diff, and test/gate evidence;
 2. enforce role separation and audit input firewall;
-3. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
-4. issue findings with severity and decision `APPROVE` or `REJECT`.
+3. verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;
+4. verify total executed tests for active package is greater than zero;
+5. verify executed positive test count for active package is greater than zero;
+6. verify executed negative test count for active package is greater than zero;
+7. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
+8. issue findings with severity and decision `APPROVE` or `REJECT`.
 
 Allowed input set:
 - `AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, specs;
@@ -98,6 +103,10 @@ Forbidden input set:
 - Missing tooling decision evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
 - Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
+- Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.
+- Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.
+- Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.
+- Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.
 - Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
 - Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.

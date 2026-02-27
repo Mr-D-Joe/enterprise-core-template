@@ -165,6 +165,10 @@ Python virtual environment location is fixed to project root `.venv`; alternativ
 ### GOV-31 Serial Change Package Lock
 Only one change package may be active. Starting a new package before the current package reaches Merge and Version closure is `FAIL`.
 
+### GOV-32 Per-Requirement Test Pair Coverage
+For every active `REQ_ID`, audit evidence must show at least one executed positive test (`PASS`) and one executed negative test (`PASS`). Total executed tests for the active package must be greater than zero.
+`positive_count > 0` and `negative_count > 0` are both mandatory at package level; one side cannot compensate for the other.
+
 ## 3. Security baseline metadata (mandatory)
 `SECURITY_BASELINE_REVIEW_UTC=2026-02-25`
 `SECURITY_BASELINE_MAX_AGE_DAYS=90`
@@ -187,3 +191,4 @@ Gate scripts must enforce the following checks at minimum:
 9. tooling decision checkpoint before implementation with official-source and currency evidence.
 10. tooling decision packet schema completeness (`application_profile`, stack choices, stability target, source verification fields).
 11. serial package lock enforcement (no overlapping PO packets before prior package closure).
+12. per-REQ test pair execution enforcement (positive+negative) with non-zero executed test count for active package.

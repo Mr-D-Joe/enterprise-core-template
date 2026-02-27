@@ -11,7 +11,8 @@ Required for each requirement block:
   - Target
   - Data-Flow
   - Error-State
-  - Test-Vector
+  - Test-Vector-Positive
+  - Test-Vector-Negative
   - Security-Privacy (`data_class=...; pii=...; secrets=...; retention=...; logging=...; encryption=...`)
   - Trace
 
@@ -21,4 +22,5 @@ Trace format requirement:
 Global rules:
 - No unresolved placeholders in finalized specs.
 - No duplicate REQ-IDs.
+- Every REQ must define at least one positive and one negative deterministic test vector.
 - Optional fields only when relevant.

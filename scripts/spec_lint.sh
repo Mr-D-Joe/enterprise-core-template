@@ -37,7 +37,7 @@ check_requirement_blocks() {
   }
   function reset_flags() {
     has_must=0; has_reqctx=0; has_intent=0; has_ac=0;
-    has_secctx=0; has_contract=0; has_target=0; has_flow=0; has_err=0; has_test=0; has_secpriv=0; has_trace=0;
+    has_secctx=0; has_contract=0; has_target=0; has_flow=0; has_err=0; has_test_pos=0; has_test_neg=0; has_secpriv=0; has_trace=0;
   }
   function validate_req() {
     if (!in_req) return;
@@ -50,7 +50,8 @@ check_requirement_blocks() {
     if (!has_target) fail(req " missing Target");
     if (!has_flow) fail(req " missing Data-Flow");
     if (!has_err) fail(req " missing Error-State");
-    if (!has_test) fail(req " missing Test-Vector");
+    if (!has_test_pos) fail(req " missing Test-Vector-Positive");
+    if (!has_test_neg) fail(req " missing Test-Vector-Negative");
     if (!has_secpriv) fail(req " missing Security-Privacy");
     if (!has_trace) fail(req " missing Trace");
   }
@@ -71,7 +72,8 @@ check_requirement_blocks() {
     if (line ~ /^- Target: /) has_target=1;
     if (line ~ /^- Data-Flow: /) has_flow=1;
     if (line ~ /^- Error-State: /) has_err=1;
-    if (line ~ /^- Test-Vector: /) has_test=1;
+    if (line ~ /^- Test-Vector-Positive: /) has_test_pos=1;
+    if (line ~ /^- Test-Vector-Negative: /) has_test_neg=1;
     if (line ~ /^- Security-Privacy: /) {
       has_secpriv=1;
       sec=line;

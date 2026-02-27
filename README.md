@@ -40,6 +40,7 @@ Supportive templates/checklists live in `docs/governance/*.md`.
 4. Fill `LASTENHEFT.md`.
 5. Author requirements in `docs/specs/*.md`.
 6. Maintain traceability matrix in `docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md`.
+   - for each active `REQ_ID`: at least one positive and one negative executed test with evidence.
 7. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `system_reports/gates/runtime_bootstrap.env`).
 8. Tooling decision checkpoint starts with `system_reports/gates/tooling_decision_template.env` (agent-maintained):
    - set `application_profile` first,

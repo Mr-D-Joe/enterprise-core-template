@@ -42,6 +42,7 @@ The system must satisfy deterministic response-time SLO under defined load.
 - Target: `.github/workflows/...`, `tests/...`
 - Data-Flow: `request_load -> api_handler -> cache_lookup -> response`
 - Error-State: `slo breach triggers failed quality gate with explicit metric output`
-- Test-Vector: `pytest -q test_nfr_req_01`
+- Test-Vector-Positive: `pytest -q test_nfr_req_01_pos`
+- Test-Vector-Negative: `pytest -q test_nfr_req_01_neg`
 - Security-Privacy: `data_class=internal; pii=none; secrets=injected_nonprod; retention=30d; logging=redacted; encryption=in_transit`
 - Trace: `NFR-REQ-01, DES-NFR-001, TEST-NFR-001, audit_gate:req_coverage`

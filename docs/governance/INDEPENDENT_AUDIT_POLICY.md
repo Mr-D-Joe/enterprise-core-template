@@ -27,6 +27,17 @@ Ensure independent release assurance with ISO-aligned evidence quality.
 - Decision: APPROVE / REJECT.
 - CAPA linkage for nonconformities.
 
+## 4.1 Mandatory requirement-test execution coverage
+AUDIT must produce explicit coverage evidence for every active `REQ_ID`:
+- at least one executed positive test (`PASS`) per `REQ_ID`;
+- at least one executed negative test (`PASS`) per `REQ_ID`;
+- total executed tests for the active package must be greater than zero.
+- executed positive test count for the active package must be greater than zero.
+- executed negative test count for the active package must be greater than zero.
+- `positive_count=0` or `negative_count=0` is always `REJECT`; no substitution allowed.
+
+Any missing per-`REQ_ID` positive/negative test evidence or zero total executed tests requires `REJECT`.
+
 ## 5. Mandatory ISO-conform security and data checks
 AUDIT must produce explicit PASS/FAIL verdicts with evidence for:
 - Data classification and processing boundaries per affected REQ-ID.

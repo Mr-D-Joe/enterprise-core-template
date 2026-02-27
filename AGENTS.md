@@ -48,6 +48,18 @@ This document is normative and binding.
 - A package is closed only after Requirement -> DEV evidence -> Independent AUDIT decision -> PR -> Merge -> Version.
 - Any overlapping/parallel package initiation is a governance violation and must hard-fail.
 
+## 4.2 Per-Requirement test execution minimum
+- AUDIT must validate executed test evidence for every active `REQ_ID`.
+- Minimum coverage per active `REQ_ID` is:
+  - at least one executed positive test (`PASS`) and
+  - at least one executed negative test (`PASS`).
+- Total executed test count for the active package must be greater than zero.
+- Package-level executed positive test count must be greater than zero.
+- Package-level executed negative test count must be greater than zero.
+- `positive_count=0` is always `FAIL`, even if negative tests exist.
+- `negative_count=0` is always `FAIL`, even if positive tests exist.
+- Missing per-`REQ_ID` positive/negative execution evidence or total executed test count of zero is a governance violation and must hard-fail.
+
 ## 5. Prompt and runtime separation controls
 - `PROMPTS.md` is the only normative prompt source.
 - PO must issue explicit role packets (`EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`).

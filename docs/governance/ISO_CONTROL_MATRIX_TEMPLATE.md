@@ -5,6 +5,7 @@
 | Requirement quality | ISO 9001 style QMS controls | Atomic, testable requirements | spec files + lint output | PO | planned |
 | Documented process | ISO 9001 style documented procedures | Design/Lastenheft/spec hierarchy | DESIGN.md, LASTENHEFT.md | PO | planned |
 | Traceability | ISO 9001 style traceability and records | REQ->Design->Code->Test->Gate | trace matrix, gate logs | DEV | planned |
+| Requirement test execution coverage | ISO 9001 style verification controls | per active REQ: >=1 positive PASS and >=1 negative PASS; total tests > 0 | trace matrix + audit report | DEV/AUDIT | planned |
 | Access and integrity | ISO 27001 style controls | separated roles and artifact integrity | audit policy, signed reports | AUDIT | planned |
 | Independent assurance | ISO 9001/27001 governance | independent audit decision | audit report template | AUDIT | planned |
 | Data classification | ISO 27001/27701 style controls | classified data and boundary mapping | specs + audit report | DEV/AUDIT | planned |

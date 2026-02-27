@@ -20,6 +20,15 @@
 - Matrix completeness: PASS/FAIL
 - Missing mappings:
 
+## Requirement test execution coverage (mandatory)
+- Total executed tests (>0): PASS/FAIL
+- Executed positive tests (>0): PASS/FAIL
+- Executed negative tests (>0): PASS/FAIL
+- Missing per-REQ positive/negative coverage:
+| REQ_ID | Positive_Test_ID | Positive_Evidence | Positive_Result | Negative_Test_ID | Negative_Evidence | Negative_Result | Coverage_Verdict |
+|---|---|---|---|---|---|---|---|
+| <REQ_ID> | <TEST_POS_ID> | <artifact/link> | PASS/FAIL | <TEST_NEG_ID> | <artifact/link> | PASS/FAIL | PASS/FAIL |
+
 ## ISO-aligned control check
 - Quality process evidence: PASS/FAIL
 - Integrity/access control evidence: PASS/FAIL

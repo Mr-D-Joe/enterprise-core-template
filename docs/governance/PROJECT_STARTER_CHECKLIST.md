@@ -13,6 +13,7 @@
 
 ## Quality enforcement
 - [ ] Add/maintain traceability matrix.
+- [ ] Enforce per active REQ: >=1 positive PASS and >=1 negative PASS test with evidence.
 - [ ] Run `scripts/spec_lint.sh --strict`.
 - [ ] Run `scripts/audit_readiness_check.sh`.
 - [ ] Run `scripts/pipeline_order_check.sh`.
