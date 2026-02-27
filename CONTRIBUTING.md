@@ -12,10 +12,12 @@ This document is normative and binding.
 7. Version/tag and release note
 
 No step may be skipped or reordered.
+Concurrent/overlapping change packages are forbidden.
 
 ## 2. Entry criteria per phase
 - Requirement phase (PO):
   - work packet exists with `REQ_IDS`,
+  - no active open change package exists from prior execution chain,
   - machine-readable PO role packet exists with required keys,
   - tooling decision packet contains `application_profile` and stack choices,
   - tooling decision packet exists with official-source evidence and verification date,
@@ -55,6 +57,7 @@ No step may be skipped or reordered.
 - Security baseline age exceeds configured maximum age.
 - Unresolved blocker/major findings.
 - Missing required gate evidence artifacts.
+- New package started while previous package is not closed (missing any of: DEV gate, AUDIT decision, PR/Merge, Version).
 
 ## 4. PR policy
 - PR must include:

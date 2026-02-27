@@ -60,6 +60,10 @@ check_contains "$PROMPTS_FILE" 'Missing `application_profile` in tooling decisio
 check_contains "$PROMPTS_FILE" 'enforce Python venv path at project root `.venv` only' "Root-only Python venv rule present"
 check_contains "$PROMPTS_FILE" "target latest stable runtime/compiler versions unless PO-approved exception exists" "Latest-stable runtime/compiler rule present"
 check_contains "$PROMPTS_FILE" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics present"
+check_contains "$PROMPTS_FILE" "Only one active change package is allowed at any time." "Single active package model present"
+check_contains "$PROMPTS_FILE" "ensure no open package exists before starting a new package;" "PO open-package lock check present"
+check_contains "$PROMPTS_FILE" "start a second package while the current package is not closed through AUDIT -> PR -> Merge -> Version." "DEV overlap prohibition present"
+check_contains "$PROMPTS_FILE" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics present"
 
 if grep -Eiq "chain-of-thought|chat history|private rationale" "$PROMPTS_FILE"; then
   echo "OK   Prompt contract forbids DEV-private context for AUDIT mode"

@@ -56,8 +56,11 @@ check_contains "$BASE_DIR/AGENTS.md" "Runtime bootstrap autonomy (customer-safe)
 check_contains "$BASE_DIR/AGENTS.md" "Customer-facing instructions to run setup commands manually are forbidden." "No customer manual setup rule in AGENTS present"
 check_contains "$BASE_DIR/AGENTS.md" 'Python virtual environment location is fixed to project root `.venv` only.' "Root-only Python venv rule in AGENTS present"
 check_contains "$BASE_DIR/AGENTS.md" "Runtime/compiler selections for active scope must target latest stable versions with dated official-source evidence." "Latest-stable runtime/compiler rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" "Single active change package lock" "Single active package section in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" "PO must not issue a new DEV or AUDIT role packet while the current package is not closed." "PO package lock rule in AGENTS present"
 
 check_contains "$BASE_DIR/CONTRIBUTING.md" "No step may be skipped or reordered." "Strict sequence rule present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Concurrent/overlapping change packages are forbidden." "No-overlap rule present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Requirement definition and approval (PO)" "Requirement phase present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Independent Audit gate (AUDIT)" "Independent audit phase present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Merge authorization (PO based on AUDIT APPROVE)" "PO merge authority with audit dependency present"
@@ -71,6 +74,7 @@ check_contains "$BASE_DIR/CONTRIBUTING.md" "machine-readable PO role packet exis
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Missing required tooling decision keys" "Tooling decision key blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" 'Python virtual environment not located at project root `.venv`.' "Root-only Python venv blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Missing latest-stable runtime/compiler evidence for active scope." "Latest-stable runtime/compiler blocker in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "New package started while previous package is not closed" "Open-package blocker in CONTRIBUTING present"
 
 check_contains "$BASE_DIR/DESIGN.md" "GOV-14 Mandatory Gate Failure Semantics" "Design hard-fail control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-15 ISO-Aligned Evidence Package" "Design ISO evidence control present"
@@ -86,6 +90,7 @@ check_contains "$BASE_DIR/DESIGN.md" "GOV-27 Profile-First Tool Selection" "Desi
 check_contains "$BASE_DIR/DESIGN.md" "GOV-28 Type-Safe UI Default" "Design type-safe UI default control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-29 Runtime and Compiler Currency" "Design runtime/compiler currency control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-30 Root-Only Python Environment" "Design root-only Python environment control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-31 Serial Change Package Lock" "Design serial change package lock control present"
 check_contains "$BASE_DIR/DESIGN.md" "role-packet artifact schema and key integrity" "Design role-packet integrity control present"
 
 check_contains "$BASE_DIR/PROMPTS.md" "Required gate semantics (no escape path)" "Prompt-level no-escape semantics present"
@@ -100,9 +105,12 @@ check_contains "$BASE_DIR/PROMPTS.md" 'select `application_profile` from `DESIGN
 check_contains "$BASE_DIR/PROMPTS.md" "keep production choices on stable/LTS channels unless PO-approved exception exists" "Stable/LTS tooling selection rule in DEV mode present"
 check_contains "$BASE_DIR/PROMPTS.md" 'enforce Python venv path at project root `.venv` only' "Root-only Python venv rule in DEV mode present"
 check_contains "$BASE_DIR/PROMPTS.md" "target latest stable runtime/compiler versions unless PO-approved exception exists" "Latest-stable runtime/compiler rule in DEV mode present"
+check_contains "$BASE_DIR/PROMPTS.md" "Only one active change package is allowed at any time." "Single active package rule in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" "ensure no open package exists before starting a new package;" "PO open-package check in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime bootstrap fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.' "Application profile fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" "AUDIT execution mode contract" "AUDIT mode section present"
 
 check_contains "$BASE_DIR/docs/governance/DELIVERY_PIPELINE_PROTOCOL.md" "PO executes official PR merge path." "PO merge authority in delivery protocol present"
