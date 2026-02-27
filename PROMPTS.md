@@ -5,6 +5,7 @@ This document is normative and binding.
 ## 1. Single prompt model
 - `PROMPTS.md` is the only normative prompt source.
 - No separate `DEV_PROMPT.md` or `AUDIT_PROMPT.md` is allowed.
+- Only one active change package is allowed at any time.
 - PO controls execution by issuing a role packet with:
   - `EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`,
   - `REQ_IDS=req_id_1,req_id_2,...`,
@@ -32,10 +33,11 @@ PO is the single customer interface and the only role allowed to trigger DEV and
 PO must:
 1. translate customer request into atomic requirement packet;
 2. choose `EXECUTION_MODE` based on project state;
-3. ensure tooling decision checkpoint exists before DEV execution;
-4. pass only approved scope and evidence to the active mode;
-5. keep customer interaction free from manual runtime/toolchain setup requests;
-6. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
+3. ensure no open package exists before starting a new package;
+4. ensure tooling decision checkpoint exists before DEV execution;
+5. pass only approved scope and evidence to the active mode;
+6. keep customer interaction free from manual runtime/toolchain setup requests;
+7. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
 
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
@@ -65,6 +67,7 @@ DEV mode must not:
 - output secrets, keys, tokens, or personal data into chat/logs/artifacts.
 - ask customer to run manual environment/setup commands.
 - ask customer to decide framework/toolchain details unless PO explicitly requests options.
+- start a second package while the current package is not closed through AUDIT -> PR -> Merge -> Version.
 
 In DEV mode the agent must never output secrets, keys, tokens, or personal data into chat, logs, or release artifacts.
 
@@ -96,6 +99,7 @@ Forbidden input set:
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
 - Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
+- Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.
 - Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`.
 - Any unresolved blocker/major finding => `FINAL_STATUS=FAIL`.

@@ -42,6 +42,12 @@ This document is normative and binding.
 - Missing traceability, missing independent audit, or failed audit means `FINAL_STATUS=FAIL`.
 - Any violation of this document results in `NOT_READY_FOR_RELEASE`.
 
+## 4.1 Single active change package lock
+- Exactly one change package may be active at a time.
+- PO must not issue a new DEV or AUDIT role packet while the current package is not closed.
+- A package is closed only after Requirement -> DEV evidence -> Independent AUDIT decision -> PR -> Merge -> Version.
+- Any overlapping/parallel package initiation is a governance violation and must hard-fail.
+
 ## 5. Prompt and runtime separation controls
 - `PROMPTS.md` is the only normative prompt source.
 - PO must issue explicit role packets (`EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`).
