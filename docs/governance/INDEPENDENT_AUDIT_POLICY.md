@@ -35,6 +35,10 @@ AUDIT must produce explicit coverage evidence for every active `REQ_ID`:
 - executed positive test count for the active package must be greater than zero.
 - executed negative test count for the active package must be greater than zero.
 - `positive_count=0` or `negative_count=0` is always `REJECT`; no substitution allowed.
+- if Python tests are in scope, separated execution evidence must exist for:
+  - `pytest -m "not integration"`
+  - `pytest -m integration`
+- release evidence must include performance budget verdict (minimum `p95`).
 
 Any missing per-`REQ_ID` positive/negative test evidence or zero total executed tests requires `REJECT`.
 

@@ -62,6 +62,8 @@ This document is normative and binding.
 
 ## 5. Prompt and runtime separation controls
 - `PROMPTS.md` is the only normative prompt source.
+- `DESIGN.md` is the only normative source for architecture/governance fundamentals.
+- `PROMPTS.md` is runtime-only and must not redefine architecture/governance fundamentals from `DESIGN.md`.
 - PO must issue explicit role packets (`EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`).
 - PO role packet must exist as a machine-readable artifact with required keys:
   - `execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`,
@@ -97,3 +99,16 @@ This document is normative and binding.
 - Tool/version decisions must target stable/LTS releases only (no beta/rc/canary for production scope).
 - If official-source or currency evidence is missing, implementation must hard-fail.
 - Customer-facing framework/tool selection prompts are forbidden unless PO explicitly requests alternatives.
+
+## 9. Planning, performance, and waiver controls
+- `docs/BACKLOG.md` and active package plan metadata must be synchronized before DEV start.
+- `LASTENHEFT.md` and `docs/BACKLOG.md` metrics must be machine-generated only and include:
+  - `generated_at_utc`
+  - `source_commit_sha`
+- Redundant active governance/prompt documents are forbidden; one active leading document per topic only.
+- Python testing in scope must be partitioned and evidenced separately:
+  - unit: `pytest -m "not integration"`
+  - integration: `pytest -m integration`
+- Performance evidence for active scope must include explicit budget result (minimum `p95`) before release.
+- Python module size limit above 900 LOC is release-blocking unless an active machine-readable waiver exists.
+- Waivers must be machine-readable, PO-approved, scope-bound, and time-bounded with explicit expiry.

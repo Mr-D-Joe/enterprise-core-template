@@ -2,6 +2,10 @@
 
 This document is normative and binding.
 
+Scope note:
+- `DESIGN.md` defines fundamental governance/architecture rules.
+- `PROMPTS.md` defines runtime execution controls for PO/DEV/AUDIT only.
+
 ## 1. Single prompt model
 - `PROMPTS.md` is the only normative prompt source.
 - No separate `DEV_PROMPT.md` or `AUDIT_PROMPT.md` is allowed.
@@ -34,10 +38,11 @@ PO must:
 1. translate customer request into atomic requirement packet;
 2. choose `EXECUTION_MODE` based on project state;
 3. ensure no open package exists before starting a new package;
-4. ensure tooling decision checkpoint exists before DEV execution;
-5. pass only approved scope and evidence to the active mode;
-6. keep customer interaction free from manual runtime/toolchain setup requests;
-7. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
+4. ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan);
+5. ensure tooling decision checkpoint exists before DEV execution;
+6. pass only approved scope and evidence to the active mode;
+7. keep customer interaction free from manual runtime/toolchain setup requests;
+8. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version.
 
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
@@ -59,8 +64,10 @@ When `EXECUTION_MODE=DEV`, the agent must:
 3. implement only PO-approved scope;
 4. maintain REQ -> Design -> Code -> Test traceability;
 5. execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;
-6. produce DEV evidence on committed state;
-7. hand over only machine-readable evidence artifacts.
+6. execute separated tests for unit (`pytest -m "not integration"`) and integration (`pytest -m integration`) when Python tests are in scope;
+7. produce DEV evidence on committed state;
+8. hand over only machine-readable evidence artifacts.
+9. execute `scripts/gates/dev_gate.sh` and persist resulting artifact in `system_reports/gates/`.
 
 DEV mode must not:
 - self-approve release readiness;
@@ -82,6 +89,7 @@ When `EXECUTION_MODE=AUDIT`, the agent must:
 6. verify executed negative test count for active package is greater than zero;
 7. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
 8. issue findings with severity and decision `APPROVE` or `REJECT`.
+9. execute `scripts/gates/audit_gate.sh` and persist resulting artifact in `system_reports/gates/`.
 
 Allowed input set:
 - `AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, specs;
@@ -104,9 +112,14 @@ Forbidden input set:
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
 - Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.
+- Missing separated Python unit/integration test evidence when Python tests are in scope => `FINAL_STATUS=FAIL`.
 - Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.
 - Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.
 - Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.
+- Stale/missing backlog or package metadata (`docs/BACKLOG.md`, active PO package plan) => `FINAL_STATUS=FAIL`.
+- Missing machine-generated metadata in planning docs (`generated_at_utc`, `source_commit_sha`) => `FINAL_STATUS=FAIL`.
+- Missing performance budget evidence (`p95`) => `FINAL_STATUS=FAIL`.
+- Additional active prompt/governance contract files outside canonical set => `FINAL_STATUS=FAIL`.
 - Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
 - Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.

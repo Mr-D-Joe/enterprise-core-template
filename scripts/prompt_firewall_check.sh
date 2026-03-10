@@ -32,6 +32,9 @@ echo "Running prompt firewall check..."
 check_file "$PROMPTS_FILE"
 
 check_contains "$PROMPTS_FILE" "Single prompt model" "Single prompt model section present"
+check_contains "$PROMPTS_FILE" "Scope note:" "Prompt scope note present"
+check_contains "$PROMPTS_FILE" '`DESIGN.md` defines fundamental governance/architecture rules.' "Prompt references DESIGN as fundamentals source"
+check_contains "$PROMPTS_FILE" '`PROMPTS.md` defines runtime execution controls for PO/DEV/AUDIT only.' "Prompt runtime-only scope rule present"
 check_contains "$PROMPTS_FILE" "PO runtime prompt (customer-facing)" "PO runtime prompt section present"
 check_contains "$PROMPTS_FILE" "DEV execution mode contract" "DEV execution mode section present"
 check_contains "$PROMPTS_FILE" "run runtime bootstrap protocol before implementation" "DEV runtime bootstrap protocol present"
@@ -63,9 +66,11 @@ check_contains "$PROMPTS_FILE" "target latest stable runtime/compiler versions u
 check_contains "$PROMPTS_FILE" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics present"
 check_contains "$PROMPTS_FILE" "Only one active change package is allowed at any time." "Single active package model present"
 check_contains "$PROMPTS_FILE" "ensure no open package exists before starting a new package;" "PO open-package lock check present"
+check_contains "$PROMPTS_FILE" 'ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan);' "PO backlog/package freshness rule present"
 check_contains "$PROMPTS_FILE" "start a second package while the current package is not closed through AUDIT -> PR -> Merge -> Version." "DEV overlap prohibition present"
 check_contains "$PROMPTS_FILE" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics present"
 check_contains "$PROMPTS_FILE" 'execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;' "DEV per-REQ positive/negative test execution rule present"
+check_contains "$PROMPTS_FILE" 'execute separated tests for unit (`pytest -m "not integration"`) and integration (`pytest -m integration`) when Python tests are in scope;' "DEV split test execution rule present"
 check_contains "$PROMPTS_FILE" 'verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;' "AUDIT per-REQ positive/negative verification rule present"
 check_contains "$PROMPTS_FILE" "verify total executed tests for active package is greater than zero;" "AUDIT non-zero test count verification rule present"
 check_contains "$PROMPTS_FILE" "verify executed positive test count for active package is greater than zero;" "AUDIT positive test count verification rule present"
@@ -74,6 +79,10 @@ check_contains "$PROMPTS_FILE" 'Missing per-REQ positive/negative execution evid
 check_contains "$PROMPTS_FILE" 'Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-test fail semantics present"
 check_contains "$PROMPTS_FILE" 'Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-positive fail semantics present"
 check_contains "$PROMPTS_FILE" 'Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-negative fail semantics present"
+check_contains "$PROMPTS_FILE" 'Stale/missing backlog or package metadata (`docs/BACKLOG.md`, active PO package plan) => `FINAL_STATUS=FAIL`.' "Stale backlog/package fail semantics present"
+check_contains "$PROMPTS_FILE" 'Missing machine-generated metadata in planning docs (`generated_at_utc`, `source_commit_sha`) => `FINAL_STATUS=FAIL`.' "Planning metadata fail semantics present"
+check_contains "$PROMPTS_FILE" 'Missing performance budget evidence (`p95`) => `FINAL_STATUS=FAIL`.' "Performance budget fail semantics present"
+check_contains "$PROMPTS_FILE" 'Additional active prompt/governance contract files outside canonical set => `FINAL_STATUS=FAIL`.' "Redundant contract fail semantics present"
 
 if grep -Eiq "chain-of-thought|chat history|private rationale" "$PROMPTS_FILE"; then
   echo "OK   Prompt contract forbids DEV-private context for AUDIT mode"
@@ -82,11 +91,24 @@ else
   EXIT_CODE=1
 fi
 
-if [[ -f "$BASE_DIR/prompts/DEV_PROMPT.md" || -f "$BASE_DIR/prompts/AUDIT_PROMPT.md" ]]; then
-  echo "FAIL legacy split prompt files detected under prompts/"
-  EXIT_CODE=1
-else
-  echo "OK   no legacy split prompt files detected"
+redundant_prompt_files=(
+  "$BASE_DIR/prompts/DEV_PROMPT.md"
+  "$BASE_DIR/prompts/AUDIT_PROMPT.md"
+  "$BASE_DIR/QA-Test-Prompt.md"
+  "$BASE_DIR/docs/PROMPTS.md"
+  "$BASE_DIR/docs/prompts/DEV_PROMPT_ANNEX.md"
+  "$BASE_DIR/docs/prompts/AUDIT_PROMPT_ANNEX.md"
+)
+redundant_found=0
+for f in "${redundant_prompt_files[@]}"; do
+  if [[ -f "$f" ]]; then
+    echo "FAIL redundant active prompt contract detected: $f"
+    EXIT_CODE=1
+    redundant_found=1
+  fi
+done
+if [[ "$redundant_found" -eq 0 ]]; then
+  echo "OK   no redundant active prompt contract files detected"
 fi
 
 if grep -Fq "REQUEST_CHANGES" "$PROMPTS_FILE"; then

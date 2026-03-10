@@ -24,10 +24,17 @@
 - Total executed tests (>0): PASS/FAIL
 - Executed positive tests (>0): PASS/FAIL
 - Executed negative tests (>0): PASS/FAIL
+- Python unit test run (`pytest -m "not integration"`) evidence: PASS/FAIL
+- Python integration test run (`pytest -m integration`) evidence: PASS/FAIL
 - Missing per-REQ positive/negative coverage:
 | REQ_ID | Positive_Test_ID | Positive_Evidence | Positive_Result | Negative_Test_ID | Negative_Evidence | Negative_Result | Coverage_Verdict |
 |---|---|---|---|---|---|---|---|
 | <REQ_ID> | <TEST_POS_ID> | <artifact/link> | PASS/FAIL | <TEST_NEG_ID> | <artifact/link> | PASS/FAIL | PASS/FAIL |
+
+## Performance budget verification (mandatory)
+- p95 budget verdict: PASS/FAIL
+- Evidence:
+  - <artifact/link>
 
 ## ISO-aligned control check
 - Quality process evidence: PASS/FAIL
