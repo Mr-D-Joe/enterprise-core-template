@@ -16,6 +16,7 @@
 
 ## Versioning requirements
 - Every merged release candidate receives a version/tag.
+- `CHANGELOG.md` must be updated before publishing release.
 - Release notes include:
   - scope summary,
   - REQ IDs,

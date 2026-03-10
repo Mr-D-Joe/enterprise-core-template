@@ -95,6 +95,7 @@ mkdir -p \
 
 TODAY_UTC="$(date -u +%Y-%m-%d)"
 NOW_UTC_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+TEMPLATE_SOURCE_SHA="$(git -C "$TEMPLATE_ROOT" rev-parse HEAD 2>/dev/null || echo "unknown")"
 
 ESCAPED_PROJECT_NAME="$(printf '%s' "$PROJECT_NAME" | sed -e 's/[\/&]/\\&/g')"
 ESCAPED_TODAY_UTC="$(printf '%s' "$TODAY_UTC" | sed -e 's/[\/&]/\\&/g')"
@@ -109,6 +110,17 @@ while IFS= read -r -d '' file; do
     "$file" > "$tmp_file"
   mv "$tmp_file" "$file"
 done < <(find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.txt" \) -print0)
+
+# Refresh machine-generated planning metadata for the new project copy.
+for planning_file in "$TARGET_DIR/LASTENHEFT.md" "$TARGET_DIR/docs/BACKLOG.md"; do
+  if [[ -f "$planning_file" ]]; then
+    sed -E \
+      -e "s|^(- generated_at_utc=).*|\\1$NOW_UTC_TS|" \
+      -e "s|^(- source_commit_sha=).*|\\1$TEMPLATE_SOURCE_SHA|" \
+      "$planning_file" > "${planning_file}.tmp"
+    mv "${planning_file}.tmp" "$planning_file"
+  fi
+done
 
 # Create an initial machine-readable PO role packet skeleton.
 cat > "$TARGET_DIR/system_reports/gates/po_role_packet_template.env" <<EOF
@@ -260,3 +272,5 @@ echo "2) Review AGENTS.md, DESIGN.md, CONTRIBUTING.md, PROMPTS.md"
 echo "3) Runtime bootstrap already executed (.env + optional .venv + runtime_bootstrap.env)"
 echo "4) Tooling decision template is ready (set application_profile first in system_reports/gates/tooling_decision_template.env)"
 echo "5) Start your first PO packet with system_reports/gates/po_role_packet_template.env"
+echo "6) Run gate chain: ./scripts/gates/dev_gate.sh then ./scripts/gates/audit_gate.sh"
+echo "7) Keep docs/BACKLOG.md and LASTENHEFT.md metadata current (generated_at_utc + source_commit_sha)"

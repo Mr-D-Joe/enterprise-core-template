@@ -66,7 +66,16 @@ Das Script erstellt:
   - `system_reports/gates/tooling_decision_template.env`,
 - eine Basis-`.gitignore` für lokale Artefakte (`.venv`, `node_modules`, `.env.local`, ...),
 - initiale Datei für das PO-Role-Packet:
-  - `system_reports/gates/po_role_packet_template.env`
+  - `system_reports/gates/po_role_packet_template.env`,
+- Planungs-/Onboarding-Dokumente:
+  - `docs/BACKLOG.md`
+  - `docs/STARTUP_CHECKLIST.md`
+  - `docs/governance/FOUR_EYES_GATING.md`
+- Gate-Skripte:
+  - `scripts/gates/dev_gate.sh`
+  - `scripts/gates/audit_gate.sh`
+- Versionshistorie:
+  - `CHANGELOG.md`
 
 Zusätzlich werden Platzhalter (Projektname, Datum) direkt ersetzt, damit du sofort mit dem ersten Prompt starten kannst.
 
@@ -78,4 +87,10 @@ Zusätzlich werden Platzhalter (Projektname, Datum) direkt ersetzt, damit du sof
    - nur neueste stabile Versionen verwenden und mit offiziellen Quellen belegen.
 3. `system_reports/gates/po_role_packet_template.env` mit `REQ_IDS` und Scope ausfüllen.
 4. DEV-Run starten (ohne manuelle Runtime-Setup-Kommandos für den Kunden).
-5. Traceability-Matrix pflegen: pro aktivem `REQ_ID` mindestens ein Positiv- und ein Negativ-Test mit Evidenz und `PASS`.
+5. DEV-Gate ausführen: `./scripts/gates/dev_gate.sh`.
+6. AUDIT-Gate ausführen: `./scripts/gates/audit_gate.sh`.
+7. `docs/BACKLOG.md` und `LASTENHEFT.md` Metadaten aktuell halten (`generated_at_utc`, `source_commit_sha`).
+8. Traceability-Matrix pflegen: pro aktivem `REQ_ID` mindestens ein Positiv- und ein Negativ-Test mit Evidenz und `PASS`.
+9. Bei Python-Scope getrennte Tests laufen lassen:
+   - `pytest -m "not integration"`
+   - `pytest -m integration`

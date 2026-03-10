@@ -18,22 +18,30 @@ Concurrent/overlapping change packages are forbidden.
 - Requirement phase (PO):
   - work packet exists with `REQ_IDS`,
   - no active open change package exists from prior execution chain,
+  - `docs/BACKLOG.md` and active package metadata are synchronized and fresh,
   - machine-readable PO role packet exists with required keys,
   - tooling decision packet contains `application_profile` and stack choices,
   - tooling decision packet exists with official-source evidence and verification date,
   - acceptance criteria and test vectors are explicit,
-  - security/privacy impact is explicit (data class, secrets, retention, redaction).
+  - security/privacy impact is explicit (data class, secrets, retention, redaction),
+  - `LASTENHEFT.md` and `docs/BACKLOG.md` include machine-generated metadata (`generated_at_utc`, `source_commit_sha`).
 - DEV phase:
   - changes are traceable to `REQ_IDS`,
+  - `scripts/gates/dev_gate.sh` is executed and artifact is stored in `system_reports/gates/dev_gate_*.gate`,
   - tooling decision packet is updated if stack/runtime choices changed,
   - active runtime/compiler versions are documented as latest stable with source/date evidence,
   - deterministic tests executed and linked with per-`REQ_ID` coverage (minimum one positive and one negative test),
+  - Python tests in scope are executed as separated runs:
+    - `pytest -m "not integration"`
+    - `pytest -m integration`,
   - security/privacy checks executed and linked (secret scan, dependency risk check, privacy/logging tests),
+  - performance budget evidence is linked (minimum `p95` verdict),
   - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact,
   - Python virtual environment is located at project root `.venv` only.
 - AUDIT phase:
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
+  - `scripts/gates/audit_gate.sh` is executed and artifact is stored in `system_reports/gates/audit_gate_*.gate`,
   - findings include severity and evidence,
   - each active `REQ_ID` has executed positive+negative test evidence and package test count is greater than zero,
   - package-level executed positive test count is greater than zero and executed negative test count is greater than zero,
@@ -49,15 +57,22 @@ Concurrent/overlapping change packages are forbidden.
 - Missing tooling decision packet for active scope.
 - Missing required tooling decision keys (`application_profile`, `frontend_ui_choice`, `backend_choice`, `data_choice`, `stability_target`).
 - Missing official-source or tooling-currency evidence in tooling decision packet.
+- Stale or unsynchronized backlog/package metadata (`docs/BACKLOG.md` or active PO package plan).
+- Missing machine-generated metadata (`generated_at_utc`, `source_commit_sha`) in `LASTENHEFT.md` or `docs/BACKLOG.md`.
+- Additional active prompt/governance contract files outside canonical set (`PROMPTS.md`, `DESIGN.md`).
 - Missing security/privacy traceability or missing security/privacy evidence.
 - Missing runtime bootstrap evidence for active `REQ_IDS`.
 - Python virtual environment not located at project root `.venv`.
 - Customer-facing manual runtime/setup instructions issued by DEV.
 - Missing latest-stable runtime/compiler evidence for active scope.
 - Missing per-`REQ_ID` test coverage evidence (minimum one executed positive and one executed negative test).
+- Missing separated Python test partition evidence (`pytest -m "not integration"` and `pytest -m integration`) when Python tests are in scope.
 - Total executed test count for active package equals zero.
 - Executed positive test count for active package equals zero.
 - Executed negative test count for active package equals zero.
+- Missing performance budget evidence (`p95`) for active release scope.
+- Python module exceeds 900 LOC without active valid waiver evidence.
+- Waiver is missing required keys, expired, or not PO-approved.
 - Hardcoded secrets/keys/tokens or unredacted personal data in code, tests, logs, or artifacts.
 - Missing ISO security/data control verdicts in audit report.
 - Security baseline age exceeds configured maximum age.
@@ -82,3 +97,7 @@ Concurrent/overlapping change packages are forbidden.
 - Merge authority remains with PO governance decision.
 - Release/versioning requires final release-readiness evidence.
 - If any mandatory control fails, status is `NOT_READY_FOR_RELEASE`.
+
+## 6. Canonical quality commands (Python scope)
+- `pytest -m "not integration"`
+- `pytest -m integration`

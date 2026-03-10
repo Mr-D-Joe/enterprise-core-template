@@ -11,6 +11,8 @@ This document is normative and binding.
 6. docs/specs/*.md
 
 All files in `docs/governance/` are supportive templates/checklists unless explicitly referenced by the four normative control files above.
+`DESIGN.md` is the only normative source for architecture/governance fundamentals.
+`PROMPTS.md` is the only normative runtime role-execution contract and must not redefine `DESIGN.md` fundamentals.
 
 ## 1. Architecture baseline
 
@@ -169,6 +171,40 @@ Only one change package may be active. Starting a new package before the current
 For every active `REQ_ID`, audit evidence must show at least one executed positive test (`PASS`) and one executed negative test (`PASS`). Total executed tests for the active package must be greater than zero.
 `positive_count > 0` and `negative_count > 0` are both mandatory at package level; one side cannot compensate for the other.
 
+### GOV-33 Backlog and Package Metadata Freshness
+Before DEV start, `docs/BACKLOG.md` and active PO package metadata must be synchronized and current. Stale planning metadata is `FAIL`.
+
+### GOV-34 Machine-Generated Planning Metrics
+`LASTENHEFT.md` and `docs/BACKLOG.md` planning metrics must be machine-generated and include `generated_at_utc` and `source_commit_sha`.
+
+### GOV-35 No Active Document Duplication
+Only one active leading document per governance/prompt topic is allowed. Parallel active prompt/governance contracts are `FAIL`.
+
+### GOV-36 Test Partition Enforcement
+When Python tests are in scope, unit and integration test execution must be separated and evidenced:
+- `pytest -m "not integration"`
+- `pytest -m integration`
+
+### GOV-37 Performance Budget Gate
+Release readiness requires explicit performance budget evidence for active scope (minimum `p95` budget verdict).
+
+### GOV-38 Structural Size Gate
+Python module size above `PYTHON_MODULE_LOC_LIMIT` is `FAIL` without active waiver evidence.
+
+### GOV-39 Runtime Fitness Review Cadence
+Runtime/toolchain currency and fitness review must be performed on a fixed cadence with dated official-source evidence.
+
+### GOV-40 Standardized Waiver Mechanism
+Any exception to hard controls requires a machine-readable waiver with:
+- `waiver_id`
+- `rule_id`
+- `scope`
+- `approved_by_po_agent_id`
+- `created_at_utc`
+- `expires_at_utc`
+- `justification`
+Expired/missing waiver evidence is `FAIL`.
+
 ## 3. Security baseline metadata (mandatory)
 `SECURITY_BASELINE_REVIEW_UTC=2026-02-25`
 `SECURITY_BASELINE_MAX_AGE_DAYS=90`
@@ -176,6 +212,10 @@ For every active `REQ_ID`, audit evidence must show at least one executed positi
 `TOOLING_DECISION_REVIEW_UTC=2026-02-25`
 `TOOLING_SOURCE_MAX_AGE_DAYS=90`
 `TOOLING_ALLOWED_SOURCE_TYPES=official_docs;official_release_notes;official_version_matrix`
+`PLANNING_METADATA_MAX_AGE_DAYS=90`
+`RUNTIME_FITNESS_REVIEW_UTC=2026-03-10`
+`RUNTIME_FITNESS_MAX_AGE_DAYS=90`
+`PYTHON_MODULE_LOC_LIMIT=900`
 
 ## 4. Hardening expectations for gate scripts
 
@@ -192,3 +232,9 @@ Gate scripts must enforce the following checks at minimum:
 10. tooling decision packet schema completeness (`application_profile`, stack choices, stability target, source verification fields).
 11. serial package lock enforcement (no overlapping PO packets before prior package closure).
 12. per-REQ test pair execution enforcement (positive+negative) with non-zero executed test count for active package.
+13. stale backlog/plan metadata detection and hard-fail behavior.
+14. no redundant active prompt/governance contract files.
+15. test partition enforcement for Python scope (`not integration` and `integration`).
+16. performance budget evidence gate enforcement (minimum `p95` verdict).
+17. structural module-size gate enforcement with waiver validation.
+18. waiver schema/expiry validation for exception paths.

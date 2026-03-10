@@ -8,6 +8,11 @@ Version: 1.0.0
 Date: <YYYY-MM-DD>
 Status: Active
 
+## Planning metadata (machine-generated, mandatory)
+- generated_at_utc=2026-03-10T00:00:00Z
+- source_commit_sha=5205b8f7e2fa18ace92529ab8c88eee766d9489a
+- metrics_generation_mode=machine_only
+
 ## Document hierarchy
 1. `AGENTS.md` (normative role and operation model)
 2. `DESIGN.md` (normative architecture and governance)
@@ -30,6 +35,14 @@ Status: Active
 - Target users:
 - Platform target:
 - Operating constraints:
+
+## Machine-generated planning metrics (no manual estimates)
+- open_requirement_count=auto
+- active_package_count=auto
+- completed_package_count=auto
+- blocked_item_count=auto
+- last_release_tag=auto
+- perf_budget_p95_status=auto
 
 ## Mandatory quality policy
 - Requirements must be atomic.

@@ -11,9 +11,16 @@ required_docs=(
   "$BASE_DIR/DESIGN.md"
   "$BASE_DIR/CONTRIBUTING.md"
   "$BASE_DIR/PROMPTS.md"
+  "$BASE_DIR/LASTENHEFT.md"
+  "$BASE_DIR/CHANGELOG.md"
+  "$BASE_DIR/docs/BACKLOG.md"
+  "$BASE_DIR/docs/STARTUP_CHECKLIST.md"
   "$BASE_DIR/scripts/prompt_firewall_check.sh"
+  "$BASE_DIR/scripts/gates/dev_gate.sh"
+  "$BASE_DIR/scripts/gates/audit_gate.sh"
   "$BASE_DIR/docs/governance/DELIVERY_PIPELINE_PROTOCOL.md"
   "$BASE_DIR/docs/governance/GITHUB_RELEASE_PROTOCOL.md"
+  "$BASE_DIR/docs/governance/FOUR_EYES_GATING.md"
 )
 
 for f in "${required_docs[@]}"; do
@@ -25,10 +32,31 @@ for f in "${required_docs[@]}"; do
   fi
 done
 
+if [[ -f "$BASE_DIR/docs/governance/PROJECT_STARTER_CHECKLIST.md" ]]; then
+  echo "FAIL legacy checklist file still active: $BASE_DIR/docs/governance/PROJECT_STARTER_CHECKLIST.md"
+  EXIT_CODE=1
+else
+  echo "OK   no legacy project starter checklist file"
+fi
+
 if [[ -x "$BASE_DIR/scripts/prompt_firewall_check.sh" ]]; then
   echo "OK   prompt_firewall_check.sh executable"
 else
   echo "FAIL prompt_firewall_check.sh is not executable"
+  EXIT_CODE=1
+fi
+
+if [[ -x "$BASE_DIR/scripts/gates/dev_gate.sh" ]]; then
+  echo "OK   dev_gate.sh executable"
+else
+  echo "FAIL dev_gate.sh is not executable"
+  EXIT_CODE=1
+fi
+
+if [[ -x "$BASE_DIR/scripts/gates/audit_gate.sh" ]]; then
+  echo "OK   audit_gate.sh executable"
+else
+  echo "FAIL audit_gate.sh is not executable"
   EXIT_CODE=1
 fi
 
@@ -62,11 +90,18 @@ check_contains "$BASE_DIR/AGENTS.md" "Per-Requirement test execution minimum" "P
 check_contains "$BASE_DIR/AGENTS.md" "Total executed test count for the active package must be greater than zero." "Non-zero test count rule in AGENTS present"
 check_contains "$BASE_DIR/AGENTS.md" "Package-level executed positive test count must be greater than zero." "Positive test count rule in AGENTS present"
 check_contains "$BASE_DIR/AGENTS.md" "Package-level executed negative test count must be greater than zero." "Negative test count rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" '`DESIGN.md` is the only normative source for architecture/governance fundamentals.' "DESIGN single-source rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" '`PROMPTS.md` is runtime-only and must not redefine architecture/governance fundamentals from `DESIGN.md`.' "PROMPTS runtime-only rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" '`docs/BACKLOG.md` and active package plan metadata must be synchronized before DEV start.' "Backlog sync rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" 'Performance evidence for active scope must include explicit budget result (minimum `p95`) before release.' "Performance budget rule in AGENTS present"
+check_contains "$BASE_DIR/AGENTS.md" "Python module size limit above 900 LOC is release-blocking unless an active machine-readable waiver exists." "Module size rule in AGENTS present"
 
 check_contains "$BASE_DIR/CONTRIBUTING.md" "No step may be skipped or reordered." "Strict sequence rule present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Concurrent/overlapping change packages are forbidden." "No-overlap rule present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Requirement definition and approval (PO)" "Requirement phase present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Independent Audit gate (AUDIT)" "Independent audit phase present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" '`docs/BACKLOG.md` and active package metadata are synchronized and fresh' "Backlog/package freshness criterion in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" '`LASTENHEFT.md` and `docs/BACKLOG.md` include machine-generated metadata' "Planning metadata criterion in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Merge authorization (PO based on AUDIT APPROVE)" "PO merge authority with audit dependency present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Hard blockers (automatic FAIL)" "Hard blocker section present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" 'runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact' "Runtime bootstrap DEV entry criterion present"
@@ -80,10 +115,16 @@ check_contains "$BASE_DIR/CONTRIBUTING.md" 'Python virtual environment not locat
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Missing latest-stable runtime/compiler evidence for active scope." "Latest-stable runtime/compiler blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "New package started while previous package is not closed" "Open-package blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" 'deterministic tests executed and linked with per-`REQ_ID` coverage (minimum one positive and one negative test)' "Per-REQ test coverage entry criterion in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'pytest -m "not integration"' "Unit test partition command in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "pytest -m integration" "Integration test partition command in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" 'Missing per-`REQ_ID` test coverage evidence (minimum one executed positive and one executed negative test).' "Per-REQ test coverage blocker in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'Missing separated Python test partition evidence (`pytest -m "not integration"` and `pytest -m integration`) when Python tests are in scope.' "Split test evidence blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Total executed test count for active package equals zero." "Zero-test blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Executed positive test count for active package equals zero." "Zero-positive blocker in CONTRIBUTING present"
 check_contains "$BASE_DIR/CONTRIBUTING.md" "Executed negative test count for active package equals zero." "Zero-negative blocker in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" 'Missing performance budget evidence (`p95`) for active release scope.' "Performance evidence blocker in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Python module exceeds 900 LOC without active valid waiver evidence." "Module size blocker in CONTRIBUTING present"
+check_contains "$BASE_DIR/CONTRIBUTING.md" "Waiver is missing required keys, expired, or not PO-approved." "Waiver blocker in CONTRIBUTING present"
 
 check_contains "$BASE_DIR/DESIGN.md" "GOV-14 Mandatory Gate Failure Semantics" "Design hard-fail control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-15 ISO-Aligned Evidence Package" "Design ISO evidence control present"
@@ -101,12 +142,22 @@ check_contains "$BASE_DIR/DESIGN.md" "GOV-29 Runtime and Compiler Currency" "Des
 check_contains "$BASE_DIR/DESIGN.md" "GOV-30 Root-Only Python Environment" "Design root-only Python environment control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-31 Serial Change Package Lock" "Design serial change package lock control present"
 check_contains "$BASE_DIR/DESIGN.md" "GOV-32 Per-Requirement Test Pair Coverage" "Design per-REQ test pair coverage control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-33 Backlog and Package Metadata Freshness" "Design backlog metadata freshness control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-34 Machine-Generated Planning Metrics" "Design machine-generated planning metrics control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-35 No Active Document Duplication" "Design no document duplication control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-36 Test Partition Enforcement" "Design test partition control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-37 Performance Budget Gate" "Design performance budget control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-38 Structural Size Gate" "Design structural size control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-39 Runtime Fitness Review Cadence" "Design runtime fitness cadence control present"
+check_contains "$BASE_DIR/DESIGN.md" "GOV-40 Standardized Waiver Mechanism" "Design waiver mechanism control present"
 check_contains "$BASE_DIR/DESIGN.md" "role-packet artifact schema and key integrity" "Design role-packet integrity control present"
 
 check_contains "$BASE_DIR/PROMPTS.md" "Required gate semantics (no escape path)" "Prompt-level no-escape semantics present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing mandatory evidence => `FINAL_STATUS=FAIL`' "Prompt fail semantics present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`' "Prompt ISO security/data fail semantics present"
 check_contains "$BASE_DIR/PROMPTS.md" "Single prompt model" "Single prompt model section present"
+check_contains "$BASE_DIR/PROMPTS.md" "Scope note:" "Prompt scope section present"
+check_contains "$BASE_DIR/PROMPTS.md" '`DESIGN.md` defines fundamental governance/architecture rules.' "Prompt DESIGN fundamental scope present"
 check_contains "$BASE_DIR/PROMPTS.md" "PO runtime prompt (customer-facing)" "PO runtime section present"
 check_contains "$BASE_DIR/PROMPTS.md" "DEV execution mode contract" "DEV mode section present"
 check_contains "$BASE_DIR/PROMPTS.md" "run runtime bootstrap protocol before implementation" "Runtime bootstrap protocol in DEV mode present"
@@ -117,7 +168,9 @@ check_contains "$BASE_DIR/PROMPTS.md" 'enforce Python venv path at project root 
 check_contains "$BASE_DIR/PROMPTS.md" "target latest stable runtime/compiler versions unless PO-approved exception exists" "Latest-stable runtime/compiler rule in DEV mode present"
 check_contains "$BASE_DIR/PROMPTS.md" "Only one active change package is allowed at any time." "Single active package rule in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" "ensure no open package exists before starting a new package;" "PO open-package check in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan);' "PO backlog/package freshness rule in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'execute at least one positive and one negative test per active `REQ_ID` and record machine-readable evidence;' "DEV per-REQ test execution rule in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'execute separated tests for unit (`pytest -m "not integration"`) and integration (`pytest -m integration`) when Python tests are in scope;' "DEV split test rule in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;' "AUDIT per-REQ test verification rule in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" "verify total executed tests for active package is greater than zero;" "AUDIT non-zero test count rule in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" "verify executed positive test count for active package is greater than zero;" "AUDIT positive test count rule in PROMPTS present"
@@ -126,17 +179,35 @@ check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime bootstrap evidence for ac
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.' "Application profile fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.' "Runtime/compiler fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.' "Per-REQ test coverage fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Missing separated Python unit/integration test evidence when Python tests are in scope => `FINAL_STATUS=FAIL`.' "Split test fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-test fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-positive fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.' "Zero-negative fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Stale/missing backlog or package metadata (`docs/BACKLOG.md`, active PO package plan) => `FINAL_STATUS=FAIL`.' "Backlog/package fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Missing machine-generated metadata in planning docs (`generated_at_utc`, `source_commit_sha`) => `FINAL_STATUS=FAIL`.' "Planning metadata fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Missing performance budget evidence (`p95`) => `FINAL_STATUS=FAIL`.' "Performance fail semantics in PROMPTS present"
+check_contains "$BASE_DIR/PROMPTS.md" 'Additional active prompt/governance contract files outside canonical set => `FINAL_STATUS=FAIL`.' "Redundant contract fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" 'Starting a new package while a previous package is still open => `FINAL_STATUS=FAIL`.' "Open-package fail semantics in PROMPTS present"
 check_contains "$BASE_DIR/PROMPTS.md" "AUDIT execution mode contract" "AUDIT mode section present"
 check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Pos_ID" "Traceability matrix positive test ID column present"
 check_contains "$BASE_DIR/docs/governance/TRACEABILITY_MATRIX_TEMPLATE.md" "Test_Neg_ID" "Traceability matrix negative test ID column present"
 check_contains "$BASE_DIR/docs/governance/AUDIT_REPORT_TEMPLATE.md" "Requirement test execution coverage (mandatory)" "Audit report requirement test coverage section present"
+check_contains "$BASE_DIR/LASTENHEFT.md" "generated_at_utc=" "LASTENHEFT generated_at_utc metadata present"
+check_contains "$BASE_DIR/LASTENHEFT.md" "source_commit_sha=" "LASTENHEFT source_commit_sha metadata present"
+check_contains "$BASE_DIR/docs/BACKLOG.md" "generated_at_utc=" "BACKLOG generated_at_utc metadata present"
+check_contains "$BASE_DIR/docs/BACKLOG.md" "source_commit_sha=" "BACKLOG source_commit_sha metadata present"
+check_contains "$BASE_DIR/docs/STARTUP_CHECKLIST.md" 'pytest -m "not integration"' "STARTUP checklist unit test command present"
+check_contains "$BASE_DIR/docs/STARTUP_CHECKLIST.md" "pytest -m integration" "STARTUP checklist integration test command present"
+check_contains "$BASE_DIR/docs/STARTUP_CHECKLIST.md" "./scripts/gates/dev_gate.sh" "STARTUP checklist DEV gate command present"
+check_contains "$BASE_DIR/docs/STARTUP_CHECKLIST.md" "./scripts/gates/audit_gate.sh" "STARTUP checklist AUDIT gate command present"
+check_contains "$BASE_DIR/CHANGELOG.md" "## [Unreleased]" "CHANGELOG unreleased section present"
 
 check_contains "$BASE_DIR/docs/governance/DELIVERY_PIPELINE_PROTOCOL.md" "PO executes official PR merge path." "PO merge authority in delivery protocol present"
 check_contains "$BASE_DIR/docs/governance/GITHUB_RELEASE_PROTOCOL.md" 'Merge execution is performed by PO identity after `AUDIT=APPROVE`.' "PO merge authority in release protocol present"
+check_contains "$BASE_DIR/docs/governance/GITHUB_RELEASE_PROTOCOL.md" "CHANGELOG.md" "Release protocol changelog requirement present"
+check_contains "$BASE_DIR/docs/governance/FOUR_EYES_GATING.md" "Binding gate chain" "Four-eyes gate chain section present"
+check_contains "$BASE_DIR/docs/governance/FOUR_EYES_GATING.md" "scripts/gates/dev_gate.sh" "Four-eyes DEV gate script reference present"
+check_contains "$BASE_DIR/docs/governance/FOUR_EYES_GATING.md" "scripts/gates/audit_gate.sh" "Four-eyes AUDIT gate script reference present"
 
 if grep -R -n -F "REQUEST_CHANGES" "$BASE_DIR/docs/governance" "$BASE_DIR/PROMPTS.md" >/dev/null 2>&1; then
   echo "FAIL non-binary decision term REQUEST_CHANGES found in prompt/governance templates"

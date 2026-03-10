@@ -6,6 +6,7 @@
 | Documented process | ISO 9001 style documented procedures | Design/Lastenheft/spec hierarchy | DESIGN.md, LASTENHEFT.md | PO | planned |
 | Traceability | ISO 9001 style traceability and records | REQ->Design->Code->Test->Gate | trace matrix, gate logs | DEV | planned |
 | Requirement test execution coverage | ISO 9001 style verification controls | per active REQ: >=1 positive PASS and >=1 negative PASS; total tests > 0 | trace matrix + audit report | DEV/AUDIT | planned |
+| Planning metadata integrity | ISO 9001 traceability controls | machine-generated backlog/lastenheft metadata with commit binding | BACKLOG.md + LASTENHEFT.md + gates | PO/DEV | planned |
 | Access and integrity | ISO 27001 style controls | separated roles and artifact integrity | audit policy, signed reports | AUDIT | planned |
 | Independent assurance | ISO 9001/27001 governance | independent audit decision | audit report template | AUDIT | planned |
 | Data classification | ISO 27001/27701 style controls | classified data and boundary mapping | specs + audit report | DEV/AUDIT | planned |
@@ -15,6 +16,7 @@
 | Encryption controls | ISO 27001 style controls | encryption at rest/in transit where applicable | design/config/test evidence | DEV/AUDIT | planned |
 | Dependency risk management | ISO 27001/SSDF style controls | vulnerability exposure review and mitigation | dependency report + audit report | DEV/AUDIT | planned |
 | Security baseline freshness | ISO governance style controls | baseline review age within allowed window | DESIGN metadata + audit readiness log | AUDIT | planned |
+| Performance budget compliance | ISO quality/service controls | p95 budget evidence and release gate verdict | performance reports + audit report | DEV/AUDIT | planned |
 | AI governance oversight | ISO/IEC 42001 style controls | human oversight and accountability | decision records, CAPA | PO | planned |
 
 Guidance:
