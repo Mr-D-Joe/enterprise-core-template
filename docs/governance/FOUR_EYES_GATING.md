@@ -7,7 +7,7 @@ This document defines the mandatory four-eyes release control.
 1. PO defines and approves requirement packet (`REQ_IDS`).
 2. DEV run executes implementation and `scripts/gates/dev_gate.sh`.
 3. AUDIT run executes independent validation and `scripts/gates/audit_gate.sh`.
-4. Only after `AUDIT` decision `APPROVE`: PR -> Merge -> Version.
+4. Only after `AUDIT` decision `APPROVE`: PR -> Merge -> Version -> Clean Desk.
 
 No step may be skipped, reordered, or merged by DEV self-approval.
 
@@ -35,3 +35,4 @@ No step may be skipped, reordered, or merged by DEV self-approval.
 
 ## PO merge authority
 PO executes merge only after independent `AUDIT=APPROVE` and green mandatory checks.
+PO closes the package only after versioning and clean-desk restoration are complete.

@@ -5,7 +5,7 @@ This protocol is supportive and becomes binding only when referenced by normativ
 ## Sequence
 1. Requirement definition (PO)
 - Create/update requirement packet with REQ IDs.
-- Sync `docs/BACKLOG.md` and package metadata.
+- Sync `docs/BACKLOG.md`, package metadata, and `LASTENHEFT.md` machine metrics.
 
 2. Implementation (DEV)
 - Implement exactly the approved requirement scope.
@@ -36,6 +36,10 @@ This protocol is supportive and becomes binding only when referenced by normativ
 - Create release version/tag and release notes.
 - Archive evidence set.
 
+7. Clean Desk
+- Remove temporary gate artifacts and stale local package residues.
+- Confirm no duplicate temporary workflow files remain active.
+
 ## Gate rule
 No step may be skipped or reordered.
 
@@ -50,3 +54,4 @@ No step may be skipped or reordered.
 - PR link
 - Merge commit
 - Version/tag reference
+- Clean-desk restoration evidence

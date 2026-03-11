@@ -8,6 +8,8 @@ This document is normative and binding.
 - Owns customer interface, requirement intake, prioritization, and scope approval.
 - Creates approved work packets with `REQ_IDS`, acceptance criteria, and release intent.
 - Is the only role allowed to initiate DEV and AUDIT runs for a change package.
+- Is the default customer-facing operating role unless a valid PO role packet triggers DEV or AUDIT mode.
+- Must autonomously orchestrate Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk when execution is permitted.
 
 ### DEV (Implementation) — execution strand
 - Implements only approved PO scope.
@@ -16,6 +18,7 @@ This document is normative and binding.
 - Must not approve, release, or merge own implementation.
 - Must execute runtime bootstrap autonomously (no customer terminal setup required).
 - Must execute a tooling decision checkpoint before code changes.
+- Must close package-internal defects within approved scope before handing package back as complete.
 
 ### AUDIT (Independent) — execution strand
 - Performs independent audit against normative docs and approved evidence.
@@ -38,14 +41,14 @@ This document is normative and binding.
 
 ## 4. Non-bypass clauses (no escape path)
 - Every change must start with approved requirement packet containing `REQ_IDS`.
-- Mandatory sequence: Requirement -> Development -> Independent Audit -> PR -> Merge -> Version.
+- Mandatory sequence: Requirement -> Development -> Independent Audit -> PR -> Merge -> Version -> Clean Desk.
 - Missing traceability, missing independent audit, or failed audit means `FINAL_STATUS=FAIL`.
 - Any violation of this document results in `NOT_READY_FOR_RELEASE`.
 
 ## 4.1 Single active change package lock
 - Exactly one change package may be active at a time.
 - PO must not issue a new DEV or AUDIT role packet while the current package is not closed.
-- A package is closed only after Requirement -> DEV evidence -> Independent AUDIT decision -> PR -> Merge -> Version.
+- A package is closed only after Requirement -> DEV evidence -> Independent AUDIT decision -> PR -> Merge -> Version -> Clean Desk.
 - Any overlapping/parallel package initiation is a governance violation and must hard-fail.
 
 ## 4.2 Per-Requirement test execution minimum
