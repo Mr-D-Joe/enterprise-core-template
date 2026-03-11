@@ -25,3 +25,4 @@
 
 ## Ownership
 - PO owns business closure and customer-facing release communication.
+- PO restores clean desk after release closure by removing temporary gate artifacts and stale local package residues.

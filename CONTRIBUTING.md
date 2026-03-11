@@ -10,6 +10,7 @@ This document is normative and binding.
 5. Pull request update/check
 6. Merge authorization (PO based on AUDIT APPROVE)
 7. Version/tag and release note
+8. Clean Desk restoration
 
 No step may be skipped or reordered.
 Concurrent/overlapping change packages are forbidden.
@@ -18,7 +19,7 @@ Concurrent/overlapping change packages are forbidden.
 - Requirement phase (PO):
   - work packet exists with `REQ_IDS`,
   - no active open change package exists from prior execution chain,
-  - `docs/BACKLOG.md` and active package metadata are synchronized and fresh,
+  - `docs/BACKLOG.md`, active package metadata, and `LASTENHEFT.md` machine metrics are synchronized and fresh,
   - machine-readable PO role packet exists with required keys,
   - tooling decision packet contains `application_profile` and stack choices,
   - tooling decision packet exists with official-source evidence and verification date,
@@ -37,7 +38,9 @@ Concurrent/overlapping change packages are forbidden.
   - security/privacy checks executed and linked (secret scan, dependency risk check, privacy/logging tests),
   - performance budget evidence is linked (minimum `p95` verdict),
   - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact,
-  - Python virtual environment is located at project root `.venv` only.
+  - Python virtual environment is located at project root `.venv` only,
+  - package-internal blockers inside approved scope are fixed before DEV handover,
+  - required gates are rerun after in-scope fixes.
 - AUDIT phase:
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
@@ -79,6 +82,10 @@ Concurrent/overlapping change packages are forbidden.
 - Unresolved blocker/major findings.
 - Missing required gate evidence artifacts.
 - New package started while previous package is not closed (missing any of: DEV gate, AUDIT decision, PR/Merge, Version).
+- Stopping before PR -> Merge -> Version -> Clean Desk although all prior mandatory gates passed.
+- DEV or AUDIT release-path evaluation performed only on uncommitted working-tree state.
+- Fixed package-internal blocker without rerunning required gates.
+- Temporary gate artifacts, duplicate workflow files, or stale local package residues left behind after closure.
 
 ## 4. PR policy
 - PR must include:
@@ -96,6 +103,7 @@ Concurrent/overlapping change packages are forbidden.
 - Merge requires `AUDIT=APPROVE` and all mandatory checks green.
 - Merge authority remains with PO governance decision.
 - Release/versioning requires final release-readiness evidence.
+- Clean Desk restoration requires temporary gate artifacts and stale local package residues to be removed after closure.
 - If any mandatory control fails, status is `NOT_READY_FOR_RELEASE`.
 
 ## 6. Canonical quality commands (Python scope)
