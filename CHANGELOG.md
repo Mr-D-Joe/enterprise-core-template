@@ -4,10 +4,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 ### Added
-- Pending
+- Governance hardening package `GOV-HARDEN-20260312` integrated into normative rules and gate checks.
 
 ### Changed
-- Pending
+- Runtime-default, error-contract, runtime-consistency, dependency/supply-chain, migration, and version-source controls tightened in canonical governance docs.
 
 ### Fixed
 - Pending

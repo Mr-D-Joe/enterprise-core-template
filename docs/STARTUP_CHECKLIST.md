@@ -12,6 +12,13 @@
 - [ ] Confirm backlog/package status is current.
 
 ## Test and quality baseline
+- [ ] Verify secure runtime defaults (for example CSP not null/disabled).
+- [ ] Verify error-contract boundary (no raw internal exception leaks to clients).
+- [ ] Verify no silent error masking as success-shaped return values.
+- [ ] Verify runtime-contract consistency (port/interpreter/start command/env keys).
+- [ ] Verify dependency/supply-chain and vulnerability evidence for release scope.
+- [ ] Verify persistence migration strategy for schema-affecting changes.
+- [ ] Verify version-source consistency across manifest/build/release.
 - [ ] Run split Python tests (when Python scope is active):
   - `pytest -m "not integration"`
   - `pytest -m integration`

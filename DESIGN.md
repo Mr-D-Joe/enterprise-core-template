@@ -104,7 +104,7 @@ Process must maintain evidence suitable for ISO-aligned quality, security, and A
 All DEV and AUDIT execution is driven by PO requirement packets.
 
 ### GOV-12 Delivery Sequence Enforcement
-Required sequence is Requirement -> Implementation -> Audit -> PR -> Merge -> Version.
+Required sequence is Requirement -> Implementation -> Audit -> PR -> Merge -> Version -> Clean Desk.
 
 ### GOV-13 No Self-Approval
 The DEV identity that authored implementation must never issue final audit approval or release authorization.
@@ -165,7 +165,7 @@ For active scope, runtime and compiler decisions must target latest stable versi
 Python virtual environment location is fixed to project root `.venv`; alternative locations are blocked for release readiness.
 
 ### GOV-31 Serial Change Package Lock
-Only one change package may be active. Starting a new package before the current package reaches Merge and Version closure is `FAIL`.
+Only one change package may be active. Starting a new package before the current package reaches Merge, Version, and Clean Desk closure is `FAIL`.
 
 ### GOV-32 Per-Requirement Test Pair Coverage
 For every active `REQ_ID`, audit evidence must show at least one executed positive test (`PASS`) and one executed negative test (`PASS`). Total executed tests for the active package must be greater than zero.
@@ -203,7 +203,36 @@ Any exception to hard controls requires a machine-readable waiver with:
 - `created_at_utc`
 - `expires_at_utc`
 - `justification`
+- `rollback_package_id`
 Expired/missing waiver evidence is `FAIL`.
+
+### GOV-41 Secure Runtime Defaults
+Production runtime defaults must be secure by default. Disabling security defaults (for example null/disabled CSP, disabled transport security, permissive wildcard origins without scope justification) is `FAIL` unless a valid waiver exists.
+
+### GOV-42 Error Disclosure Boundary
+Client-facing contracts must not expose raw internal exceptions, stack traces, infrastructure identifiers, or secret-bearing error details.
+
+### GOV-43 No Silent Error Masking
+Errors must not be masked as successful responses (for example `[]`, `0`, `{}`, or success status) when operation semantics represent failure.
+
+### GOV-44 Canonical Runtime Contract
+Runtime contract fields must be consistent across code, scripts, docs, and environment keys:
+- interpreter/runtime
+- port/bind target
+- startup command
+- required env keys
+Inconsistencies are release-blocking.
+
+### GOV-45 Dependency and Supply-Chain Baseline
+Each release package must include dependency vulnerability and supply-chain evidence (source integrity and risk review) with explicit PASS/FAIL verdict.
+
+### GOV-46 Persistence Schema Versioning and Migration Strategy
+Persistent data changes require explicit schema versioning and deterministic migration strategy (upgrade and rollback behavior).
+Persistence changes without migrations are `FAIL`.
+
+### GOV-47 Version Single Source of Truth
+Version identifiers across manifest/build/release artifacts must resolve to one canonical source.
+Version source mismatch is `FAIL`.
 
 ## 3. Security baseline metadata (mandatory)
 `SECURITY_BASELINE_REVIEW_UTC=2026-02-25`
@@ -238,3 +267,11 @@ Gate scripts must enforce the following checks at minimum:
 16. performance budget evidence gate enforcement (minimum `p95` verdict).
 17. structural module-size gate enforcement with waiver validation.
 18. waiver schema/expiry validation for exception paths.
+19. secure runtime defaults enforcement.
+20. error disclosure boundary enforcement (no raw exception leakage).
+21. no silent error masking as success values.
+22. canonical runtime contract consistency checks (port/interpreter/start command/env keys).
+23. dependency/supply-chain baseline evidence checks.
+24. persistence migration strategy checks for schema-affecting changes.
+25. version single-source-of-truth consistency checks.
+26. waiver rollback-package requirement checks.

@@ -9,9 +9,10 @@ Date: <YYYY-MM-DD>
 Status: Active
 
 ## Planning metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-10T00:00:00Z
-- source_commit_sha=5205b8f7e2fa18ace92529ab8c88eee766d9489a
+- generated_at_utc=2026-03-12T07:50:21Z
+- source_commit_sha=adb7f5e172da6476b1d5f62b768ef4eacf75dbde
 - metrics_generation_mode=machine_only
+- last_closed_package_id=GOV-HARDEN-20260312
 
 ## Document hierarchy
 1. `AGENTS.md` (normative role and operation model)
