@@ -5,15 +5,15 @@ It is the orientation-only project overview for humans and AI.
 It is not the default coding context and must not become an operational implementation container.
 It may enter active execution context only when the active package changes scope/non-scope, key business terms, capability/module map, product-level functional intent, or high-level quality goals, and then only as a bounded excerpt derived into the active `changes/CHG-*.md`.
 
-Version: 1.0.0
-Date: <YYYY-MM-DD>
-Status: Active
+Version: 1.0.1
+Date: 2026-03-12
+Status: Closed
 
 ## Planning metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-12T11:59:26Z
-- source_commit_sha=cdd149eb43ea95e139561a438274cd9b5b49aa28
+- generated_at_utc=2026-03-12T18:55:15Z
+- source_commit_sha=9f26c9170697ae0f0ac8d4289e2ec1af3a756f55
 - metrics_generation_mode=machine_only
-- last_closed_package_id=GOV-HARDEN-20260312
+- last_closed_package_id=TPL-RESTRUCTURE-20260312-01
 
 ## Purpose
 - Project goal:

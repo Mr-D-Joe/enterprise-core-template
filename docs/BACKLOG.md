@@ -1,17 +1,17 @@
 # BACKLOG — <PROJECT_NAME>
 
-Status: Active
+Status: Closed
 
 ## Metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-12T11:59:26Z
-- source_commit_sha=cdd149eb43ea95e139561a438274cd9b5b49aa28
-- planning_sync_state=active_migration
-- active_package_id=TPL-RESTRUCTURE-20260312-01
+- generated_at_utc=2026-03-12T18:55:15Z
+- source_commit_sha=9f26c9170697ae0f0ac8d4289e2ec1af3a756f55
+- planning_sync_state=clean_desk
+- active_package_id=none
 
 ## Active package board
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | active | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T11:59:26Z |
+| TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
 | GOV-HARDEN-20260312 | DES-GOV-41,DES-GOV-42,DES-GOV-43,DES-GOV-44,DES-GOV-45,DES-GOV-46,DES-GOV-47 | closed | PO | system_reports/gates/* | 2026-03-12T07:50:21Z |
 
 ## Rules
