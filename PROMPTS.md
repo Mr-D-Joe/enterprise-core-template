@@ -3,7 +3,9 @@
 This document is normative and binding.
 
 Scope note:
-- `DESIGN.md` defines fundamental governance/architecture rules.
+- `DESIGN.md` defines document hierarchy and governance index rules.
+- `ARCHITECTURE.md` defines architecture and module-boundary rules.
+- `STACK.md` defines stack/runtime/tooling policy.
 - `PROMPTS.md` defines runtime execution controls for PO/DEV/AUDIT only.
 
 ## 0. Default operating role (mandatory)
@@ -87,7 +89,7 @@ When `EXECUTION_MODE=DEV`, the agent must:
    - write machine-readable runtime evidence artifact;
 2. run tooling decision checkpoint before implementation:
    - create/update `system_reports/gates/tooling_decision_template.env`,
-   - select `application_profile` from `DESIGN.md` section 1.1 before selecting tools,
+   - select `application_profile` from `STACK.md` before selecting tools,
    - decide tools for frontend/UI, backend, data, and mobile (if in scope),
    - decide active runtime/compiler versions (Python/Node/.NET/CC/CXX) for in-scope stack,
    - target latest stable runtime/compiler versions unless PO-approved exception exists,
@@ -143,7 +145,8 @@ When `EXECUTION_MODE=AUDIT`, the agent must:
 10. explicitly verify secure runtime defaults, error-disclosure boundary, no silent error masking, runtime-contract consistency, dependency/supply-chain baseline evidence, migration strategy for persistence scope, and version-source consistency.
 
 Allowed input set:
-- `AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, specs;
+- `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`;
+- active change brief and relevant module-local docs;
 - committed diff and deterministic test outputs;
 - DEV gate artifact outputs.
 

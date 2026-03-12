@@ -10,8 +10,10 @@ Ensure independent release assurance with ISO-aligned evidence quality.
 
 ## 2. Approved AUDIT input set
 - DESIGN.md
+- ARCHITECTURE.md
+- STACK.md
 - LASTENHEFT.md
-- docs/specs/*.md
+- active change brief and relevant module-local docs
 - change set (diff/commit)
 - test/gate evidence
 - traceability matrix

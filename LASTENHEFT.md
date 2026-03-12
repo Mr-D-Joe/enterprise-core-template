@@ -1,52 +1,48 @@
 # LASTENHEFT — <PROJECT_NAME>
-## Requirements Specification (Master Index)
 
 This document is normative.
-Detailed requirements are maintained in modular documents.
+It is the orientation-only project overview for humans and AI.
+It is not the default coding context and must not become an operational implementation container.
 
 Version: 1.0.0
 Date: <YYYY-MM-DD>
 Status: Active
 
 ## Planning metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-12T07:50:21Z
-- source_commit_sha=adb7f5e172da6476b1d5f62b768ef4eacf75dbde
+- generated_at_utc=2026-03-12T11:59:26Z
+- source_commit_sha=cdd149eb43ea95e139561a438274cd9b5b49aa28
 - metrics_generation_mode=machine_only
 - last_closed_package_id=GOV-HARDEN-20260312
 
-## Document hierarchy
-1. `AGENTS.md` (normative role and operation model)
-2. `DESIGN.md` (normative architecture and governance)
-3. `CONTRIBUTING.md` (normative delivery/release workflow)
-4. `PROMPTS.md` (normative PO-controlled execution contract)
-5. `LASTENHEFT.md` (normative master index)
-6. `docs/specs/*.md` (normative modular requirements)
-7. `docs/governance/*.md` (supportive templates and evidence aids)
-
-## Modules
-| Module | Path | Scope | ID prefix |
-|---|---|---|---|
-| UI | `docs/specs/ui.md` | frontend behavior | UI-REQ-* |
-| Backend | `docs/specs/backend.md` | API and domain services | BE-REQ-* |
-| Data | `docs/specs/data.md` | data and persistence | DB-REQ-* |
-| NFR | `docs/specs/nfr.md` | quality constraints | NFR-REQ-* |
-
-## Project context
+## Purpose
 - Project goal:
 - Target users:
 - Platform target:
-- Operating constraints:
 
-## Machine-generated planning metrics (no manual estimates)
-- open_requirement_count=auto
-- active_package_count=auto
-- completed_package_count=auto
-- blocked_item_count=auto
-- last_release_tag=auto
-- perf_budget_p95_status=auto
+## Scope
+- In scope:
+- Out of scope:
 
-## Mandatory quality policy
-- Requirements must be atomic.
-- Every requirement must include requirement-level context.
-- Every module must include module-level general context.
-- Traceability and independent audit are mandatory for release.
+## Key terms
+- Primary business terms:
+- Critical domain concepts:
+
+## Capability and module map
+| Capability | MOD_ID | Primary path | Public interfaces | Notes |
+|---|---|---|---|---|
+| Governance root | MOD-GOV-ROOT | `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md` | root governance docs | canonical repository governance |
+| Template scaffolds | MOD-GOV-TEMPLATE | `docs/templates/`, `changes/`, `bootstrap_project.sh` | bootstrap and scaffolds | reusable neutral template assets |
+| Gates and audits | MOD-GOV-GATES | `scripts/`, `docs/governance/` | gate scripts, CI, audit artifacts | enforcement and evidence support |
+
+## High-level quality goals
+- Atomic requirements and bounded change packages.
+- Independent audit before release.
+- Security-by-default and privacy-by-design.
+- Token-efficient AI working context.
+- Structural alignment between code, documentation, and contracts.
+
+## Orientation rules
+- Detailed implementation guidance belongs in module-local documentation.
+- Concrete change execution belongs in `changes/CHG-*.md`.
+- Release history belongs in `CHANGELOG.md`.
+- Active package control belongs in `docs/BACKLOG.md`.
