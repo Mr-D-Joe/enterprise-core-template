@@ -118,7 +118,14 @@ DEV execution for an approved package is not complete until:
 - required tests are executed,
 - per-REQ positive and negative evidence exists,
 - committed-state DEV evidence exists,
-- no known package-internal defect remains open that can be fixed within approved scope.
+- no known package-internal defect remains open that can be fixed within approved scope,
+- secure runtime defaults are verified for release scope,
+- no raw internal exceptions are exposed in client-facing responses,
+- no silent error masking reports failure paths as success values,
+- runtime contract is consistent (port/interpreter/start command/env keys),
+- dependency/supply-chain vulnerability evidence exists for release scope,
+- persistence changes include schema versioning and migration strategy,
+- version source-of-truth is consistent across manifest/build/release artifacts.
 
 If DEV finds a package-internal blocker that can be fixed within approved scope, DEV must fix it and rerun required checks instead of handing back a partial package.
 
@@ -133,6 +140,7 @@ When `EXECUTION_MODE=AUDIT`, the agent must:
 7. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
 8. issue findings with severity and decision `APPROVE` or `REJECT`;
 9. execute `scripts/gates/audit_gate.sh` and persist resulting artifact in `system_reports/gates/`.
+10. explicitly verify secure runtime defaults, error-disclosure boundary, no silent error masking, runtime-contract consistency, dependency/supply-chain baseline evidence, migration strategy for persistence scope, and version-source consistency.
 
 Allowed input set:
 - `AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, specs;
@@ -170,6 +178,13 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - Missing performance budget evidence (`p95`) => `FINAL_STATUS=FAIL`.
 - Additional active prompt/governance contract files outside canonical set => `FINAL_STATUS=FAIL`.
 - Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
+- insecure runtime defaults => `FINAL_STATUS=FAIL`.
+- raw exception exposure => `FINAL_STATUS=FAIL`.
+- silent masking => `FINAL_STATUS=FAIL`.
+- runtime contract inconsistent => `FINAL_STATUS=FAIL`.
+- missing dependency evidence => `FINAL_STATUS=FAIL`.
+- persistence without migrations => `FINAL_STATUS=FAIL`.
+- version source mismatch => `FINAL_STATUS=FAIL`.
 - Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.
 - Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`.
 - Any unresolved blocker/major finding => `FINAL_STATUS=FAIL`.

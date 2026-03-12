@@ -19,11 +19,13 @@ This document is normative and binding.
 - Must execute runtime bootstrap autonomously (no customer terminal setup required).
 - Must execute a tooling decision checkpoint before code changes.
 - Must close package-internal defects within approved scope before handing package back as complete.
+- Must not leave in-scope security/runtime/error-contract/migration/version-drift defects unresolved.
 
 ### AUDIT (Independent) — execution strand
 - Performs independent audit against normative docs and approved evidence.
 - Produces findings, severities, and decision (`APPROVE` or `REJECT`).
 - Must not reuse DEV private rationale/chat history or act as DEV proxy.
+- Must explicitly verify secure runtime defaults, error-contract boundary, runtime-contract consistency, dependency/supply-chain risk evidence, migration strategy, and version-source consistency.
 
 ## 2. Mandatory separation and identity controls
 - PO, DEV, and AUDIT must use distinct identities (`AGENT_ID` and runtime evidence).
@@ -84,6 +86,7 @@ This document is normative and binding.
 - AUDIT must reject releases with missing security/privacy evidence or unresolved high-risk findings.
 - AUDIT must execute the ISO-conform security/data checklist defined in `docs/governance/INDEPENDENT_AUDIT_POLICY.md`.
 - AUDIT decision is invalid if `docs/governance/AUDIT_REPORT_TEMPLATE.md` security/data control section is incomplete.
+- Unsichere Runtime-Defaults, Exception-Leaks an Clients, oder stilles Error-Masking ohne genehmigten Waiver sind explizit verboten.
 
 ## 7. Runtime bootstrap autonomy (customer-safe)
 - DEV must create `.env` from `.env.template` automatically when missing.

@@ -31,6 +31,13 @@ Concurrent/overlapping change packages are forbidden.
   - `scripts/gates/dev_gate.sh` is executed and artifact is stored in `system_reports/gates/dev_gate_*.gate`,
   - tooling decision packet is updated if stack/runtime choices changed,
   - active runtime/compiler versions are documented as latest stable with source/date evidence,
+  - secure runtime defaults are verified for production runtime profile,
+  - no raw internal exception details are exposed in client-facing contracts,
+  - no silent error masking returns success-shaped fallback values for failure states,
+  - runtime contract is consistent (port/interpreter/start command/env keys),
+  - dependency vulnerability and supply-chain evidence is linked,
+  - persistence changes include schema versioning and migration strategy,
+  - version sources are synchronized to one canonical source of truth,
   - deterministic tests executed and linked with per-`REQ_ID` coverage (minimum one positive and one negative test),
   - Python tests in scope are executed as separated runs:
     - `pytest -m "not integration"`
@@ -68,6 +75,13 @@ Concurrent/overlapping change packages are forbidden.
 - Python virtual environment not located at project root `.venv`.
 - Customer-facing manual runtime/setup instructions issued by DEV.
 - Missing latest-stable runtime/compiler evidence for active scope.
+- Unsichere Runtime-Defaults.
+- Exception-Leak.
+- Error-Masking.
+- Runtime-Widerspruch.
+- Fehlende Dependency-Sicherheitsprüfung.
+- Persistenz ohne Migrationen.
+- Versionsdrift.
 - Missing per-`REQ_ID` test coverage evidence (minimum one executed positive and one executed negative test).
 - Missing separated Python test partition evidence (`pytest -m "not integration"` and `pytest -m integration`) when Python tests are in scope.
 - Total executed test count for active package equals zero.
