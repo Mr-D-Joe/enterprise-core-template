@@ -19,8 +19,11 @@ Concurrent/overlapping change packages are forbidden.
 - Requirement phase (PO):
   - work packet exists with `REQ_IDS`,
   - no active open change package exists from prior execution chain,
+  - exactly one active `changes/CHG-*.md` exists with valid YAML frontmatter and `status=ACTIVE`,
   - `docs/BACKLOG.md`, active package metadata, and `LASTENHEFT.md` machine metrics are synchronized and fresh,
   - machine-readable PO role packet exists with required keys,
+  - active CHG document declares included and excluded source documents,
+  - active CHG document contains backlog extraction for the active package,
   - tooling decision packet contains `application_profile` and stack choices,
   - tooling decision packet exists with official-source evidence and verification date,
   - acceptance criteria and test vectors are explicit,
@@ -28,6 +31,8 @@ Concurrent/overlapping change packages are forbidden.
   - `LASTENHEFT.md` and `docs/BACKLOG.md` include machine-generated metadata (`generated_at_utc`, `source_commit_sha`).
 - DEV phase:
   - changes are traceable to `REQ_IDS`,
+  - all DEV evidence artifacts reference the active `chg_id`,
+  - only declared and allowed source documents are used for execution context,
   - `scripts/gates/dev_gate.sh` is executed and artifact is stored in `system_reports/gates/dev_gate_*.gate`,
   - tooling decision packet is updated if stack/runtime choices changed,
   - active runtime/compiler versions are documented as latest stable with source/date evidence,
@@ -51,6 +56,8 @@ Concurrent/overlapping change packages are forbidden.
 - AUDIT phase:
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
+  - all audit artifacts reference the active `chg_id`,
+  - no undeclared source document is used as audit input,
   - `scripts/gates/audit_gate.sh` is executed and artifact is stored in `system_reports/gates/audit_gate_*.gate`,
   - findings include severity and evidence,
   - each active `REQ_ID` has executed positive+negative test evidence and package test count is greater than zero,
@@ -65,6 +72,13 @@ Concurrent/overlapping change packages are forbidden.
 - Missing or wrong `EXECUTION_MODE` role packet for active phase.
 - Missing required role packet keys (`execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`, `allowed_inputs_hash`, `target_commit_sha`, `po_agent_id`, `created_at_utc`).
 - Missing tooling decision packet for active scope.
+- Missing active CHG document.
+- More than one active CHG document.
+- Active CHG document missing valid YAML frontmatter.
+- Active CHG document missing required keys (`chg_id`, `status`, `req_ids`, `mod_ids`, `included_sources`, `excluded_sources`, `created_at_utc`, `updated_at_utc`).
+- Active CHG document missing required backlog extraction.
+- Source document used in DEV or AUDIT but not declared in active CHG document.
+- Gate or evidence artifact missing active `chg_id` binding.
 - Missing required tooling decision keys (`application_profile`, `frontend_ui_choice`, `backend_choice`, `data_choice`, `stability_target`).
 - Missing official-source or tooling-currency evidence in tooling decision packet.
 - Stale or unsynchronized backlog/package metadata (`docs/BACKLOG.md` or active PO package plan).
@@ -94,6 +108,7 @@ Concurrent/overlapping change packages are forbidden.
 - Missing ISO security/data control verdicts in audit report.
 - Security baseline age exceeds configured maximum age.
 - Unresolved blocker/major findings.
+- Full backlog/changelog/lastenheft/ADR history used as standard package context.
 - Missing required gate evidence artifacts.
 - New package started while previous package is not closed (missing any of: DEV gate, AUDIT decision, PR/Merge, Version).
 - Stopping before PR -> Merge -> Version -> Clean Desk although all prior mandatory gates passed.

@@ -46,8 +46,14 @@ require_file "docs/templates/module-docs/TESTING.md"
 require_file "docs/templates/module-docs/DECISIONS.md"
 
 require_heading "changes/CHG-TEMPLATE.md" "# CHG-TEMPLATE"
+require_heading "changes/CHG-TEMPLATE.md" '```yaml'
 require_heading "changes/CHG-TEMPLATE.md" "## Goal"
 require_heading "changes/CHG-TEMPLATE.md" "## Affected MOD_IDs"
+require_heading "changes/CHG-TEMPLATE.md" "## Included source documents"
+require_heading "changes/CHG-TEMPLATE.md" "## Backlog extraction"
+require_heading "changes/CHG-TEMPLATE.md" "## Changelog extraction"
+require_heading "changes/CHG-TEMPLATE.md" "## Lastenheft inclusion decision"
+require_heading "changes/CHG-TEMPLATE.md" "## ADR inclusion decision"
 require_heading "changes/CHG-TEMPLATE.md" "## Pass / fail criteria"
 
 require_heading "docs/modules/index.md" "# Modules Index"

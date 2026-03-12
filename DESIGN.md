@@ -94,6 +94,58 @@ Not allowed as default coding context:
 - full changelog history,
 - full-repository summaries without concrete need.
 
+Execution context must be derived from exactly one active `changes/CHG-*.md`.
+Authoritative source documents remain complete, but DEV and AUDIT must consume the bounded derivation instead of undifferentiated source documents.
+Non-extracted source text is out of scope for the active package.
+
+## Derived execution context
+- `docs/BACKLOG.md`, `CHANGELOG.md`, `LASTENHEFT.md`, ADRs, and module-local docs are authoritative source documents.
+- `changes/CHG-*.md` is the only operative package document for DEV and AUDIT.
+- Exactly one `changes/CHG-*.md` with machine-readable `status=ACTIVE` may exist for the active package.
+- Every active CHG document must begin with one YAML frontmatter block containing at least:
+  - `chg_id`
+  - `status`
+  - `req_ids`
+  - `mod_ids`
+  - `included_sources`
+  - `excluded_sources`
+  - `created_at_utc`
+  - `updated_at_utc`
+- Allowed CHG status values are exactly:
+  - `DRAFT`
+  - `ACTIVE`
+  - `CLOSED`
+  - `ARCHIVED`
+- Any missing frontmatter, missing key, invalid status, or more than one active CHG document is `FAIL`.
+- The active CHG document must declare every included source document and every excluded source document.
+- Every included non-root source document requires an explicit inclusion reason.
+- Any source document used by DEV or AUDIT but not declared in the active CHG document is forbidden input and causes `FAIL`.
+- All role packets, gate artifacts, and package-level evidence must bind to the active `chg_id`.
+- Evidence that does not bind to the active `chg_id` is invalid for release.
+
+## Source inclusion rules
+- `docs/BACKLOG.md` is never default execution context.
+- Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active CHG document.
+- `CHANGELOG.md` is never default execution context.
+- Only the minimal relevant changelog slice may be derived into the active CHG document when package history is materially relevant.
+- `LASTENHEFT.md` is not default execution context.
+- `LASTENHEFT.md` may be included only when the active package changes:
+  - scope or non-scope,
+  - key business terms,
+  - capability/module map,
+  - product-level functional intent,
+  - high-level quality goals.
+- ADRs are excluded by default.
+- ADR inclusion is mandatory only when the active package changes or depends on:
+  - module boundaries,
+  - contract boundary semantics or versions,
+  - runtime or stack decisions,
+  - persistence boundaries or data ownership,
+  - security or compliance boundaries,
+  - an ADR-governed decision.
+- Only the minimal ADR set directly governing the active package may be included.
+- Full backlog, full changelog, full lastenheft, full ADR history, and full docs trees are forbidden default execution context.
+
 ## Root anti-bloat rule
 Root files must remain:
 - concise,
@@ -126,6 +178,10 @@ Only reusable scaffolds, placeholders, templates, and neutral examples are allow
 - `docs/BACKLOG.md` is an active-package board plus compact ledger.
 - `CHANGELOG.md` is a compact release ledger.
 - Older detail remains recoverable through Git history, ADRs, release notes, and module-local docs.
+- `docs/BACKLOG.md` older completed-package detail must be compacted or moved to `docs/archive/backlog/` when repository policy thresholds are exceeded.
+- `CHANGELOG.md` older release detail must be compacted or moved to `docs/archive/changelog/` when repository policy thresholds are exceeded.
+- Threshold ownership for compaction must be declared canonically.
+- Exceeding compaction thresholds without compaction is `COMPACTION_REQUIRED` or `FAIL`.
 
 ## Enforcement expectation
 Gate scripts and CI must verify the new structure where feasible:

@@ -53,6 +53,8 @@ This document is normative and binding.
 - PO must not issue a new DEV or AUDIT role packet while the current package is not closed.
 - A package is closed only after Requirement -> DEV evidence -> Independent AUDIT decision -> PR -> Merge -> Version -> Clean Desk.
 - Any overlapping/parallel package initiation is a governance violation and must hard-fail.
+- Exactly one `changes/CHG-*.md` with machine-readable `status=ACTIVE` may exist for the active package.
+- Missing active CHG document, more than one active CHG document, or invalid active-CHG status is a governance violation and must hard-fail.
 
 ## 4.2 Per-Requirement test execution minimum
 - AUDIT must validate executed test evidence for every active `REQ_ID`.
@@ -77,6 +79,14 @@ This document is normative and binding.
   - `execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`,
   - `allowed_inputs_hash`, `target_commit_sha`, `po_agent_id`, `created_at_utc`.
 - DEV and AUDIT must execute in separate runs with separate role packets.
+- PO must derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts.
+- DEV and AUDIT must use the active CHG document plus declared allowed documents only.
+- The active CHG document must declare:
+  - included source documents,
+  - excluded source documents,
+  - inclusion reason for every included non-root source document.
+- Any source document used in DEV or AUDIT but not declared in the active CHG document is forbidden input and must hard-fail.
+- All execution artifacts must bind to the active `chg_id`.
 - AUDIT input must be limited to committed artifacts and approved evidence files.
 - DEV must not receive audit findings or audit rationale before DEV gate completion.
 - Any mode-mixing, cross-role leakage, or non-PO-triggered execution is an independence violation and must hard-fail.
@@ -116,6 +126,10 @@ This document is normative and binding.
   - `source_commit_sha`
 - `LASTENHEFT.md` is orientation-only and must not become an operational implementation container.
 - Active code-change work must use `changes/CHG-*.md` as bounded task context.
+- `docs/BACKLOG.md`, `CHANGELOG.md`, and `LASTENHEFT.md` are never default execution context.
+- Only package-relevant slices derived into the active CHG document may enter DEV or AUDIT execution context.
+- `LASTENHEFT.md` may enter active execution context only when the package changes scope/non-scope, key terms, capability map, product-level functional intent, or high-level quality goals.
+- ADRs are excluded from default execution context unless the active package changes or depends on an ADR-governed boundary or decision.
 - Module-local docs must be adjacent to module code and follow the declared `MOD_ID` boundary model.
 - Redundant active governance/prompt documents are forbidden; one active leading document per topic only.
 - Python testing in scope must be partitioned and evidenced separately:

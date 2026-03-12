@@ -12,6 +12,11 @@
 - [ ] Update `LASTENHEFT.md` metadata (`generated_at_utc`, `source_commit_sha`).
 - [ ] Confirm backlog/package status is current.
 - [ ] Create or update the active `changes/CHG-*.md` before concrete implementation work starts.
+- [ ] Confirm exactly one active `changes/CHG-*.md` exists.
+- [ ] Confirm active CHG YAML frontmatter is valid and contains required keys.
+- [ ] Confirm active CHG declares included and excluded source documents.
+- [ ] Confirm backlog extraction exists in the active CHG document.
+- [ ] Confirm only declared and allowed source documents are loaded into execution context.
 
 ## Test and quality baseline
 - [ ] Verify secure runtime defaults (for example CSP not null/disabled).
@@ -31,6 +36,7 @@
 - [ ] Run gate scripts:
   - `./scripts/gates/dev_gate.sh`
   - `./scripts/gates/audit_gate.sh`
+- [ ] Confirm gate and evidence artifacts bind to the active `chg_id`.
 
 ## Performance and structure gates
 - [ ] Record performance budget evidence with p95 result.

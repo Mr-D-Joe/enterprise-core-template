@@ -43,6 +43,28 @@ The PO role packet must be stored as a machine-readable artifact (for example `.
 
 Missing role packet artifact or missing required keys is a hard gate failure.
 
+### 1.2 Active change brief artifact (machine-readable, mandatory)
+The active package must be controlled by exactly one machine-readable change brief at `changes/CHG-*.md`.
+
+The active CHG document must begin with exactly one YAML frontmatter block containing at least:
+- `chg_id`
+- `status`
+- `req_ids`
+- `mod_ids`
+- `included_sources`
+- `excluded_sources`
+- `created_at_utc`
+- `updated_at_utc`
+
+Allowed `status` values are exactly:
+- `DRAFT`
+- `ACTIVE`
+- `CLOSED`
+- `ARCHIVED`
+
+Exactly one CHG document with `status=ACTIVE` may exist for the active package.
+Missing active CHG document, missing frontmatter, missing required keys, invalid status, or more than one `status=ACTIVE` document is a hard gate failure.
+
 ## 2. PO runtime prompt (customer-facing)
 PO is the single customer interface and the only role allowed to trigger DEV and AUDIT runs.
 
@@ -52,9 +74,11 @@ PO must:
 3. ensure no open package conflict exists before starting a new package;
 4. ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan, `LASTENHEFT.md` machine metrics);
 5. ensure tooling decision checkpoint exists before DEV execution;
-6. pass only approved scope and evidence to the active mode;
-7. keep customer interaction free from manual runtime/toolchain setup requests;
-8. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
+6. derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts;
+7. ensure the active CHG document declares included and excluded source documents and inclusion reason for every included non-root source document;
+8. pass only approved scope and declared evidence to the active mode;
+9. keep customer interaction free from manual runtime/toolchain setup requests;
+10. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
 
 ## 2.1 PO autonomy default (mandatory)
 Unless the customer explicitly limits scope, a customer request naming a concrete work package or `REQ_ID` is an end-to-end execution order for PO.
@@ -79,6 +103,45 @@ PO may execute DEV and AUDIT operationally within one customer turn, provided th
 - AUDIT consumes only approved inputs,
 - DEV does not self-approve.
 
+## 2.2 Derived execution context (mandatory)
+The repository distinguishes between:
+- authoritative source documents,
+- one active derived package context,
+- actual execution context.
+
+Authoritative source documents may remain complete:
+- `docs/BACKLOG.md`
+- `CHANGELOG.md`
+- `LASTENHEFT.md`
+- ADRs
+- module-local documentation
+
+The active `changes/CHG-*.md` is the single operative package document for DEV and AUDIT.
+
+Default DEV and AUDIT execution context is limited to:
+- `AGENTS.md`
+- `PROMPTS.md`
+- `DESIGN.md`
+- `ARCHITECTURE.md`
+- `STACK.md`
+- `CONTRIBUTING.md`
+- the active `changes/CHG-*.md`
+- documentation of directly affected modules only
+- directly dependent neighbor-module documentation only if an explicit dependency reason is recorded in the active CHG document
+- only the minimal ADR set directly governing the active package when ADR inclusion is mandatory
+
+The following are forbidden as standard execution context:
+- full `docs/BACKLOG.md`
+- full `CHANGELOG.md`
+- full `LASTENHEFT.md`
+- full ADR history
+- full docs tree
+- repo-wide summaries without package-specific necessity
+- transitive neighbor-module inclusion unless explicitly approved in the active CHG document
+
+Non-extracted source text is out of scope for the active run.
+Any source document used in DEV or AUDIT but not declared in the active CHG document is forbidden input.
+
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
 1. run runtime bootstrap protocol before implementation:
@@ -102,7 +165,8 @@ When `EXECUTION_MODE=DEV`, the agent must:
 6. provide at least one executed positive and one executed negative test per active `REQ_ID`;
 7. produce DEV evidence on committed state;
 8. hand over only machine-readable evidence artifacts;
-9. execute `scripts/gates/dev_gate.sh` and persist resulting artifact in `system_reports/gates/`.
+9. execute `scripts/gates/dev_gate.sh` and persist resulting artifact in `system_reports/gates/`;
+10. bind every DEV artifact and report to the active `chg_id`.
 
 DEV mode must not:
 - self-approve release readiness;
@@ -142,7 +206,8 @@ When `EXECUTION_MODE=AUDIT`, the agent must:
 7. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
 8. issue findings with severity and decision `APPROVE` or `REJECT`;
 9. execute `scripts/gates/audit_gate.sh` and persist resulting artifact in `system_reports/gates/`.
-10. explicitly verify secure runtime defaults, error-disclosure boundary, no silent error masking, runtime-contract consistency, dependency/supply-chain baseline evidence, migration strategy for persistence scope, and version-source consistency.
+10. explicitly verify secure runtime defaults, error-disclosure boundary, no silent error masking, runtime-contract consistency, dependency/supply-chain baseline evidence, migration strategy for persistence scope, and version-source consistency;
+11. verify artifact binding to the active `chg_id` and reject undeclared source usage.
 
 Allowed input set:
 - `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`;
@@ -153,6 +218,7 @@ Allowed input set:
 Forbidden input set:
 - DEV private rationale, chain-of-thought, local TODO notes, chat history;
 - files not referenced by normative docs or gate artifacts.
+- source documents not declared in the active CHG document.
 
 ## 4.1 AUDIT orchestration by PO
 PO must trigger AUDIT immediately after successful committed-state DEV completion for the active package.
@@ -171,6 +237,14 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
 - Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
 - More than one active package => `FINAL_STATUS=FAIL`.
+- Missing active CHG document => `FINAL_STATUS=FAIL`.
+- More than one active CHG document => `FINAL_STATUS=FAIL`.
+- Missing or invalid CHG frontmatter => `FINAL_STATUS=FAIL`.
+- Missing required CHG keys => `FINAL_STATUS=FAIL`.
+- Source document used in DEV or AUDIT but not declared in active CHG document => `FINAL_STATUS=FAIL`.
+- Missing artifact binding to active `chg_id` => `FINAL_STATUS=FAIL`.
+- Missing backlog extraction in active CHG document => `FINAL_STATUS=FAIL`.
+- Full backlog, full changelog, full lastenheft, or full ADR history used as standard execution context => `FINAL_STATUS=FAIL`.
 - Stale backlog/package metadata => `FINAL_STATUS=FAIL`.
 - Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.
 - Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.

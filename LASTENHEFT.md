@@ -3,6 +3,7 @@
 This document is normative.
 It is the orientation-only project overview for humans and AI.
 It is not the default coding context and must not become an operational implementation container.
+It may enter active execution context only when the active package changes scope/non-scope, key business terms, capability/module map, product-level functional intent, or high-level quality goals, and then only as a bounded excerpt derived into the active `changes/CHG-*.md`.
 
 Version: 1.0.0
 Date: <YYYY-MM-DD>
