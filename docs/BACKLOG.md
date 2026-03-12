@@ -19,3 +19,6 @@ Status: Active
 2. Backlog metadata must be refreshed before each DEV start.
 3. Manual estimate fields are forbidden in active backlog state.
 4. Every active package row must include evidence paths.
+5. `docs/BACKLOG.md` is authoritative portfolio overview and is never default execution context.
+6. Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active `changes/CHG-*.md`.
+7. Older completed-package detail must be compacted or archived under `docs/archive/backlog/` when repository policy thresholds are exceeded.

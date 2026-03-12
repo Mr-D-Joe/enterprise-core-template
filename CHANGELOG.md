@@ -1,6 +1,9 @@
 # CHANGELOG — <PROJECT_NAME>
 
 All notable changes to this project are documented in this file.
+`CHANGELOG.md` is authoritative release history and is never default DEV or AUDIT execution context.
+Only the minimal package-relevant changelog slice may be derived into the active `changes/CHG-*.md` when history is materially relevant.
+Older release detail must be compacted or archived under `docs/archive/changelog/` when repository policy thresholds are exceeded.
 
 ## [Unreleased]
 ### Added
