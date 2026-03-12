@@ -1,6 +1,6 @@
 # CHG-20260312-template-restructure
 
-Status: Active
+Status: Closed
 Package_ID: TPL-RESTRUCTURE-20260312-01
 
 ## Goal
@@ -41,6 +41,11 @@ Package_ID: TPL-RESTRUCTURE-20260312-01
 - `./scripts/audit_readiness_check.sh`
 - `./scripts/pipeline_order_check.sh`
 - `./scripts/spec_lint.sh --strict`
+
+## Closure
+- Merged to `main` via PR `#9` and follow-up governance hardening via PR `#10`.
+- Final merged baseline commit before release: `9f26c9170697ae0f0ac8d4289e2ec1af3a756f55`.
+- Package closed after metadata synchronization, release tagging, and GitHub release entry.
 
 ## Explicitly excluded paths / modules
 - No production application modules.

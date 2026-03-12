@@ -6,6 +6,10 @@ Only the minimal package-relevant changelog slice may be derived into the active
 Older release detail must be compacted or archived under `docs/archive/changelog/` when repository policy thresholds are exceeded.
 
 ## [Unreleased]
+### Changed
+- Package closure metadata aligned to the released derived-context governance baseline.
+
+## [2.5.1] - 2026-03-12
 ### Added
 - Governance hardening package `GOV-HARDEN-20260312` integrated into normative rules and gate checks.
 - `ARCHITECTURE.md` and `STACK.md` introduced as canonical root sources.
@@ -18,6 +22,7 @@ Older release detail must be compacted or archived under `docs/archive/changelog
 
 ### Fixed
 - `docs/specs/*.md` removed as parallel operational specification sources.
+- Derived execution context is now bound to exactly one active `CHG` document with YAML frontmatter, declared sources, and `chg_id`-bound evidence artifacts.
 
 ## [0.1.0] - <YYYY-MM-DD>
 ### Added
