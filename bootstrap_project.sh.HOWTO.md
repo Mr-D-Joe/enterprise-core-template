@@ -5,6 +5,7 @@
 
 ## Datei
 - Script: `bootstrap_project.sh`
+- Finder-Starter: `bootstrap_project_picker.command`
 - How-To: `bootstrap_project.sh.HOWTO.md`
 
 ## Verwendung
@@ -15,6 +16,14 @@ cd /PATH/TO/TEMPLATE/ROOT
 ```
 
 ### 2. Script starten
+
+Mit Finder-Ordnerauswahl (empfohlen auf macOS):
+```bash
+./bootstrap_project_picker.command
+```
+
+Oder per Doppelklick auf `bootstrap_project_picker.command`.
+Das Script fragt zuerst nach dem Projektnamen und öffnet dann einen Finder-Dialog zur Auswahl des Zielordners.
 
 Ohne Zielordner (erstellt Projekt im aktuellen Verzeichnis):
 ```bash
@@ -47,6 +56,9 @@ Das Script erzeugt daraus automatisch einen Ordnernamen (Slug), z. B.:
 - Zielordner: `anti-gravity`
 
 ## Zielordner auswählen
+- Mit Finder-Dialog:
+  - `./bootstrap_project_picker.command`
+  - Zielordner wird grafisch ausgewählt.
 - Übergib den Zielordner als ersten Parameter:
   - `./bootstrap_project.sh /mein/zielpfad`
 - Wenn kein Parameter gesetzt ist:
@@ -55,7 +67,7 @@ Das Script erzeugt daraus automatisch einen Ordnernamen (Slug), z. B.:
 ## Ergebnis
 Das Script erstellt:
 - die komplette Framework-Struktur,
-- alle nötigen Unterordner (`docs/specs`, `docs/governance`, `system_reports/...`, `reports`),
+- alle nötigen Unterordner (`changes`, `docs/modules`, `docs/templates`, `docs/governance`, `system_reports/...`, `reports`),
 - eine allgemeine Runtime-/Toolchain-Umgebungsdatei:
   - `.env.template` (Python/Node/.NET/C/C++-Variablen als Startpunkt),
 - eine aktive `.env` automatisch aus der Vorlage,
@@ -70,6 +82,9 @@ Das Script erstellt:
 - Planungs-/Onboarding-Dokumente:
   - `docs/BACKLOG.md`
   - `docs/STARTUP_CHECKLIST.md`
+  - `changes/CHG-TEMPLATE.md`
+  - `docs/modules/index.md`
+  - `docs/templates/module-docs/...`
   - `docs/governance/FOUR_EYES_GATING.md`
 - Gate-Skripte:
   - `scripts/gates/dev_gate.sh`
@@ -85,12 +100,13 @@ Zusätzlich werden Platzhalter (Projektname, Datum) direkt ersetzt, damit du sof
    - zuerst `application_profile` setzen,
    - dann konkrete Stack-Auswahl + Runtime-/Compiler-Versionen eintragen,
    - nur neueste stabile Versionen verwenden und mit offiziellen Quellen belegen.
-3. `system_reports/gates/po_role_packet_template.env` mit `REQ_IDS` und Scope ausfüllen.
-4. DEV-Run starten (ohne manuelle Runtime-Setup-Kommandos für den Kunden).
-5. DEV-Gate ausführen: `./scripts/gates/dev_gate.sh`.
-6. AUDIT-Gate ausführen: `./scripts/gates/audit_gate.sh`.
-7. `docs/BACKLOG.md` und `LASTENHEFT.md` Metadaten aktuell halten (`generated_at_utc`, `source_commit_sha`).
-8. Traceability-Matrix pflegen: pro aktivem `REQ_ID` mindestens ein Positiv- und ein Negativ-Test mit Evidenz und `PASS`.
-9. Bei Python-Scope getrennte Tests laufen lassen:
+3. Ersten Change-Brief aus `changes/CHG-TEMPLATE.md` ableiten.
+4. `system_reports/gates/po_role_packet_template.env` mit `REQ_IDS` und Scope ausfüllen.
+5. DEV-Run starten (ohne manuelle Runtime-Setup-Kommandos für den Kunden).
+6. DEV-Gate ausführen: `./scripts/gates/dev_gate.sh`.
+7. AUDIT-Gate ausführen: `./scripts/gates/audit_gate.sh`.
+8. `docs/BACKLOG.md` und `LASTENHEFT.md` Metadaten aktuell halten (`generated_at_utc`, `source_commit_sha`).
+9. Traceability-Matrix pflegen: pro aktivem `REQ_ID` mindestens ein Positiv- und ein Negativ-Test mit Evidenz und `PASS`.
+10. Bei Python-Scope getrennte Tests laufen lassen:
    - `pytest -m "not integration"`
    - `pytest -m integration`

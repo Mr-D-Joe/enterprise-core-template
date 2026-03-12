@@ -1,15 +1,17 @@
 # STARTUP CHECKLIST — <PROJECT_NAME>
 
 ## Governance baseline
-- [ ] Confirm canonical docs: `AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`, `docs/BACKLOG.md`.
+- [ ] Confirm canonical docs: `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`, `docs/BACKLOG.md`.
 - [ ] Confirm governance support docs: `docs/governance/FOUR_EYES_GATING.md`, `CHANGELOG.md`.
 - [ ] Confirm no redundant active prompt contracts exist (`QA-Test-Prompt.md`, `docs/PROMPTS.md`, `docs/prompts/*`).
 - [ ] Confirm one active package maximum.
+- [ ] Confirm `changes/CHG-TEMPLATE.md` and `docs/templates/module-docs/` exist in canonical paths.
 
 ## Planning metadata
 - [ ] Update `docs/BACKLOG.md` metadata (`generated_at_utc`, `source_commit_sha`, `planning_sync_state`).
 - [ ] Update `LASTENHEFT.md` metadata (`generated_at_utc`, `source_commit_sha`).
 - [ ] Confirm backlog/package status is current.
+- [ ] Create or update the active `changes/CHG-*.md` before concrete implementation work starts.
 
 ## Test and quality baseline
 - [ ] Verify secure runtime defaults (for example CSP not null/disabled).

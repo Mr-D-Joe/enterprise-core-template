@@ -15,7 +15,7 @@ jobs:
 
       - name: Check normative files
         run: |
-          for f in AGENTS.md DESIGN.md CONTRIBUTING.md PROMPTS.md LASTENHEFT.md; do
+          for f in AGENTS.md DESIGN.md ARCHITECTURE.md STACK.md CONTRIBUTING.md PROMPTS.md LASTENHEFT.md; do
             if [ ! -f "$f" ]; then
               echo "::error file=$f::CRITICAL: missing normative file: $f"
               exit 1

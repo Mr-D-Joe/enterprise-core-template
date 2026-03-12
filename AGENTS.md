@@ -34,7 +34,8 @@ This document is normative and binding.
 
 ## 3. Audit input firewall
 - Allowed audit inputs:
-  - normative docs (`AGENTS.md`, `DESIGN.md`, `CONTRIBUTING.md`, `PROMPTS.md`, specs),
+  - normative docs (`AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`),
+  - active change brief and relevant module-local docs,
   - committed change set/diff,
   - deterministic test and gate outputs.
 - Forbidden audit inputs:
@@ -67,8 +68,10 @@ This document is normative and binding.
 
 ## 5. Prompt and runtime separation controls
 - `PROMPTS.md` is the only normative prompt source.
-- `DESIGN.md` is the only normative source for architecture/governance fundamentals.
-- `PROMPTS.md` is runtime-only and must not redefine architecture/governance fundamentals from `DESIGN.md`.
+- `DESIGN.md` is the normative governance index and document-hierarchy source.
+- `ARCHITECTURE.md` is the only normative source for architecture and module-boundary rules.
+- `STACK.md` is the only normative source for stack/runtime/tooling policy.
+- `PROMPTS.md` is runtime-only and must not redefine architecture, stack, or governance ownership from the canonical root sources.
 - PO must issue explicit role packets (`EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`).
 - PO role packet must exist as a machine-readable artifact with required keys:
   - `execution_mode`, `po_packet_id`, `req_ids`, `scope_allowlist`,
@@ -111,6 +114,9 @@ This document is normative and binding.
 - `LASTENHEFT.md` and `docs/BACKLOG.md` metrics must be machine-generated only and include:
   - `generated_at_utc`
   - `source_commit_sha`
+- `LASTENHEFT.md` is orientation-only and must not become an operational implementation container.
+- Active code-change work must use `changes/CHG-*.md` as bounded task context.
+- Module-local docs must be adjacent to module code and follow the declared `MOD_ID` boundary model.
 - Redundant active governance/prompt documents are forbidden; one active leading document per topic only.
 - Python testing in scope must be partitioned and evidenced separately:
   - unit: `pytest -m "not integration"`
