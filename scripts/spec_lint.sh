@@ -47,6 +47,7 @@ require_file "docs/templates/module-docs/DECISIONS.md"
 
 require_heading "changes/CHG-TEMPLATE.md" "# CHG-TEMPLATE"
 require_heading "changes/CHG-TEMPLATE.md" '```yaml'
+require_heading "changes/CHG-TEMPLATE.md" "package_id:"
 require_heading "changes/CHG-TEMPLATE.md" "## Goal"
 require_heading "changes/CHG-TEMPLATE.md" "## Affected MOD_IDs"
 require_heading "changes/CHG-TEMPLATE.md" "## Included source documents"

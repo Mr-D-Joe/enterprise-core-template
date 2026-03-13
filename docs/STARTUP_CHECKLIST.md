@@ -11,12 +11,16 @@
 - [ ] Update `docs/BACKLOG.md` metadata (`generated_at_utc`, `source_commit_sha`, `planning_sync_state`).
 - [ ] Update `LASTENHEFT.md` metadata (`generated_at_utc`, `source_commit_sha`).
 - [ ] Confirm backlog/package status is current.
+- [ ] Confirm `docs/BACKLOG.md` exposes `active_package_id`, `next_package_id`, and `next_after_next_package_id`.
+- [ ] Confirm the next executable package is visible when open work exists.
 - [ ] Create or update the active `changes/CHG-*.md` before concrete implementation work starts.
 - [ ] Confirm exactly one active `changes/CHG-*.md` exists.
 - [ ] Confirm active CHG YAML frontmatter is valid and contains required keys.
+- [ ] Confirm active CHG `package_id` matches backlog `active_package_id`.
 - [ ] Confirm active CHG declares included and excluded source documents.
 - [ ] Confirm backlog extraction exists in the active CHG document.
 - [ ] Confirm only declared and allowed source documents are loaded into execution context.
+- [ ] Confirm `CHANGELOG.md` is release-history only and contains no planning-control structures.
 
 ## Test and quality baseline
 - [ ] Verify secure runtime defaults (for example CSP not null/disabled).

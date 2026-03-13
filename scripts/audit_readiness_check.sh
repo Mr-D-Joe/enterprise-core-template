@@ -138,6 +138,17 @@ check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "generated_at_utc"
 check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "source_commit_sha"
 check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "planning_sync_state"
 check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "active_package_id"
+check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "next_package_id"
+check_metadata_value "$BASE_DIR/docs/BACKLOG.md" "next_after_next_package_id"
+check_contains "$BASE_DIR/docs/BACKLOG.md" "## Ordered pending package queue" "Backlog pending queue section present"
+check_contains "$BASE_DIR/docs/BACKLOG.md" "## Compact closed package ledger" "Backlog closed ledger section present"
+check_contains "$BASE_DIR/CHANGELOG.md" "release-history only" "Changelog release-only rule present"
+if grep -Eq 'next_package|next_after_next|pending|blocked|owner|priority|sequencing rationale' "$BASE_DIR/CHANGELOG.md"; then
+  echo "FAIL CHANGELOG contains planning-control structures"
+  EXIT_CODE=1
+else
+  echo "OK   CHANGELOG excludes planning-control structures"
+fi
 
 if find "$BASE_DIR/docs/specs" -type f -name "*.md" 2>/dev/null | grep -q .; then
   echo "FAIL legacy docs/specs/*.md files still exist as parallel artifacts"

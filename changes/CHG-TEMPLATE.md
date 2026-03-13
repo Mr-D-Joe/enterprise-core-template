@@ -2,6 +2,7 @@
 
 ```yaml
 chg_id: CHG-YYYY-XXXX
+package_id: PKG-YYYY-XXXX
 status: DRAFT
 req_ids:
   - REQ-PLACEHOLDER
@@ -41,6 +42,7 @@ updated_at_utc: 2026-03-12T00:00:00Z
 - `<path>`: `<reason>`
 
 ## Backlog extraction
+- Active package_id:
 - Active package row:
 - Scope slice:
 
