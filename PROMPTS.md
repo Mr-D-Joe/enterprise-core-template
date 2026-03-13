@@ -48,6 +48,7 @@ The active package must be controlled by exactly one machine-readable change bri
 
 The active CHG document must begin with exactly one YAML frontmatter block containing at least:
 - `chg_id`
+- `package_id`
 - `status`
 - `req_ids`
 - `mod_ids`
@@ -73,12 +74,18 @@ PO must:
 2. choose `EXECUTION_MODE` based on project state;
 3. ensure no open package conflict exists before starting a new package;
 4. ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan, `LASTENHEFT.md` machine metrics);
-5. ensure tooling decision checkpoint exists before DEV execution;
-6. derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts;
-7. ensure the active CHG document declares included and excluded source documents and inclusion reason for every included non-root source document;
-8. pass only approved scope and declared evidence to the active mode;
-9. keep customer interaction free from manual runtime/toolchain setup requests;
-10. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
+5. ensure `docs/BACKLOG.md` exposes:
+   - `active_package_id`
+   - `next_package_id`
+   - `next_after_next_package_id`;
+6. ensure open work has a visible next executable package in `docs/BACKLOG.md`;
+7. ensure active CHG `package_id` matches backlog `active_package_id`;
+8. ensure tooling decision checkpoint exists before DEV execution;
+9. derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts;
+10. ensure the active CHG document declares included and excluded source documents and inclusion reason for every included non-root source document;
+11. pass only approved scope and declared evidence to the active mode;
+12. keep customer interaction free from manual runtime/toolchain setup requests;
+13. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
 
 ## 2.1 PO autonomy default (mandatory)
 Unless the customer explicitly limits scope, a customer request naming a concrete work package or `REQ_ID` is an end-to-end execution order for PO.
@@ -141,6 +148,9 @@ The following are forbidden as standard execution context:
 
 Non-extracted source text is out of scope for the active run.
 Any source document used in DEV or AUDIT but not declared in the active CHG document is forbidden input.
+`docs/BACKLOG.md` must remain forward-looking planning control.
+`CHANGELOG.md` must remain backward-looking release history only.
+The active CHG `package_id` must match backlog `active_package_id`.
 
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
@@ -241,10 +251,15 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - More than one active CHG document => `FINAL_STATUS=FAIL`.
 - Missing or invalid CHG frontmatter => `FINAL_STATUS=FAIL`.
 - Missing required CHG keys => `FINAL_STATUS=FAIL`.
+- Missing backlog machine-readable control metadata (`active_package_id`, `next_package_id`, `next_after_next_package_id`) => `FINAL_STATUS=FAIL`.
+- Open work exists without visible next executable package in backlog => `FINAL_STATUS=FAIL`.
+- Active CHG `package_id` mismatch with backlog `active_package_id` => `FINAL_STATUS=FAIL`.
 - Source document used in DEV or AUDIT but not declared in active CHG document => `FINAL_STATUS=FAIL`.
 - Missing artifact binding to active `chg_id` => `FINAL_STATUS=FAIL`.
 - Missing backlog extraction in active CHG document => `FINAL_STATUS=FAIL`.
 - Full backlog, full changelog, full lastenheft, or full ADR history used as standard execution context => `FINAL_STATUS=FAIL`.
+- `CHANGELOG.md` used for planning control => `FINAL_STATUS=FAIL`.
+- `CHANGELOG.md` contains planning-control fields or queue semantics => `FINAL_STATUS=FAIL`.
 - Stale backlog/package metadata => `FINAL_STATUS=FAIL`.
 - Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.
 - Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.

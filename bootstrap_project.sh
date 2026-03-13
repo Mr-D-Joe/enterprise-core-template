@@ -130,6 +130,7 @@ cat > "$TARGET_DIR/changes/CHG-TEMPLATE.md" <<'EOF'
 
 ```yaml
 chg_id: CHG-YYYY-XXXX
+package_id: PKG-YYYY-XXXX
 status: DRAFT
 req_ids:
   - REQ-PLACEHOLDER
@@ -169,6 +170,7 @@ updated_at_utc: 2026-03-12T00:00:00Z
 - `<path>`: `<reason>`
 
 ## Backlog extraction
+- Active package_id:
 - Active package row:
 - Scope slice:
 
@@ -221,11 +223,23 @@ Status: Active
 - source_commit_sha=$TEMPLATE_SOURCE_SHA
 - planning_sync_state=ready_for_first_package
 - active_package_id=none
+- next_package_id=none
+- next_after_next_package_id=none
 
 ## Active package board
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| none | none | pending | PO | changes/CHG-TEMPLATE.md | $NOW_UTC_TS |
+| none | none | archived | PO | none | $NOW_UTC_TS |
+
+## Ordered pending package queue
+| sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+|---|---|---|---|---|---|
+| none | none | none | archived | PO | none | $NOW_UTC_TS |
+
+## Compact closed package ledger
+| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+|---|---|---|---|---|---|
+| none | none | archived | PO | none | $NOW_UTC_TS |
 
 ## Rules
 1. Exactly one package may be active at a time.
@@ -235,6 +249,8 @@ Status: Active
 5. \`docs/BACKLOG.md\` is authoritative portfolio overview and is never default execution context.
 6. Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active \`changes/CHG-*.md\`.
 7. Older completed-package detail must be compacted or archived under \`docs/archive/backlog/\` when repository policy thresholds are exceeded.
+8. Backlog must expose \`active_package_id\`, \`next_package_id\`, and \`next_after_next_package_id\`.
+9. If open work exists, the next executable package must be visible in machine-readable metadata and queue order.
 EOF
 
 cat > "$TARGET_DIR/LASTENHEFT.md" <<EOF
@@ -296,6 +312,7 @@ All notable changes to this project are documented in this file.
 \`CHANGELOG.md\` is authoritative release history and is never default DEV or AUDIT execution context.
 Only the minimal package-relevant changelog slice may be derived into the active \`changes/CHG-*.md\` when history is materially relevant.
 Older release detail must be compacted or archived under \`docs/archive/changelog/\` when repository policy thresholds are exceeded.
+\`CHANGELOG.md\` is release-history only and must not be used for planning control, queue semantics, or next-step steering.
 
 ## [Unreleased]
 ### Added

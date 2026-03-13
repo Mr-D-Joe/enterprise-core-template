@@ -146,6 +146,37 @@ Non-extracted source text is out of scope for the active package.
 - Only the minimal ADR set directly governing the active package may be included.
 - Full backlog, full changelog, full lastenheft, full ADR history, and full docs trees are forbidden default execution context.
 
+## Backlog and changelog separation
+- `docs/BACKLOG.md` is the forward-looking planning and execution-control document.
+- `CHANGELOG.md` is the backward-looking release-history document.
+- `docs/BACKLOG.md` must remain separate from `CHANGELOG.md`.
+- A mixed backlog/changelog document is forbidden.
+- `docs/BACKLOG.md` must expose next steps in machine-readable form through:
+  - `active_package_id`
+  - `next_package_id`
+  - `next_after_next_package_id`
+- If open work exists and `next_package_id` is missing, planning is incomplete and this is `FAIL`.
+- If no open work exists:
+  - `active_package_id=none`
+  - `next_package_id=none`
+  - `next_after_next_package_id=none`
+- `docs/BACKLOG.md` must contain:
+  - a metadata block,
+  - an active package board,
+  - an ordered pending package queue,
+  - a compact closed package ledger.
+- Package ordering must not be inferred from prose alone.
+- `CHANGELOG.md` must remain release-history only and must not contain planning-control fields or queue semantics, including:
+  - `next_package`
+  - `next_package_id`
+  - `next_after_next_package_id`
+  - `pending`
+  - `blocked`
+  - `owner`
+  - `priority`
+  - `sequencing rationale`
+- Presence of planning-control structures in `CHANGELOG.md` is `FAIL`.
+
 ## Root anti-bloat rule
 Root files must remain:
 - concise,

@@ -80,6 +80,12 @@ This document is normative and binding.
   - `allowed_inputs_hash`, `target_commit_sha`, `po_agent_id`, `created_at_utc`.
 - DEV and AUDIT must execute in separate runs with separate role packets.
 - PO must derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts.
+- PO must keep next executable work visible in `docs/BACKLOG.md`.
+- PO must maintain machine-readable backlog control metadata:
+  - `active_package_id`
+  - `next_package_id`
+  - `next_after_next_package_id`
+- PO must not use `CHANGELOG.md` as planning or sequencing control.
 - DEV and AUDIT must use the active CHG document plus declared allowed documents only.
 - The active CHG document must declare:
   - included source documents,
@@ -127,6 +133,8 @@ This document is normative and binding.
 - `LASTENHEFT.md` is orientation-only and must not become an operational implementation container.
 - Active code-change work must use `changes/CHG-*.md` as bounded task context.
 - `docs/BACKLOG.md`, `CHANGELOG.md`, and `LASTENHEFT.md` are never default execution context.
+- `docs/BACKLOG.md` must show the active package and the next executable package whenever open work exists.
+- `CHANGELOG.md` is release-history only and must not be used for planning control.
 - Only package-relevant slices derived into the active CHG document may enter DEV or AUDIT execution context.
 - `LASTENHEFT.md` may enter active execution context only when the package changes scope/non-scope, key terms, capability map, product-level functional intent, or high-level quality goals.
 - ADRs are excluded from default execution context unless the active package changes or depends on an ADR-governed boundary or decision.

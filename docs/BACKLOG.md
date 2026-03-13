@@ -7,8 +7,21 @@ Status: Closed
 - source_commit_sha=9f26c9170697ae0f0ac8d4289e2ec1af3a756f55
 - planning_sync_state=clean_desk
 - active_package_id=none
+- next_package_id=none
+- next_after_next_package_id=none
 
 ## Active package board
+| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+|---|---|---|---|---|---|
+| none | none | archived | PO | none | 2026-03-12T18:55:15Z |
+
+## Ordered pending package queue
+| sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+|---|---|---|---|---|---|
+| TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
+| none | none | archived | PO | none | 2026-03-12T18:55:15Z |
+
+## Compact closed package ledger
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
 | TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
@@ -22,3 +35,5 @@ Status: Closed
 5. `docs/BACKLOG.md` is authoritative portfolio overview and is never default execution context.
 6. Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active `changes/CHG-*.md`.
 7. Older completed-package detail must be compacted or archived under `docs/archive/backlog/` when repository policy thresholds are exceeded.
+8. Backlog must expose `active_package_id`, `next_package_id`, and `next_after_next_package_id`.
+9. If open work exists, the next executable package must be visible in machine-readable metadata and queue order.
