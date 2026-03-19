@@ -12,6 +12,14 @@
 - Included artifacts:
 - Excluded artifacts:
 
+## Evidence chronology
+- Earlier observed state:
+- Repaired state:
+- Final verified state:
+- Final edited files:
+- Residue checks:
+- Final-state rerun checks:
+
 ## Findings
 | Severity | REQ_ID | Description | Evidence | Required Action |
 |---|---|---|---|---|
@@ -54,6 +62,7 @@
   - <artifact/link 2>
 
 ## Decision
+- Accuracy classification: ACCURATE / PARTIALLY_ACCURATE / MISLEADING / FALSE
 - APPROVE / REJECT
 - Rationale:
 

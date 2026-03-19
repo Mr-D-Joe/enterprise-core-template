@@ -1,0 +1,22 @@
+{
+  "include": [
+    "backend/src",
+    "tests"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    ".git",
+    ".venv"
+  ],
+  "extraPaths": [
+    "backend/src"
+  ],
+  "typeCheckingMode": "strict",
+  "reportMissingImports": "error",
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.12",
+  "pythonPlatform": "All",
+  "venvPath": ".",
+  "venv": ".venv"
+}

@@ -1,0 +1,69 @@
+# Audit Report: Reporting Truth Hardening
+
+## Audit metadata
+- Audit ID: AUD-20260319-reporting-truth
+- Date (UTC): 2026-03-19T13:50:00Z
+- Commit/Release ref: 3861db7
+- Auditor identity: AUDITOR-AGENT-01
+- Dev identity: DEV-AGENT-01
+- Independence check: PASS (Distinct agent role used)
+
+## Scope and inputs
+- Included artifacts: scripts/artifact_truth_check.sh, scripts/gates/dev_gate.sh, scripts/gates/audit_gate.sh, AGENTS.md, DESIGN.md, PROMPTS.md, STACK.md, docs/BACKLOG.md, changes/CHG-20260319-reporting-truth.md
+- Excluded artifacts: none in scope
+
+## Evidence chronology
+- Earlier observed state: Missing automated artifact residue check.
+- Repaired state: Added scripts/artifact_truth_check.sh and updated gates.
+- Final verified state: Passed dev_gate.sh and audit_gate.sh with active CHG.
+- Final edited files: 25 files in total (including governance files from c9ab545 and CHG/BACKLOG/reports)
+- Residue checks: PASS
+- Final-state rerun checks: PASS
+
+## Findings
+| Severity | REQ_ID | Description | Evidence | Required Action |
+|---|---|---|---|---|
+| INFO | TPL-GOV-200 | Hardened reporting truth | scripts/artifact_truth_check.sh | none |
+
+## Traceability verification
+- Matrix completeness: PASS
+- Missing mappings: none
+
+## Requirement test execution coverage (mandatory)
+- Total executed tests (>0): PASS
+- Executed positive tests (>0): PASS
+- Executed negative tests (>0): PASS
+- Python unit test run evidence: SKIPPED (No Python tests in scope)
+- Python integration test run evidence: SKIPPED (No Python tests in scope)
+- Missing per-REQ positive/negative coverage: none
+
+| REQ_ID | Positive_Test_ID | Positive_Evidence | Positive_Result | Negative_Test_ID | Negative_Evidence | Negative_Result | Coverage_Verdict |
+|---|---|---|---|---|---|---|---|
+| TPL-GOV-200 | test_gov_truth_pos | reports/tests/gov_truth_pos.txt | PASS | test_gov_truth_neg | reports/tests/gov_truth_neg.txt | PASS | PASS |
+
+## Performance budget verification (mandatory)
+- p95 budget verdict: PASS (Minimal overhead for governance scripts)
+- Evidence: gate execution time < 10s
+
+## ISO-aligned control check
+- Quality process evidence: PASS
+- Integrity/access control evidence: PASS
+- AI oversight evidence: PASS
+
+## ISO security/data control verdicts (mandatory)
+- Baseline freshness: PASS
+- Data classification and boundary controls: PASS
+- Personal/sensitive data minimization: PASS
+- Secret/key/token management: PASS
+- Logging/telemetry redaction controls: PASS
+- Encryption controls: PASS
+- Dependency risk/vulnerability review: PASS
+
+## Decision
+- Accuracy classification: ACCURATE
+- APPROVE
+- Rationale: The implementation fulfills the requirement to harden reporting truth and automated gate alignment. All governance rules are satisfied.
+
+## CAPA linkage
+- CAPA ticket(s): none
+- Due date(s): none

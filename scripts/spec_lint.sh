@@ -44,6 +44,8 @@ require_file "docs/templates/module-docs/README.md"
 require_file "docs/templates/module-docs/ARCHITECTURE.md"
 require_file "docs/templates/module-docs/TESTING.md"
 require_file "docs/templates/module-docs/DECISIONS.md"
+require_file ".vscode/settings.json"
+require_file "pyrightconfig.json"
 
 require_heading "changes/CHG-TEMPLATE.md" "# CHG-TEMPLATE"
 require_heading "changes/CHG-TEMPLATE.md" '```yaml'
@@ -64,6 +66,10 @@ require_heading "docs/templates/module-docs/README.md" "# Module README Template
 require_heading "docs/templates/module-docs/ARCHITECTURE.md" "# Module ARCHITECTURE Template"
 require_heading "docs/templates/module-docs/TESTING.md" "# Module TESTING Template"
 require_heading "docs/templates/module-docs/DECISIONS.md" "# Module DECISIONS Template"
+require_heading ".vscode/settings.json" '"python.defaultInterpreterPath": ".venv/bin/python"'
+require_heading ".vscode/settings.json" '"pyright.typeCheckingMode": "strict"'
+require_heading "pyrightconfig.json" '"typeCheckingMode": "strict"'
+require_heading "pyrightconfig.json" '"venv": ".venv"'
 
 while IFS= read -r file; do
   check_template_placeholders "$file"

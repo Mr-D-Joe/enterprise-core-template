@@ -49,7 +49,7 @@ Release history is tracked in `CHANGELOG.md`.
 5. Sync `docs/BACKLOG.md` metadata before each DEV start.
 6. Use `changes/CHG-TEMPLATE.md` to create bounded change briefs under `changes/`.
 7. Use `docs/templates/module-docs/` as the canonical module-doc scaffold.
-8. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `system_reports/gates/runtime_bootstrap.env`).
+8. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `.vscode/settings.json`, `pyrightconfig.json`, `system_reports/gates/runtime_bootstrap.env`).
 9. Tooling decision checkpoint starts with `system_reports/gates/tooling_decision_template.env` (agent-maintained):
    - set `application_profile` first,
    - then set stack/runtime/compiler choices + official source evidence (latest stable only).
@@ -66,3 +66,7 @@ Release history is tracked in `CHANGELOG.md`.
 13. Run gate scripts with the active PO role packet:
    - `./scripts/gates/dev_gate.sh`
    - `./scripts/gates/audit_gate.sh`
+14. Treat timestamped gate artifacts as history only. Current gate truth is declared by:
+   - `system_reports/gates/current_dev_gate.env`
+   - `system_reports/gates/current_audit_gate.env`
+15. Final repair/migration summaries must disclose same-turn additional edits and final-state rerun evidence when earlier assessments were corrected later in the turn.

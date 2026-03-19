@@ -54,6 +54,33 @@ read_env_value() {
   fi
 }
 
+find_active_chg_file() {
+  local file=""
+  local matches=()
+  while IFS= read -r file; do
+    if grep -Eq '^status:[[:space:]]*ACTIVE$' "$file"; then
+      matches+=("$file")
+    fi
+  done < <(find "$BASE_DIR/changes" -maxdepth 1 -type f -name 'CHG-*.md' | sort)
+
+  if [[ "${#matches[@]}" -eq 1 ]]; then
+    printf '%s' "${matches[0]}"
+  fi
+}
+
+read_chg_value() {
+  local key="$1"
+  local file="$2"
+  local raw
+  raw="$(grep -E "^${key}:" "$file" | head -n1 || true)"
+  if [[ -n "$raw" ]]; then
+    raw="${raw#*:}"
+    raw="${raw#"${raw%%[![:space:]]*}"}"
+    raw="${raw%"${raw##*[![:space:]]}"}"
+    printf '%s' "$raw"
+  fi
+}
+
 run_check() {
   local script_path="$1"
   local label="$2"
@@ -218,6 +245,9 @@ fi
 REQ_IDS=""
 PO_PACKET_ID=""
 EXECUTION_MODE=""
+ACTIVE_CHG_PATH=""
+ACTIVE_CHG_ID="missing"
+ACTIVE_PACKAGE_ID="missing"
 if [[ -n "$ROLE_PACKET_PATH" && -f "$ROLE_PACKET_PATH" ]]; then
   EXECUTION_MODE="$(read_env_value execution_mode "$ROLE_PACKET_PATH")"
   REQ_IDS="$(read_env_value req_ids "$ROLE_PACKET_PATH")"
@@ -234,6 +264,14 @@ if [[ -n "$ROLE_PACKET_PATH" && -f "$ROLE_PACKET_PATH" ]]; then
   else
     log_ok "Role packet req_ids set"
   fi
+fi
+
+ACTIVE_CHG_PATH="$(find_active_chg_file || true)"
+if [[ -n "$ACTIVE_CHG_PATH" && -f "$ACTIVE_CHG_PATH" ]]; then
+  ACTIVE_CHG_ID="$(read_chg_value "chg_id" "$ACTIVE_CHG_PATH" || true)"
+  ACTIVE_PACKAGE_ID="$(read_chg_value "package_id" "$ACTIVE_CHG_PATH" || true)"
+  ACTIVE_CHG_ID="${ACTIVE_CHG_ID:-missing}"
+  ACTIVE_PACKAGE_ID="${ACTIVE_PACKAGE_ID:-missing}"
 fi
 
 run_check "$BASE_DIR/scripts/prompt_firewall_check.sh" "prompt_firewall_check" PROMPT_FIREWALL_STATUS
@@ -256,6 +294,9 @@ final_status=$FINAL_STATUS
 gate_type=DEV
 gate_utc=$GATE_UTC
 target_commit_sha=$TARGET_SHA
+chg_id=${ACTIVE_CHG_ID:-missing}
+package_id=${ACTIVE_PACKAGE_ID:-missing}
+active_chg_path=${ACTIVE_CHG_PATH:-missing}
 po_packet_id=${PO_PACKET_ID:-unknown}
 role_packet_path=${ROLE_PACKET_PATH:-missing}
 execution_mode=${EXECUTION_MODE:-missing}
@@ -272,6 +313,19 @@ unit_test_status=$UNIT_TEST_STATUS
 unit_test_exit_code=$UNIT_TEST_EXIT_CODE
 integration_test_status=$INTEGRATION_TEST_STATUS
 integration_test_exit_code=$INTEGRATION_TEST_EXIT_CODE
+EOG
+
+cat > "$GATE_DIR/current_dev_gate.env" <<EOG
+artifact_truth_model=current-plus-history
+current_authoritative=true
+gate_type=DEV
+authoritative_artifact_path=$GATE_FILE
+final_status=$FINAL_STATUS
+target_commit_sha=$TARGET_SHA
+chg_id=${ACTIVE_CHG_ID:-missing}
+package_id=${ACTIVE_PACKAGE_ID:-missing}
+active_chg_path=${ACTIVE_CHG_PATH:-missing}
+updated_at_utc=$GATE_UTC
 EOG
 
 echo "DEV gate artifact: $GATE_FILE"

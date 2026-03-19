@@ -1,19 +1,19 @@
 # BACKLOG — <PROJECT_NAME>
 
-Status: Closed
+Status: Active
 
 ## Metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-12T18:55:15Z
-- source_commit_sha=9f26c9170697ae0f0ac8d4289e2ec1af3a756f55
-- planning_sync_state=clean_desk
-- active_package_id=none
+- generated_at_utc=2026-03-19T13:45:00Z
+- source_commit_sha=6f75d84d68ebdd25ed1cdfe4c1e346902976441c
+- planning_sync_state=active_package
+- active_package_id=PKG-20260319-reporting-truth
 - next_package_id=none
 - next_after_next_package_id=none
 
 ## Active package board
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| none | none | archived | PO | none | 2026-03-12T18:55:15Z |
+| PKG-20260319-reporting-truth | TPL-GOV-200 | active | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:45:00Z |
 
 ## Ordered pending package queue
 | sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |

@@ -28,6 +28,11 @@ Ensure independent release assurance with ISO-aligned evidence quality.
 - Evidence references (file, line, artifact).
 - Decision: APPROVE / REJECT.
 - CAPA linkage for nonconformities.
+- When same-turn repairs occurred after an earlier assessment, the audit summary must distinguish:
+  - earlier observed state,
+  - repaired state,
+  - final verified state.
+- Audit must not use smooth summary wording that hides intervening repair steps.
 
 ## 4.1 Mandatory requirement-test execution coverage
 AUDIT must produce explicit coverage evidence for every active `REQ_ID`:
@@ -63,6 +68,7 @@ Any missing control verdict or failed high-risk control requires `REJECT`.
 - Quality management evidence retention.
 - Access control and integrity of audit artifacts.
 - Human oversight and accountability for AI-supported decisions.
+- Current audit truth must be machine-discernible through `system_reports/gates/current_audit_gate.env`.
 
 Note:
 This template is ISO-aligned guidance. Formal certification requires accredited external audit.
