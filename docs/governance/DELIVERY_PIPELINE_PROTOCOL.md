@@ -17,14 +17,16 @@ This protocol is supportive and becomes binding only when referenced by normativ
 - Run separated Python tests when in scope:
   - `pytest -m "not integration"`
   - `pytest -m integration`
-- Execute `scripts/gates/dev_gate.sh` and archive gate artifact.
+- Execute `scripts/gates/dev_gate.sh` and archive timestamped gate artifact.
+- Refresh `system_reports/gates/current_dev_gate.env` as the authoritative DEV gate pointer.
 - Produce DEV report artifact.
 
 4. Independent audit (AUDIT)
 - Validate with approved inputs only.
 - Validate per active REQ positive+negative executed tests and package test count > 0.
 - Validate performance budget evidence (minimum p95 verdict).
-- Execute `scripts/gates/audit_gate.sh` and archive gate artifact.
+- Execute `scripts/gates/audit_gate.sh` and archive timestamped gate artifact.
+- Refresh `system_reports/gates/current_audit_gate.env` as the authoritative AUDIT gate pointer.
 - Produce AUDIT report and decision.
 
 5. GitHub integration
@@ -39,6 +41,8 @@ This protocol is supportive and becomes binding only when referenced by normativ
 7. Clean Desk
 - Remove temporary gate artifacts and stale local package residues.
 - Confirm no duplicate temporary workflow files remain active.
+- Historical timestamped gate artifacts may remain as history.
+- Current truth must be taken only from `current_dev_gate.env` and `current_audit_gate.env`, never from undocumented filename ordering.
 
 ## Gate rule
 No step may be skipped or reordered.
@@ -51,6 +55,8 @@ No step may be skipped or reordered.
 - Performance budget evidence (p95)
 - DEV report
 - AUDIT report
+- authoritative DEV gate pointer
+- authoritative AUDIT gate pointer
 - PR link
 - Merge commit
 - Version/tag reference

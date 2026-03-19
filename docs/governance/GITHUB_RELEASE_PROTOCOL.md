@@ -23,6 +23,14 @@
   - audit decision reference,
   - evidence artifact references.
 
+## Evidence truth requirements
+- Timestamped gate artifacts are historical records.
+- Current authoritative truth is declared only by:
+  - `system_reports/gates/current_dev_gate.env`
+  - `system_reports/gates/current_audit_gate.env`
+- Release summaries and PR text must not rely on undocumented `latest file wins` artifact selection.
+- If additional edits occurred after an earlier assessment in the same turn, the release-facing summary must disclose that chronology explicitly.
+
 ## Ownership
 - PO owns business closure and customer-facing release communication.
 - PO restores clean desk after release closure by removing temporary gate artifacts and stale local package residues.

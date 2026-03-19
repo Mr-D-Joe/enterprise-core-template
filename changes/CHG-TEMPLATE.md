@@ -83,3 +83,17 @@ updated_at_utc: 2026-03-12T00:00:00Z
 
 ## Explicitly excluded paths / modules
 - 
+
+## Reporting chronology
+- Earlier observed state:
+- Repaired state:
+- Final verified state:
+- Files changed after earlier assessment:
+
+## Residue and proof checks
+- Edited files re-read:
+- Forbidden-residue check:
+- Final-state rerun checks:
+
+## Final report accuracy classification
+- `ACCURATE` / `PARTIALLY_ACCURATE` / `MISLEADING` / `FALSE`:

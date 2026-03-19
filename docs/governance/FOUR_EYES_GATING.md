@@ -21,7 +21,14 @@ No step may be skipped, reordered, or merged by DEV self-approval.
 - PO role packet: `system_reports/gates/po_role_packet*.env`
 - DEV gate artifact: `system_reports/gates/dev_gate_*.gate`
 - AUDIT gate artifact: `system_reports/gates/audit_gate_*.gate`
+- authoritative DEV gate pointer: `system_reports/gates/current_dev_gate.env`
+- authoritative AUDIT gate pointer: `system_reports/gates/current_audit_gate.env`
 - Traceability/test evidence linked per active `REQ_ID`
+
+## Artifact truth rule
+- Timestamped gate artifacts are historical records.
+- Current truth must be read from the authoritative pointer files, not from implicit filename ordering.
+- Mixed historical `FAIL` and `PASS` artifacts are allowed only when the authoritative pointer files are present and machine-discernible.
 
 ## Hard-fail conditions
 - More than one active package.

@@ -123,6 +123,45 @@ Non-extracted source text is out of scope for the active package.
 - All role packets, gate artifacts, and package-level evidence must bind to the active `chg_id`.
 - Evidence that does not bind to the active `chg_id` is invalid for release.
 
+## Reporting truth model
+- Final summaries must describe the state that actually exists at the end of the turn.
+- If the final state was reached through additional edits later in the same turn, the summary must disclose that chronology explicitly.
+- Reporting must distinguish:
+  - earlier observed state,
+  - repaired state,
+  - final verified state.
+- If files were edited, created, or deleted after an earlier assessment point, the final summary must disclose that fact explicitly.
+- The phrase `No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
+- Contradiction repair, migration, and governance-hardening work must report proof from the final edit state:
+  - re-read of edited files where relevant,
+  - residue checks for forbidden remnants,
+  - rerun of required checks after the final edit state.
+- For discrepancy-sensitive work, reporting may classify accuracy only as:
+  - `ACCURATE`
+  - `PARTIALLY_ACCURATE`
+  - `MISLEADING`
+  - `FALSE`
+- Smooth summaries that erase intervening repair steps are forbidden.
+
+## Artifact truth model
+- Artifact truth model for this template is `current-plus-history`.
+- Timestamped gate and audit artifacts under `system_reports/gates/` are historical records by default.
+- Current authoritative truth must be declared explicitly through machine-readable pointer files:
+  - `system_reports/gates/current_dev_gate.env`
+  - `system_reports/gates/current_audit_gate.env`
+- Pointer files are the only supported current-state selectors for DEV and AUDIT gate truth.
+- Undocumented `latest file wins` behavior is forbidden.
+- Mixed historical `FAIL` and `PASS` artifacts are allowed only when the current authoritative pointer is present and machine-discernible.
+- Historical artifacts must never require operator guesswork to distinguish them from current truth.
+- Missing authoritative pointer files when corresponding historical gate artifacts exist is `FAIL`.
+- Pointer files must bind current truth to:
+  - gate type,
+  - active `chg_id`,
+  - active `package_id`,
+  - target commit SHA,
+  - authoritative artifact path,
+  - timestamp/run identity.
+
 ## Source inclusion rules
 - `docs/BACKLOG.md` is never default execution context.
 - Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active CHG document.
@@ -222,4 +261,7 @@ Gate scripts and CI must verify the new structure where feasible:
 - module-doc scaffold presence,
 - legacy-spec deactivation,
 - structural-truth alignment,
-- canonical policy-source references.
+- canonical policy-source references,
+- reporting-truth rule presence,
+- artifact-truth pointer integrity,
+- absence of undocumented latest-artifact selection.

@@ -91,7 +91,8 @@ mkdir -p \
   "$TARGET_DIR/system_reports/gates" \
   "$TARGET_DIR/system_reports/releases" \
   "$TARGET_DIR/system_reports/tasks" \
-  "$TARGET_DIR/reports"
+  "$TARGET_DIR/reports" \
+  "$TARGET_DIR/.vscode"
 
 TODAY_UTC="$(date -u +%Y-%m-%d)"
 NOW_UTC_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -124,94 +125,7 @@ done
 
 # Reset copied template history so a new project starts in a neutral state.
 rm -f "$TARGET_DIR/changes"/CHG-*.md
-
-cat > "$TARGET_DIR/changes/CHG-TEMPLATE.md" <<'EOF'
-# CHG-TEMPLATE
-
-```yaml
-chg_id: CHG-YYYY-XXXX
-package_id: PKG-YYYY-XXXX
-status: DRAFT
-req_ids:
-  - REQ-PLACEHOLDER
-mod_ids:
-  - MOD-PLACEHOLDER
-included_sources:
-  - AGENTS.md
-  - PROMPTS.md
-  - DESIGN.md
-  - ARCHITECTURE.md
-  - STACK.md
-  - CONTRIBUTING.md
-excluded_sources:
-  - docs/BACKLOG.md
-  - CHANGELOG.md
-  - LASTENHEFT.md
-created_at_utc: 2026-03-12T00:00:00Z
-updated_at_utc: 2026-03-12T00:00:00Z
-```
-
-## Goal
-- 
-
-## Affected MOD_IDs
-- 
-
-## Included source documents
-- `AGENTS.md`: canonical role constitution
-- `PROMPTS.md`: runtime execution contract
-
-## Excluded source documents
-- `docs/BACKLOG.md`: source only, not default execution context
-- `CHANGELOG.md`: source only, not default execution context
-- `LASTENHEFT.md`: excluded unless explicit trigger applies
-
-## Inclusion reason per included non-root source
-- `<path>`: `<reason>`
-
-## Backlog extraction
-- Active package_id:
-- Active package row:
-- Scope slice:
-
-## Changelog extraction
-- Required history:
-- Why relevant:
-
-## Lastenheft inclusion decision
-- Included: yes/no
-- Trigger:
-- Relevant excerpt:
-
-## ADR inclusion decision
-- Included: yes/no
-- Governing ADRs:
-- Why required:
-
-## Non-goals
-- 
-
-## Contracts affected
-- yes/no:
-
-## Data model affected
-- yes/no:
-
-## Security and privacy impact
-- 
-
-## Neighbor-module inclusion reason
-- `<module/path>`: `<direct dependency reason>`
-
-## Pass / fail criteria
-- 
-
-## Relevant tests and checks
-- 
-
-## Explicitly excluded paths / modules
-- 
-EOF
+cp changes/CHG-TEMPLATE.md "$TARGET_DIR/changes/CHG-TEMPLATE.md"
 
 cat > "$TARGET_DIR/docs/BACKLOG.md" <<EOF
 # BACKLOG — $PROJECT_NAME
@@ -416,10 +330,14 @@ dist/
 .env.local
 EOF
 
+# Copy default Python editor/type-checking scaffolds from the template.
+cp "$TEMPLATE_ROOT/.vscode/settings.json" "$TARGET_DIR/.vscode/settings.json"
+cp "$TEMPLATE_ROOT/pyrightconfig.json" "$TARGET_DIR/pyrightconfig.json"
+
 # Auto-bootstrap runtime environment so customers do not need manual setup.
 cp "$TARGET_DIR/.env.template" "$TARGET_DIR/.env"
 
-python_bin="$(detect_bin python3 python || true)"
+python_bin="$(detect_bin python3.12 python3.11 python3.10 python3 python || true)"
 node_bin="$(detect_bin node || true)"
 dotnet_bin="$(detect_bin dotnet || true)"
 cc_bin="$(detect_bin clang gcc cc || true)"
@@ -427,13 +345,23 @@ cxx_bin="$(detect_bin clang++ g++ c++ || true)"
 
 python_venv_status="SKIPPED"
 runtime_bootstrap_status="PASS"
+pyright_install_status="SKIPPED"
+vscode_settings_created="true"
+pyrightconfig_created="true"
 
 if [[ -n "$python_bin" ]]; then
   set_env_value "PYTHON_BIN" "$python_bin" "$TARGET_DIR/.env"
   if "$python_bin" -m venv "$TARGET_DIR/.venv" >/dev/null 2>&1; then
     python_venv_status="CREATED"
+    if "$TARGET_DIR/.venv/bin/python" -m pip install --upgrade pip pyright >/dev/null 2>&1; then
+      pyright_install_status="INSTALLED"
+    else
+      pyright_install_status="FAILED"
+      runtime_bootstrap_status="BEST_EFFORT"
+    fi
   else
     python_venv_status="FAILED"
+    pyright_install_status="BLOCKED_NO_VENV"
     runtime_bootstrap_status="BEST_EFFORT"
   fi
 fi
@@ -462,6 +390,9 @@ python_bin=${python_bin:-missing}
 python_venv_status=$python_venv_status
 python_venv_path=.venv
 python_venv_root_only=true
+vscode_settings_created=$vscode_settings_created
+pyrightconfig_created=$pyrightconfig_created
+pyright_install_status=$pyright_install_status
 node_bin=${node_bin:-missing}
 dotnet_bin=${dotnet_bin:-missing}
 cc_bin=${cc_bin:-missing}

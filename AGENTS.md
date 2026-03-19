@@ -97,6 +97,22 @@ This document is normative and binding.
 - DEV must not receive audit findings or audit rationale before DEV gate completion.
 - Any mode-mixing, cross-role leakage, or non-PO-triggered execution is an independence violation and must hard-fail.
 
+## 5.1 Reporting truth obligations
+- PO, DEV, and AUDIT must report the end-of-turn repository state exactly as it exists after the final edit and verification step.
+- If additional edits were required after an earlier assessment in the same turn, the final summary must disclose that chronology explicitly.
+- `No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
+- Contradiction repair, migration, and governance-hardening summaries must include:
+  - changed files,
+  - final residue-check result,
+  - rerun checks from the final edit state.
+- Smooth summaries that erase intervening repair steps are forbidden.
+- For discrepancy-sensitive work, accuracy classification may use only:
+  - `ACCURATE`
+  - `PARTIALLY_ACCURATE`
+  - `MISLEADING`
+  - `FALSE`
+- Historical gate or audit artifacts must not be described as current truth when an authoritative pointer names a different current artifact.
+
 ## 6. Security and privacy non-negotiables
 - No secret or personal data exfiltration into prompts, chat output, logs, or release artifacts.
 - No hardcoded credentials, API keys, tokens, or private certificates in code or tests.
@@ -112,6 +128,9 @@ This document is normative and binding.
 - DEV must prepare only required runtimes based on active `REQ_IDS` and test vectors.
 - Python requirements must trigger automatic `.venv` creation when missing.
 - Python virtual environment location is fixed to project root `.venv` only.
+- Python scope must create `.vscode/settings.json` with root-only `.venv` interpreter binding.
+- Python scope must create `pyrightconfig.json` with strict type-checking defaults bound to root `.venv`.
+- Python scope must install `pyright` into project-root `.venv`.
 - Runtime/compiler selections for active scope must target latest stable versions with dated official-source evidence.
 - Customer-facing instructions to run setup commands manually are forbidden.
 - Missing required toolchains must be reported as explicit blocker evidence with `FINAL_STATUS=FAIL`.
@@ -143,6 +162,10 @@ This document is normative and binding.
 - Python testing in scope must be partitioned and evidenced separately:
   - unit: `pytest -m "not integration"`
   - integration: `pytest -m integration`
+- Python typing baseline in scope must include:
+  - `.vscode/settings.json`
+  - `pyrightconfig.json`
+  - installed `.venv/bin/pyright`
 - Performance evidence for active scope must include explicit budget result (minimum `p95`) before release.
 - Python module size limit above 900 LOC is release-blocking unless an active machine-readable waiver exists.
 - Waivers must be machine-readable, PO-approved, scope-bound, and time-bounded with explicit expiry.

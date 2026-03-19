@@ -152,6 +152,29 @@ Any source document used in DEV or AUDIT but not declared in the active CHG docu
 `CHANGELOG.md` must remain backward-looking release history only.
 The active CHG `package_id` must match backlog `active_package_id`.
 
+## 2.3 Reporting truth model (mandatory)
+Final reporting must describe the state that actually exists at the end of the turn.
+If additional edits were made after an earlier assessment in the same turn, the final summary must disclose that chronology explicitly.
+
+Final reporting for repair, migration, or governance-hardening work must distinguish:
+- earlier observed state,
+- repaired state,
+- final verified state.
+
+If files were edited, created, or deleted after an earlier assessment point, the final summary must disclose that fact explicitly.
+`No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
+
+Contradiction repair, migration, or governance-hardening summaries must include proof from the final edit state:
+- re-read of edited files where relevant,
+- residue checks for forbidden remnants,
+- rerun of required checks after the final edit state.
+
+For discrepancy-sensitive work, final reporting may classify accuracy only as:
+- `ACCURATE`
+- `PARTIALLY_ACCURATE`
+- `MISLEADING`
+- `FALSE`
+
 ## 3. DEV execution mode contract
 When `EXECUTION_MODE=DEV`, the agent must:
 1. run runtime bootstrap protocol before implementation:
@@ -159,6 +182,9 @@ When `EXECUTION_MODE=DEV`, the agent must:
    - initialize only runtimes required by active `REQ_IDS` and test vectors,
    - create `.venv` automatically when Python runtime is required and `.venv` is missing,
    - enforce Python venv path at project root `.venv` only,
+   - create `.vscode/settings.json` when Python runtime is required,
+   - create `pyrightconfig.json` when Python runtime is required,
+   - install `pyright` into root `.venv` when Python runtime is required,
    - write machine-readable runtime evidence artifact;
 2. run tooling decision checkpoint before implementation:
    - create/update `system_reports/gates/tooling_decision_template.env`,
@@ -243,6 +269,9 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - Missing/invalid role packet artifact or key mismatch => `FINAL_STATUS=FAIL`.
 - Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.
 - Python virtual environment path outside project root `.venv` => `FINAL_STATUS=FAIL`.
+- Missing `.vscode/settings.json` for Python scope => `FINAL_STATUS=FAIL`.
+- Missing `pyrightconfig.json` for Python scope => `FINAL_STATUS=FAIL`.
+- Missing installed root `.venv` `pyright` for Python scope => `FINAL_STATUS=FAIL`.
 - Missing tooling decision evidence for active scope => `FINAL_STATUS=FAIL`.
 - Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
 - Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
@@ -256,6 +285,9 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - Active CHG `package_id` mismatch with backlog `active_package_id` => `FINAL_STATUS=FAIL`.
 - Source document used in DEV or AUDIT but not declared in active CHG document => `FINAL_STATUS=FAIL`.
 - Missing artifact binding to active `chg_id` => `FINAL_STATUS=FAIL`.
+- Misleading final summary that hides same-turn repair edits => `FINAL_STATUS=FAIL`.
+- Using `No additional changes were required` after same-turn repository edits => `FINAL_STATUS=FAIL`.
+- Missing final-state residue check or final-state rerun evidence for contradiction repair / migration / governance hardening => `FINAL_STATUS=FAIL`.
 - Missing backlog extraction in active CHG document => `FINAL_STATUS=FAIL`.
 - Full backlog, full changelog, full lastenheft, or full ADR history used as standard execution context => `FINAL_STATUS=FAIL`.
 - `CHANGELOG.md` used for planning control => `FINAL_STATUS=FAIL`.
@@ -284,6 +316,7 @@ Customer interaction is not required between DEV completion and AUDIT start.
 - Performing DEV or AUDIT only on uncommitted working-tree state for release path => `FINAL_STATUS=FAIL`.
 - Failing to rerun gates after fixing a package-internal blocker => `FINAL_STATUS=FAIL`.
 - Leaving temporary gate artifacts, duplicate workflow files, or stale local package residues after merge/version => `FINAL_STATUS=FAIL`.
+- Relying on undocumented `latest file wins` artifact selection => `FINAL_STATUS=FAIL`.
 
 Only a complete Requirement -> DEV -> Independent AUDIT -> PR -> Merge -> Version -> Clean Desk chain is releasable.
 

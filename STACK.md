@@ -24,6 +24,7 @@ Tooling must start with one profile selection before implementation.
 4. Tool decisions must be backed by official sources and verification dates.
 5. Runtime and compiler versions for active scope must target latest stable releases unless a valid exception exists.
 6. Python virtual environment path is fixed to project root `.venv`.
+7. Python scope must bootstrap `.vscode/settings.json`, `pyrightconfig.json`, and install `pyright` into root `.venv`.
 
 ## Canonical tooling decision packet
 `system_reports/gates/tooling_decision_template.env` must include at least:
@@ -72,3 +73,18 @@ Active runtime and compiler choices must be evidenced for the in-scope stack:
 
 Customer-facing manual setup prompts are forbidden.
 Runtime bootstrap must happen automatically where feasible and produce machine-readable evidence.
+
+## Python typing and editor policy
+Repository policy defaults for Python scope:
+- `PYTHON_VENV_PATH=.venv`
+- `PYRIGHT_TYPE_CHECKING_MODE=strict`
+- `PYRIGHT_CONFIG_FILE=pyrightconfig.json`
+- `VSCODE_SETTINGS_FILE=.vscode/settings.json`
+
+Python scope must provide all of the following:
+- project-root `.venv`,
+- `.vscode/settings.json` bound to `.venv/bin/python`,
+- `pyrightconfig.json` bound to root `.venv`,
+- installed `.venv/bin/pyright`.
+
+Missing Python typing/editor bootstrap artifacts for Python scope are repository-policy-default release blockers.

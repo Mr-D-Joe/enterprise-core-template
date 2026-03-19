@@ -54,8 +54,12 @@ Concurrent/overlapping change packages are forbidden.
   - performance budget evidence is linked (minimum `p95` verdict),
   - runtime bootstrap executed automatically (`.env` and required toolchain setup) with evidence artifact,
   - Python virtual environment is located at project root `.venv` only,
+  - Python scope includes `.vscode/settings.json` bound to root `.venv`,
+  - Python scope includes `pyrightconfig.json` with strict defaults,
+  - Python scope includes installed root `.venv` `pyright`,
   - package-internal blockers inside approved scope are fixed before DEV handover,
   - required gates are rerun after in-scope fixes.
+  - current authoritative DEV gate truth is recorded in `system_reports/gates/current_dev_gate.env` when DEV gate artifacts exist,
 - AUDIT phase:
   - independent identity and input firewall enforced,
   - explicit PO role packet used (`EXECUTION_MODE=AUDIT`),
@@ -66,7 +70,18 @@ Concurrent/overlapping change packages are forbidden.
   - each active `REQ_ID` has executed positive+negative test evidence and package test count is greater than zero,
   - package-level executed positive test count is greater than zero and executed negative test count is greater than zero,
   - ISO-conform security/data control evidence is validated before decision,
-  - security baseline freshness check is validated before decision.
+  - security baseline freshness check is validated before decision,
+  - current authoritative AUDIT gate truth is recorded in `system_reports/gates/current_audit_gate.env` when AUDIT gate artifacts exist.
+
+## 2.1 Reporting and artifact truth
+- Final package summaries must describe the final verified state, not a smoothed narrative.
+- If additional edits were made after an earlier assessment in the same turn, the summary must disclose that chronology explicitly.
+- `No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
+- Contradiction repair, migration, and governance-hardening work must include final-state residue checks and rerun evidence.
+- Artifact truth model is `current-plus-history`:
+  - timestamped `dev_gate_*.gate` and `audit_gate_*.gate` files are historical records,
+  - `current_dev_gate.env` and `current_audit_gate.env` are the only authoritative current-state selectors,
+  - undocumented `latest file wins` selection is forbidden.
 
 ## 3. Hard blockers (automatic FAIL)
 - Missing `REQ_IDS` trace chain (REQ -> Design -> Code -> Test -> Gate).
@@ -83,6 +98,11 @@ Concurrent/overlapping change packages are forbidden.
 - Active CHG `package_id` does not match backlog `active_package_id`.
 - Source document used in DEV or AUDIT but not declared in active CHG document.
 - Gate or evidence artifact missing active `chg_id` binding.
+- Historical `FAIL` / `PASS` gate artifacts coexist without authoritative current pointer.
+- Missing `system_reports/gates/current_dev_gate.env` when DEV gate history exists.
+- Missing `system_reports/gates/current_audit_gate.env` when AUDIT gate history exists.
+- Pointer file references missing authoritative artifact path.
+- Final summary hides same-turn repair edits or omits final-state proof after contradiction repair / migration / governance hardening.
 - Missing required tooling decision keys (`application_profile`, `frontend_ui_choice`, `backend_choice`, `data_choice`, `stability_target`).
 - Missing official-source or tooling-currency evidence in tooling decision packet.
 - Stale or unsynchronized backlog/package metadata (`docs/BACKLOG.md` or active PO package plan).
@@ -93,6 +113,9 @@ Concurrent/overlapping change packages are forbidden.
 - Missing security/privacy traceability or missing security/privacy evidence.
 - Missing runtime bootstrap evidence for active `REQ_IDS`.
 - Python virtual environment not located at project root `.venv`.
+- Missing `.vscode/settings.json` for Python scope.
+- Missing `pyrightconfig.json` for Python scope.
+- Missing installed root `.venv` `pyright` for Python scope.
 - Customer-facing manual runtime/setup instructions issued by DEV.
 - Missing latest-stable runtime/compiler evidence for active scope.
 - Unsichere Runtime-Defaults.
@@ -141,6 +164,7 @@ Concurrent/overlapping change packages are forbidden.
 - Merge authority remains with PO governance decision.
 - Release/versioning requires final release-readiness evidence.
 - Clean Desk restoration requires temporary gate artifacts and stale local package residues to be removed after closure.
+- Historical gate artifacts may remain as history, but current truth must be declared only through the authoritative pointer files.
 - If any mandatory control fails, status is `NOT_READY_FOR_RELEASE`.
 
 ## 6. Canonical quality commands (Python scope)
