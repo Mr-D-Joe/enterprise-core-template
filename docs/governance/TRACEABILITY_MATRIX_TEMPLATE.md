@@ -6,6 +6,7 @@
 | BE-REQ-001 | DES-BE-001 | Backend | backend/src/... | test_be_001_pos | reports/tests/be_req_001_pos.txt | PASS | test_be_001_neg | reports/tests/be_req_001_neg.txt | PASS | dev_gate:req_trace | completed | DEV |
 | DB-REQ-001 | DES-DATA-001 | Data | backend/src/db/... | test_db_001_pos | reports/tests/db_req_001_pos.txt | PASS | test_db_001_neg | reports/tests/db_req_001_neg.txt | PASS | audit_gate:req_coverage | completed | AUDIT |
 | NFR-REQ-001 | DES-NFR-001 | NFR | scripts/... | test_nfr_001_pos | reports/tests/nfr_req_001_pos.txt | PASS | test_nfr_001_neg | reports/tests/nfr_req_001_neg.txt | PASS | audit_gate:req_coverage | completed | AUDIT |
+| TPL-GOV-200 | DES-GOV-200 | Gov | scripts/ | test_gov_truth_pos | reports/tests/gov_truth_pos.txt | PASS | test_gov_truth_neg | reports/tests/gov_truth_neg.txt | PASS | dev_gate:req_trace | completed | DEV |
 
 Rules:
 1. Every active requirement must have a row.
