@@ -7,8 +7,17 @@ Older release detail must be compacted or archived under `docs/archive/changelog
 `CHANGELOG.md` is release-history only and must not be used for planning control, queue semantics, or next-step steering.
 
 ## [Unreleased]
+
+## [2.5.2] - 2026-03-19
+### Added
+- Automated reporting and artifact truth checks (`scripts/artifact_truth_check.sh`).
+- Hardened DEV and AUDIT gates with strict historical artifact residue enforcement.
+- New change package `CHG-20260319-reporting-truth` and independent audit `AUD-20260319-reporting-truth`.
+- Traceability matrix updated with `TPL-GOV-200`.
+
 ### Changed
-- Package closure metadata aligned to the released derived-context governance baseline.
+- Core governance documents (AGENTS.md, DESIGN.md, PROMPTS.md, STACK.md) aligned to the new truth enforcement model.
+- `CHANGELOG.md` and `BACKLOG.md` closure metadata synchronization.
 
 ## [2.5.1] - 2026-03-12
 ### Added

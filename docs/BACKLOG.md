@@ -1,29 +1,30 @@
 # BACKLOG — <PROJECT_NAME>
 
-Status: Active
+Status: Closed
 
 ## Metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-19T13:45:00Z
-- source_commit_sha=6f75d84d68ebdd25ed1cdfe4c1e346902976441c
-- planning_sync_state=active_package
-- active_package_id=PKG-20260319-reporting-truth
+- generated_at_utc=2026-03-19T13:55:00Z
+- source_commit_sha=091cc1467499d3e87ae9f64c63749d21
+- planning_sync_state=clean_desk
+- active_package_id=none
 - next_package_id=none
 - next_after_next_package_id=none
 
 ## Active package board
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| PKG-20260319-reporting-truth | TPL-GOV-200 | active | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:45:00Z |
+| none | none | archived | PO | none | 2026-03-19T13:55:00Z |
 
 ## Ordered pending package queue
 | sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
+| PKG-20260319-reporting-truth | TPL-GOV-200 | closed | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:55:00Z |
 | TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
-| none | none | archived | PO | none | 2026-03-12T18:55:15Z |
 
 ## Compact closed package ledger
 | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
+| PKG-20260319-reporting-truth | TPL-GOV-200 | closed | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:55:00Z |
 | TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
 | GOV-HARDEN-20260312 | DES-GOV-41,DES-GOV-42,DES-GOV-43,DES-GOV-44,DES-GOV-45,DES-GOV-46,DES-GOV-47 | closed | PO | system_reports/gates/* | 2026-03-12T07:50:21Z |
 

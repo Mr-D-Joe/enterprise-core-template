@@ -3,7 +3,7 @@
 ```yaml
 chg_id: CHG-20260319-reporting-truth
 package_id: PKG-20260319-reporting-truth
-status: ACTIVE
+status: CLOSED
 req_ids:
   - TPL-GOV-200
 mod_ids:
