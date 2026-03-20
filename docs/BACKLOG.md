@@ -1,40 +1,96 @@
-# BACKLOG — <PROJECT_NAME>
+# BACKLOG
 
-Status: Closed
+This document is the compact package-control surface for the repository.
+It is human-readable, AI-usable, and not default execution context.
+Detailed execution context belongs in `changes/CHG-*.md`, not in backlog rows.
+All package rows must remain compact and non-narrative.
 
-## Metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-19T13:55:00Z
-- source_commit_sha=091cc1467499d3e87ae9f64c63749d21
-- planning_sync_state=clean_desk
-- active_package_id=none
-- next_package_id=none
-- next_after_next_package_id=none
+## Metadata
+This section is mandatory and machine-readable.
+Required keys:
+- `active_package_id`
+- `next_package_id`
+- `next_after_next_package_id`
+- `control_role`
+- `default_execution_context`
+- `detailed_execution_context_path`
+- `package_row_status_values`
 
-## Active package board
-| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+active_package_id=<package_id|none>
+next_package_id=<package_id|none>
+next_after_next_package_id=<package_id|none>
+control_role=package_control_only
+default_execution_context=false
+detailed_execution_context_path=changes/CHG-*.md
+package_row_status_values=open,active,closed
+
+## Active package
+Exactly one visible active package row is allowed when work is in progress.
+If no package is active, show exactly one explicit no-active-package display state.
+Normal package rows in this section use only the package-row status `active`.
+Mandatory columns:
+- status
+- package_id
+- req_ids
+- owner
+- evidence_paths
+- updated_at_utc
+
+| status | package_id | req_ids | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| none | none | archived | PO | none | 2026-03-19T13:55:00Z |
+| active | PKG-YYYY-0001 | REQ-001,REQ-002 | PO | changes/CHG-YYYY-0001.md;system_reports/gates/current_dev_gate.env | YYYY-MM-DDTHH:MM:SSZ |
 
-## Ordered pending package queue
-| sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+No-active-package display example:
+
+| active_package_state | package_id | req_ids | owner | evidence_paths | updated_at_utc |
 |---|---|---|---|---|---|
-| PKG-20260319-reporting-truth | TPL-GOV-200 | closed | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:55:00Z |
-| TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
+| none | none | none | none | none | YYYY-MM-DDTHH:MM:SSZ |
 
-## Compact closed package ledger
-| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
+## Open packages
+Open packages are ordered by priority first and customer value second, highest first.
+Rows in this section must use only the package-row status `open`.
+Mandatory columns:
+- priority
+- customer_value
+- status
+- package_id
+- req_ids
+- owner
+- evidence_paths
+- updated_at_utc
+
+| priority | customer_value | status | package_id | req_ids | owner | evidence_paths | updated_at_utc |
+|---|---|---|---|---|---|---|---|
+| 1 | high | open | PKG-YYYY-0002 | REQ-003 | PO | changes/CHG-YYYY-0002.md | YYYY-MM-DDTHH:MM:SSZ |
+| 2 | medium | open | PKG-YYYY-0003 | REQ-004,REQ-005 | PO | changes/CHG-YYYY-0003.md;system_reports/gates/po_role_packet_dev.env | YYYY-MM-DDTHH:MM:SSZ |
+
+## Closed packages
+Closed packages are ordered by completion time, newest first.
+Rows in this section must use only the package-row status `closed`.
+Mandatory columns:
+- closed_at_utc
+- status
+- package_id
+- req_ids
+- owner
+- evidence_paths
+
+| closed_at_utc | status | package_id | req_ids | owner | evidence_paths |
 |---|---|---|---|---|---|
-| PKG-20260319-reporting-truth | TPL-GOV-200 | closed | PO | changes/CHG-20260319-reporting-truth.md | 2026-03-19T13:55:00Z |
-| TPL-RESTRUCTURE-20260312-01 | TPL-GOV-100,TPL-GOV-101,TPL-GOV-102,TPL-GOV-103,TPL-GOV-104 | closed | PO | changes/CHG-20260312-template-restructure.md;system_reports/gates/* | 2026-03-12T18:55:15Z |
-| GOV-HARDEN-20260312 | DES-GOV-41,DES-GOV-42,DES-GOV-43,DES-GOV-44,DES-GOV-45,DES-GOV-46,DES-GOV-47 | closed | PO | system_reports/gates/* | 2026-03-12T07:50:21Z |
+| YYYY-MM-DDTHH:MM:SSZ | closed | PKG-YYYY-0001 | REQ-001,REQ-002 | PO | changes/CHG-YYYY-0001.md;system_reports/gates/current_audit_gate.env |
+| YYYY-MM-DDTHH:MM:SSZ | closed | PKG-YYYY-0000 | REQ-000 | PO | changes/CHG-YYYY-0000.md |
 
-## Rules
-1. Exactly one package may be active at a time.
-2. Backlog metadata must be refreshed before each DEV start.
-3. Manual estimate fields are forbidden in active backlog state.
-4. Every active package row must include evidence paths.
-5. `docs/BACKLOG.md` is authoritative portfolio overview and is never default execution context.
-6. Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active `changes/CHG-*.md`.
-7. Older completed-package detail must be compacted or archived under `docs/archive/backlog/` when repository policy thresholds are exceeded.
-8. Backlog must expose `active_package_id`, `next_package_id`, and `next_after_next_package_id`.
-9. If open work exists, the next executable package must be visible in machine-readable metadata and queue order.
+## Unrefactored changes
+This section is for known changes that are not yet refactored into bounded package rows.
+These are not package rows and must not use the main package-row status vocabulary.
+Mandatory columns:
+- change_id
+- change_kind
+- short_description
+- target_package_id
+- noted_at_utc
+
+| change_id | change_kind | short_description | target_package_id | noted_at_utc |
+|---|---|---|---|---|
+| UC-001 | pending_refactor | Replace placeholder package control data with real package rows | PKG-YYYY-0002 | YYYY-MM-DDTHH:MM:SSZ |
+| UC-002 | residual_cleanup | Clean residual legacy planning note after migration | none | YYYY-MM-DDTHH:MM:SSZ |

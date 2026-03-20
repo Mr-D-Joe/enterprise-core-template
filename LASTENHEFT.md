@@ -1,49 +1,55 @@
-# LASTENHEFT — <PROJECT_NAME>
+# LASTENHEFT
 
-This document is normative.
-It is the orientation-only project overview for humans and AI.
-It is not the default coding context and must not become an operational implementation container.
-It may enter active execution context only when the active package changes scope/non-scope, key business terms, capability/module map, product-level functional intent, or high-level quality goals, and then only as a bounded excerpt derived into the active `changes/CHG-*.md`.
-
-Version: 1.0.1
-Date: 2026-03-12
-Status: Closed
-
-## Planning metadata (machine-generated, mandatory)
-- generated_at_utc=2026-03-12T18:55:15Z
-- source_commit_sha=9f26c9170697ae0f0ac8d4289e2ec1af3a756f55
-- metrics_generation_mode=machine_only
-- last_closed_package_id=TPL-RESTRUCTURE-20260312-01
+This document is the concise orientation for the repository context, whether the repository serves a product, internal system, service, tool, or solution.
+It creates shared understanding for humans and AI.
+It is not the default implementation context and must not become implementation-facing technical documentation.
+It may enter active execution context only where bounded excerpt use is explicitly allowed by the applicable runtime or governance rules.
 
 ## Purpose
-- Project goal:
-- Target users:
-- Platform target:
+State the intended purpose at a level that explains why the repository exists and who it serves.
+- Purpose:
+- Primary users or stakeholders:
+- Primary value delivered:
 
-## Scope
-- In scope:
-- Out of scope:
+## In scope
+List the intended outcomes and capability areas that are intentionally covered here.
+Keep this at boundary level, not implementation detail.
+- Core outcomes in scope:
+- Capability areas in scope:
+- Supported usage focus:
+
+## Out of scope
+List the exclusions clearly so scope does not expand through assumption.
+Keep this section as explicit non-scope, not as technical design.
+- Explicit non-scope areas:
+- Unsupported usage expectations:
+- Deliberate exclusions:
+
+## Capability areas
+Describe the main capability areas at orientation level only.
+Do not turn this section into implementation design or module structure.
+- Capability area 1:
+- Capability area 2:
+- Capability area 3:
+- Capability area 4:
 
 ## Key terms
-- Primary business terms:
-- Critical domain concepts:
-
-## Capability and module map
-| Capability | MOD_ID | Primary path | Public interfaces | Notes |
-|---|---|---|---|---|
-| Governance root | MOD-GOV-ROOT | `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md` | root governance docs | canonical repository governance |
-| Template scaffolds | MOD-GOV-TEMPLATE | `docs/templates/`, `changes/`, `bootstrap_project.sh` | bootstrap and scaffolds | reusable neutral template assets |
-| Gates and audits | MOD-GOV-GATES | `scripts/`, `docs/governance/` | gate scripts, CI, audit artifacts | enforcement and evidence support |
+Capture the shared domain or business vocabulary needed for correct understanding.
+Do not use this section for technical path names or implementation labels.
+- Term 1:
+- Term 2:
+- Term 3:
+- Term 4:
 
 ## High-level quality goals
-- Atomic requirements and bounded change packages.
-- Independent audit before release.
-- Security-by-default and privacy-by-design.
-- Token-efficient AI working context.
-- Structural alignment between code, documentation, and contracts.
+State the top-level qualities the repository must protect.
+Do not turn this section into a test plan, checklist, or engineering procedure.
+- Quality goal 1:
+- Quality goal 2:
+- Quality goal 3:
+- Quality goal 4:
 
-## Orientation rules
-- Detailed implementation guidance belongs in module-local documentation.
-- Concrete change execution belongs in `changes/CHG-*.md`.
-- Release history belongs in `CHANGELOG.md`.
-- Active package control belongs in `docs/BACKLOG.md`.
+## Orientation notes
+- Module-local documentation or specification near the code is the active implementation-facing technical truth.
+- LASTENHEFT.md is orientation only and not default implementation context.
+- Detailed architecture, runtime execution, readiness rules, package control, and operative package context live in their own canonical homes.

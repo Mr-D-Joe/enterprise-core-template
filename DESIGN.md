@@ -1,267 +1,97 @@
-# DESIGN — Governance Index
+# DESIGN
 
 This document is normative and binding.
 
 ## Purpose
 `DESIGN.md` is the canonical governance index for this repository.
-It defines document ownership, hierarchy, AI-context discipline, and structural-truth rules.
-It must remain short, stable, and delegating.
+It defines document ownership, execution-context rules, reporting truth, artifact truth, planning-to-execution handoff, repository drift handling, and root anti-bloat rules.
+It must remain short, stable, delegating, and globally applicable.
 
-## Normative hierarchy
-1. `AGENTS.md`
-2. `DESIGN.md`
-3. `ARCHITECTURE.md`
-4. `STACK.md`
-5. `CONTRIBUTING.md`
-6. `PROMPTS.md`
-7. `LASTENHEFT.md`
+## Normative references model
+The root canonical documents work as bounded normative owners, not as a license to absorb each other's responsibilities.
+`AGENTS.md` remains the role constitution.
+`DESIGN.md` remains the governance and ownership index.
+Other root canonical documents own their own bounded domains and must not be silently redefined here.
+Only canonical owning documents are normative. Other files are non-normative unless explicitly designated by the canonical governance model.
 
-Supportive files are non-normative by default:
-- `docs/governance/*`
-- `docs/templates/*`
-- `changes/*`
-- `system_reports/*`
+## Canonical ownership and delegation
+- `AGENTS.md`: role constitution only.
+- `DESIGN.md`: governance index, document ownership, execution-context rules, reporting truth model, artifact truth model, planning-to-execution handoff rule, repository drift rule, and root anti-bloat rule.
+- `ARCHITECTURE.md`: architecture model, module model, boundaries, layering, interface principles, temporary mismatches, and code/doc structure correspondence.
+- `STACK.md`: runtime, toolchain, typing, editor, and stable-version policy.
+- `CONTRIBUTING.md`: entry criteria, exit criteria, blockers, and release expectations.
+- `PROMPTS.md`: the only normative runtime execution contract.
+- `LASTENHEFT.md`: product and scope orientation only.
+- Module-local documentation/specification near the code: active implementation-facing technical truth for module behavior, boundaries, contracts, and operating context.
+- `docs/BACKLOG.md`: compact, human-readable package control.
+- `CHANGELOG.md`: release history only.
+- `changes/`: operative package context.
+- `changes/CHG-TEMPLATE.md`: the only canonical change-brief template.
+- `changes/CHG-*.md`: the operative package execution context.
 
-Supportive files become binding only when explicitly referenced by canonical normative files.
+No other file may silently compete with these responsibilities.
+Document responsibilities must not be merged.
 
-## Canonical ownership
-- `AGENTS.md`
-  Role constitution, separation of duties, audit firewall, non-bypass rules.
-- `DESIGN.md`
-  Governance index, source-of-truth map, structural-truth rule, AI-context rule.
-- `ARCHITECTURE.md`
-  Modular monolith, module model, layering, boundaries, contracts, security/privacy/observability architecture.
-- `STACK.md`
-  Technology profiles, runtime/toolchain policy, repository stack defaults, tooling decision policy.
-- `CONTRIBUTING.md`
-  Delivery sequence, blockers, PR/merge/release workflow, gate expectations.
-- `PROMPTS.md`
-  Runtime execution contract for PO/DEV/AUDIT only.
-- `LASTENHEFT.md`
-  Orientation only: project purpose, scope, terms, capability map, quality goals.
+## Canonical active locations
+- Root canonical governance files live at repository root.
+- `docs/BACKLOG.md` is the active planning and package-control ledger.
+- `CHANGELOG.md` is the active release-history ledger.
+- `changes/` is the active package-context location.
+- `docs/modules/` is navigation only and must not replace module-local technical truth.
+- Module-local documentation/specification must live near the code it governs.
 
-No other root file may compete with these responsibilities.
+Alternative parallel active locations for the same responsibility are forbidden.
 
-## Canonical paths
-- `ARCHITECTURE.md` at repository root.
-- `STACK.md` at repository root.
-- `changes/` for active change briefs.
-- `changes/CHG-TEMPLATE.md` for the reusable change-brief scaffold.
-- `docs/modules/` for navigation and module registry.
-- `docs/templates/module-docs/` for reusable module-documentation scaffolds.
-- Module-local docs directly adjacent to module code.
-- `docs/BACKLOG.md` for package and migration backlog control.
-
-Alternative parallel locations for the same artifact type are forbidden.
-
-## Default architecture stance
-- Default architecture is a modular monolith.
-- Modules are cut along business capabilities, not technical layers alone.
-- Code structure and documentation structure must mirror the same capability and `MOD_ID` model.
-- Microservices require an ADR with at least two justified architectural drivers.
-
-## Structural-truth rule
-The repository must maintain one coherent structure across:
-- capabilities,
-- `MOD_ID`s,
-- code modules,
-- module-local documentation,
-- contracts,
-- change briefs,
-- backlog and release metadata.
-
-If code is split into modules, documentation must split along the same boundaries.
-If documentation defines a boundary, code must either reflect it or carry an explicit temporary mismatch record with ADR or waiver evidence.
-Silent drift between code structure and documentation structure is `FAIL`.
-
-## AI-context discipline
-Default coding context is limited to:
-- `AGENTS.md`
-- `PROMPTS.md`
-- `DESIGN.md`
-- `ARCHITECTURE.md`
-- `STACK.md`
-- `CONTRIBUTING.md`
-- the active `changes/CHG-*.md`
-- affected module-local docs
-- directly impacted neighboring modules only if necessary
-- relevant ADRs only when actually needed
-
-Not allowed as default coding context:
-- full `LASTENHEFT.md` for every task,
-- full `docs/` tree,
-- full ADR history,
-- full changelog history,
-- full-repository summaries without concrete need.
-
-Execution context must be derived from exactly one active `changes/CHG-*.md`.
-Authoritative source documents remain complete, but DEV and AUDIT must consume the bounded derivation instead of undifferentiated source documents.
-Non-extracted source text is out of scope for the active package.
-
-## Derived execution context
-- `docs/BACKLOG.md`, `CHANGELOG.md`, `LASTENHEFT.md`, ADRs, and module-local docs are authoritative source documents.
-- `changes/CHG-*.md` is the only operative package document for DEV and AUDIT.
-- Exactly one `changes/CHG-*.md` with machine-readable `status=ACTIVE` may exist for the active package.
-- Every active CHG document must begin with one YAML frontmatter block containing at least:
-  - `chg_id`
-  - `status`
-  - `req_ids`
-  - `mod_ids`
-  - `included_sources`
-  - `excluded_sources`
-  - `created_at_utc`
-  - `updated_at_utc`
-- Allowed CHG status values are exactly:
-  - `DRAFT`
-  - `ACTIVE`
-  - `CLOSED`
-  - `ARCHIVED`
-- Any missing frontmatter, missing key, invalid status, or more than one active CHG document is `FAIL`.
-- The active CHG document must declare every included source document and every excluded source document.
-- Every included non-root source document requires an explicit inclusion reason.
-- Any source document used by DEV or AUDIT but not declared in the active CHG document is forbidden input and causes `FAIL`.
-- All role packets, gate artifacts, and package-level evidence must bind to the active `chg_id`.
-- Evidence that does not bind to the active `chg_id` is invalid for release.
+## Execution-context rules
+- Execution must use bounded derived context rather than undifferentiated source context.
+- The active `changes/CHG-*.md` document is the single operative package execution context for DEV and AUDIT.
+- Exactly one active CHG document is required for active package execution.
+- `docs/BACKLOG.md`, `CHANGELOG.md`, `LASTENHEFT.md`, full ADR history, and the full `docs/` tree are never default execution context.
+- Module-local documentation/specification near the code is the active implementation-facing technical truth layer for affected modules.
+- Central legacy specs must not outrank active module-local documentation/specification for implementation-facing truth.
+- `docs/BACKLOG.md` must remain compact, scan-friendly, and human-readable. It is package control, not CHG-level narrative context.
+- Open work in `docs/BACKLOG.md` must be ordered by priority and customer value.
+- Closed work in `docs/BACKLOG.md` must be ordered by completion time.
+- Detailed operative execution context belongs in `changes/CHG-*.md`, not in backlog rows.
+- Non-extracted source text is out of scope for DEV and AUDIT once the active CHG document exists.
+- Undeclared source usage in active execution is forbidden.
 
 ## Reporting truth model
 - Final summaries must describe the state that actually exists at the end of the turn.
-- If the final state was reached through additional edits later in the same turn, the summary must disclose that chronology explicitly.
-- Reporting must distinguish:
-  - earlier observed state,
-  - repaired state,
-  - final verified state.
-- If files were edited, created, or deleted after an earlier assessment point, the final summary must disclose that fact explicitly.
-- The phrase `No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
-- Contradiction repair, migration, and governance-hardening work must report proof from the final edit state:
-  - re-read of edited files where relevant,
-  - residue checks for forbidden remnants,
-  - rerun of required checks after the final edit state.
-- For discrepancy-sensitive work, reporting may classify accuracy only as:
-  - `ACCURATE`
-  - `PARTIALLY_ACCURATE`
-  - `MISLEADING`
-  - `FALSE`
+- If the final state was reached through additional edits in the same turn, that chronology must be stated explicitly.
+- A final summary must not imply that no further changes were required if additional repository changes did occur in the same turn.
+- Reporting must distinguish earlier observed state, repaired state, and final verified state when discrepancies or repairs occurred.
+- Repair, migration, and governance-hardening summaries must prefer proof over smooth narrative.
+- Proof-oriented reporting must include final-state verification such as edited-file re-read where relevant, residue checks for forbidden remnants, and rerun of required checks after the final edit state.
 - Smooth summaries that erase intervening repair steps are forbidden.
 
 ## Artifact truth model
-- Artifact truth model for this template is `current-plus-history`.
-- Timestamped gate and audit artifacts under `system_reports/gates/` are historical records by default.
-- Current authoritative truth must be declared explicitly through machine-readable pointer files:
-  - `system_reports/gates/current_dev_gate.env`
-  - `system_reports/gates/current_audit_gate.env`
-- Pointer files are the only supported current-state selectors for DEV and AUDIT gate truth.
-- Undocumented `latest file wins` behavior is forbidden.
-- Mixed historical `FAIL` and `PASS` artifacts are allowed only when the current authoritative pointer is present and machine-discernible.
-- Historical artifacts must never require operator guesswork to distinguish them from current truth.
-- Missing authoritative pointer files when corresponding historical gate artifacts exist is `FAIL`.
-- Pointer files must bind current truth to:
-  - gate type,
-  - active `chg_id`,
-  - active `package_id`,
-  - target commit SHA,
-  - authoritative artifact path,
-  - timestamp/run identity.
+- Current authoritative operational truth must be machine-discernible.
+- Historical artifacts may remain, but they must not be confused with current truth.
+- Current state must never depend on operator guesswork, implicit latest-file selection, or ambiguous residue.
+- Historical and current artifacts may coexist only when current authoritative truth is explicitly marked.
+- Undocumented latest-file-wins behavior is forbidden.
 
-## Source inclusion rules
-- `docs/BACKLOG.md` is never default execution context.
-- Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active CHG document.
-- `CHANGELOG.md` is never default execution context.
-- Only the minimal relevant changelog slice may be derived into the active CHG document when package history is materially relevant.
-- `LASTENHEFT.md` is not default execution context.
-- `LASTENHEFT.md` may be included only when the active package changes:
-  - scope or non-scope,
-  - key business terms,
-  - capability/module map,
-  - product-level functional intent,
-  - high-level quality goals.
-- ADRs are excluded by default.
-- ADR inclusion is mandatory only when the active package changes or depends on:
-  - module boundaries,
-  - contract boundary semantics or versions,
-  - runtime or stack decisions,
-  - persistence boundaries or data ownership,
-  - security or compliance boundaries,
-  - an ADR-governed decision.
-- Only the minimal ADR set directly governing the active package may be included.
-- Full backlog, full changelog, full lastenheft, full ADR history, and full docs trees are forbidden default execution context.
+## Planning-to-execution handoff rule
+- User prose is not executable repository context by itself.
+- Before DEV may start, PO must first synchronize the canonical planning/specification chain:
+  - `LASTENHEFT.md` when product-level scope, terms, capability map, or high-level quality goals are affected,
+  - affected module-local documentation/specification near the code when implementation-facing behavior, boundaries, contracts, or operating context are affected,
+  - `docs/BACKLOG.md` for ordered package control,
+  - exactly one active `changes/CHG-*.md` for the first executable package.
+- Direct execution from prose without this artifact chain is forbidden.
 
-## Backlog and changelog separation
-- `docs/BACKLOG.md` is the forward-looking planning and execution-control document.
-- `CHANGELOG.md` is the backward-looking release-history document.
-- `docs/BACKLOG.md` must remain separate from `CHANGELOG.md`.
-- A mixed backlog/changelog document is forbidden.
-- `docs/BACKLOG.md` must expose next steps in machine-readable form through:
-  - `active_package_id`
-  - `next_package_id`
-  - `next_after_next_package_id`
-- If open work exists and `next_package_id` is missing, planning is incomplete and this is `FAIL`.
-- If no open work exists:
-  - `active_package_id=none`
-  - `next_package_id=none`
-  - `next_after_next_package_id=none`
-- `docs/BACKLOG.md` must contain:
-  - a metadata block,
-  - an active package board,
-  - an ordered pending package queue,
-  - a compact closed package ledger.
-- Package ordering must not be inferred from prose alone.
-- `CHANGELOG.md` must remain release-history only and must not contain planning-control fields or queue semantics, including:
-  - `next_package`
-  - `next_package_id`
-  - `next_after_next_package_id`
-  - `pending`
-  - `blocked`
-  - `owner`
-  - `priority`
-  - `sequencing rationale`
-- Presence of planning-control structures in `CHANGELOG.md` is `FAIL`.
+## Repository drift and cleanup-before-next-package rule
+- Contradictory repository state is not a valid execution baseline.
+- If repository state conflicts with the canonical model, the conflict must be surfaced explicitly.
+- Every surfaced conflict must be classified as either:
+  - intended deviation, or
+  - unintended drift.
+- Intended deviation must be explicitly bounded and explained through canonical ownership.
+- Unintended drift must be repaired or isolated before the next package starts.
+- Manual edits, partial cleanup, imperfect merges, stale runtime artifacts, stale control artifacts, and mixed old/new schemas must not remain unexplained.
 
 ## Root anti-bloat rule
-Root files must remain:
-- concise,
-- delegating,
-- globally applicable,
-- non-redundant.
-
-Root files must not accumulate:
-- module implementation detail,
-- task instructions,
-- repeated contract detail,
-- long narrative history,
-- duplicated explanations already owned by another canonical file.
-
-## Legacy structure migration
-`docs/specs/*.md` are legacy requirement artifacts.
-They must not remain parallel operational specification sources after migration.
-Each legacy spec must be:
-- migrated into module-local documentation,
-- reduced to orientation/index-only status,
-- or removed after verified replacement.
-
-## Template constraints
-This repository is a template, not a sample business system.
-It must not contain fake business modules or fake production capabilities.
-Only reusable scaffolds, placeholders, templates, and neutral examples are allowed.
-
-## Compaction policy
-- `LASTENHEFT.md` is orientation-only.
-- `docs/BACKLOG.md` is an active-package board plus compact ledger.
-- `CHANGELOG.md` is a compact release ledger.
-- Older detail remains recoverable through Git history, ADRs, release notes, and module-local docs.
-- `docs/BACKLOG.md` older completed-package detail must be compacted or moved to `docs/archive/backlog/` when repository policy thresholds are exceeded.
-- `CHANGELOG.md` older release detail must be compacted or moved to `docs/archive/changelog/` when repository policy thresholds are exceeded.
-- Threshold ownership for compaction must be declared canonically.
-- Exceeding compaction thresholds without compaction is `COMPACTION_REQUIRED` or `FAIL`.
-
-## Enforcement expectation
-Gate scripts and CI must verify the new structure where feasible:
-- canonical root-source ownership,
-- duplicate-source absence,
-- change-brief presence,
-- module-doc scaffold presence,
-- legacy-spec deactivation,
-- structural-truth alignment,
-- canonical policy-source references,
-- reporting-truth rule presence,
-- artifact-truth pointer integrity,
-- absence of undocumented latest-artifact selection.
+- Root canonical files must stay concise, delegating, globally applicable, and non-redundant.
+- Root files must not absorb downstream technical detail that belongs in `ARCHITECTURE.md`, `STACK.md`, `PROMPTS.md`, `CONTRIBUTING.md`, `LASTENHEFT.md`, module-local documentation/specification, `docs/BACKLOG.md`, or `changes/CHG-*.md`.
+- If detail is implementation-facing, package-specific, runtime-specific, architecture-specific, or product-specific, it must not be expanded inside `DESIGN.md`.
