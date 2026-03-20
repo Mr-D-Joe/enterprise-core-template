@@ -1,7 +1,5 @@
-# CHG-TEMPLATE
-
-```yaml
-chg_id: CHG-YYYY-XXXX
+---
+chg_id: CHG-YYYY-NNNN
 package_id: PKG-YYYY-XXXX
 status: DRAFT
 req_ids:
@@ -9,80 +7,87 @@ req_ids:
 mod_ids:
   - MOD-PLACEHOLDER
 included_sources:
-  - AGENTS.md
-  - PROMPTS.md
-  - DESIGN.md
-  - ARCHITECTURE.md
-  - STACK.md
-  - CONTRIBUTING.md
+  - <execution-context-source-path>
 excluded_sources:
-  - docs/BACKLOG.md
-  - CHANGELOG.md
-  - LASTENHEFT.md
-created_at_utc: 2026-03-12T00:00:00Z
-updated_at_utc: 2026-03-12T00:00:00Z
-```
+  - <source-only-or-out-of-scope-path>
+created_at_utc: YYYY-MM-DDTHH:MM:SSZ
+updated_at_utc: YYYY-MM-DDTHH:MM:SSZ
+---
 
-## Goal
+# CHG-YYYY-NNNN -- Package Title
+
+## Operative package context
+This document is the bounded operative package context for the active package and active `chg_id`.
+Only declared execution-context inputs belong here.
+Source-only documents remain source documents unless their bounded package slice is explicitly extracted below.
+When implementation-facing behavior, boundaries, contracts, or operating context are technically affected, the affected module-local documentation/specification near the code is an expected execution-context input and must be declared explicitly.
+
+## Package goal
 - 
 
-## Affected MOD_IDs
-- 
+## Package scope
+- Active package_id: PKG-YYYY-XXXX
+- Active req_ids:
+- Affected mod_ids:
+- In-scope paths:
+- Out-of-scope paths:
 
-## Included source documents
-- `AGENTS.md`: canonical role constitution
-- `PROMPTS.md`: runtime execution contract
+## Execution-context inputs
+List only the documents or paths that are actual execution-context inputs for this package.
+Do not list broad default sources by habit.
+Include affected module-local documentation/specification near the code when the package changes implementation-facing behavior, boundaries, contracts, or operating context.
 
-## Excluded source documents
-- `docs/BACKLOG.md`: source only, not default execution context
-- `CHANGELOG.md`: source only, not default execution context
-- `LASTENHEFT.md`: excluded unless explicit trigger applies
+- <path>: <why this source is required for execution>
 
-## Inclusion reason per included non-root source
-- `<path>`: `<reason>`
-
-## Backlog extraction
-- Active package_id:
+## Source-only documents and extracted slices
+### Backlog package slice
+Source-only document: `docs/BACKLOG.md`
+- Extracted slice included: yes/no
 - Active package row:
-- Scope slice:
+- Next relevant package relation:
+- Package-control notes required for execution:
 
-## Changelog extraction
+### Changelog slice
+Source-only document: `CHANGELOG.md`
+- Extracted slice included: yes/no
 - Required history:
 - Why relevant:
 
-## Lastenheft inclusion decision
-- Included: yes/no
+### Lastenheft slice
+Source-only document: `LASTENHEFT.md`
+- Extracted slice included: yes/no
 - Trigger:
 - Relevant excerpt:
 
-## ADR inclusion decision
-- Included: yes/no
+### ADR slice
+Source-only document: ADRs
+- Extracted slice included: yes/no
 - Governing ADRs:
 - Why required:
 
-## Non-goals
-- 
+### Affected module-local documentation/specification
+Execution-context input category for technically affected modules.
+- Included as execution-context input: yes/no
+- Owning module paths:
+- Why required for this package:
 
-## Contracts affected
-- yes/no:
+### Neighbor-module documentation
+- Included as execution-context input: yes/no
+- Direct dependency reason:
 
-## Data model affected
-- yes/no:
+## Excluded or out-of-scope sources
+- <path>: <why excluded or out of scope>
 
-## Security and privacy impact
-- 
+## Execution constraints
+- Non-goals:
+- Contracts affected:
+- Data model affected:
+- Security and privacy impact:
+- Explicitly excluded paths or modules:
 
-## Neighbor-module inclusion reason
-- `<module/path>`: `<direct dependency reason>`
-
-## Pass / fail criteria
-- 
-
-## Relevant tests and checks
-- 
-
-## Explicitly excluded paths / modules
-- 
+## Verification targets
+- Pass or fail criteria:
+- Required tests and checks:
 
 ## Reporting chronology
 - Earlier observed state:
@@ -96,4 +101,4 @@ updated_at_utc: 2026-03-12T00:00:00Z
 - Final-state rerun checks:
 
 ## Final report accuracy classification
-- `ACCURATE` / `PARTIALLY_ACCURATE` / `MISLEADING` / `FALSE`:
+- ACCURATE | PARTIALLY_ACCURATE | MISLEADING | FALSE

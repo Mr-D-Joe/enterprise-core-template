@@ -1,121 +1,101 @@
-# ARCHITECTURE — Modular Monolith Baseline
+# ARCHITECTURE
 
 This document is normative and binding.
 
 ## Purpose
-`ARCHITECTURE.md` is the canonical architecture source for this repository.
-It owns the module model, boundary rules, layering, contracts, and cross-cutting architecture controls.
+`ARCHITECTURE.md` is the single active root architecture document for this repository.
+It defines the architecture model, structural decomposition, module model, boundary rules, layering principles, interface and contract boundary principles, structure correspondence rules, temporary mismatch handling, and ADR touchpoints.
+It must remain architecture-focused, technically precise, and delegating where detailed technical truth belongs closer to the code.
+
+## Scope
+This document owns root architecture only.
+It describes how the system is structurally cut and how modules, boundaries, layers, and contracts are expected to relate.
+It does not own governance, runtime orchestration, blocker logic, runtime/toolchain policy, product-orientation detail, or detailed module-local implementation truth.
 
 ## Architecture stance
-- Default architecture is a modular monolith.
-- New microservices are forbidden unless an ADR documents at least two justified drivers:
-  - materially different scaling profile,
-  - distinct security or compliance boundary,
-  - independently required release cadence,
-  - incompatible runtime or technology need.
-- Modules are organized around business capabilities, not technical layers alone.
+- The preferred default architecture is a modular monolith unless justified constraints require a different structure.
+- Modules are cut along coherent capability boundaries rather than technical layers alone.
+- Structural simplicity is preferred over premature distribution.
+- Separate deployable units require explicit architectural justification.
+
+## Level-1 structural view
+At level 1, the repository is expected to decompose into:
+- root canonical architecture and governance documents,
+- bounded code modules,
+- module-local documentation/specification near the code,
+- bounded package execution context under `changes/`,
+- supporting navigation and reference surfaces that do not replace module-local truth.
+
+The root architecture view must stay structural.
+Detailed technical behavior belongs in the owning module-local documentation/specification.
 
 ## Module model
-Every module must have a stable `MOD_ID` and exactly one primary business responsibility.
-
-Each module must declare:
+Each module must represent one primary architectural responsibility.
+Each module is expected to define, at architecture level:
+- module identity,
 - purpose,
-- scope,
-- non-goals,
-- owner,
-- public entry points,
-- public outbound ports,
-- data ownership,
-- dependencies,
-- operational expectations or SLOs.
+- owned responsibility,
+- public entry points or exposed interfaces,
+- declared dependencies,
+- inbound and outbound boundary expectations,
+- owned data or state boundaries where applicable.
+
+Detailed technical behavior, operating detail, and module-specific implementation truth belong near the code, not in this root document.
 
 ## Boundary rules
-- No cyclic dependencies.
-- No internal implementation access across module boundaries.
-- No shared database access across module ownership boundaries.
-- Domain logic must not depend on frameworks, ORM internals, transport details, or provider SDKs.
-- Public APIs may be consumed; internal packages may not.
+- Module boundaries must be explicit.
+- Dependency direction across module boundaries must be intentional and limited.
+- Cyclic dependencies between modules are forbidden.
+- Internal implementation details must not be used across module boundaries.
+- Shared access patterns that erase ownership boundaries are forbidden.
+- Boundary crossings must occur through declared interfaces, contracts, or ports rather than implicit reach-through.
 
-## Layering rules
-Conceptual layers:
-- `api`
-- `application`
-- `domain`
-- `ports`
-- `adapters`
+## Layering principles
+Conceptual layers may be used where they clarify structure, such as:
+- interface or API edge,
+- application orchestration,
+- domain logic,
+- ports or abstractions,
+- adapters or infrastructure.
 
-Rules:
-- dependency direction must remain inward,
-- `domain` must not import frameworks, adapters, HTTP clients, DB drivers, transport details, or provider SDK types,
-- adapters implement ports, never the reverse.
+The exact layer names may vary by implementation, but the architectural expectation remains:
+- dependencies should point inward toward stable core logic,
+- outer infrastructure and delivery concerns must not dominate inner domain structure,
+- adapters implement boundary contracts rather than redefine them.
 
-## Contract-first rules
-- Synchronous interfaces must use OpenAPI where applicable.
-- Async and message interfaces must use AsyncAPI where applicable.
-- Contracts must be versioned.
-- Undocumented payload formats are forbidden.
-- Contract validation or code generation should be used where practical.
+## Interface and contract boundary principles
+- Interfaces at module boundaries must be explicit.
+- Contracts must be defined before or alongside cross-boundary implementation.
+- Boundary contracts should be version-aware where evolution is expected.
+- Undocumented boundary payloads or implicit boundary semantics are forbidden.
+- Interface choices should preserve module replaceability and boundary clarity.
 
-## Security and privacy architecture
-Apply where applicable:
-- OWASP ASVS,
-- NIST SSDF,
-- CISA Secure by Design.
+This document defines the contract-first architectural principle only.
+Detailed contract technology and runtime policy stay outside this file.
 
-At minimum:
-- secure defaults,
-- least privilege,
-- server-side validation,
-- no secrets in repository,
-- dependency scanning,
-- secret scanning,
-- SAST,
-- SBOM where practical,
-- provenance/signing hooks where practical,
-- no invented authentication if standard OIDC/OAuth-based approaches are intended.
+## Code, module, and documentation correspondence rule
+Code structure, module structure, and near-code module-local documentation/specification must converge on the same architectural decomposition.
+If the root architecture defines a module boundary, code and near-code documentation/specification must either reflect that boundary or carry an explicit temporary mismatch record.
+Near-code documentation/specification is the active detailed technical truth layer for the owning module and must remain structurally aligned with the root architecture.
 
-Privacy-by-design is mandatory.
-Modules touching personal data must document:
-- data categories,
-- purpose,
-- retention,
-- deletion path,
-- logging restrictions.
+## Temporary mismatch rule
+Architecture and implementation are allowed to diverge temporarily only when that divergence is explicit.
+Any temporary mismatch must be recorded clearly with:
+- the intended target structure,
+- the current mismatch,
+- the bounded reason for the mismatch,
+- the expected cleanup path or isolating rule.
 
-Personal data must not appear in logs, traces, or events unless explicitly justified and protected.
+Silent structural drift is forbidden.
+Unexplained mismatch between architecture, code, and near-code documentation/specification is invalid.
 
-## Observability architecture
-- structured logs,
-- metrics,
-- traces,
-- correlation and trace IDs,
-- health and readiness conventions,
-- OpenTelemetry-compatible patterns where appropriate.
+## ADR touchpoints
+ADRs are required for major architectural decisions or explicit architectural exceptions, including when applicable:
+- changing the top-level architecture style,
+- introducing or removing major boundaries,
+- approving structural exceptions,
+- accepting long-lived mismatch or non-standard decomposition,
+- introducing separate deployable units or materially different interface models.
 
-## Structural truth
-Code structure and documentation structure must mirror the same module and capability model.
-If module-local docs define a boundary, code must reflect it or carry explicit mismatch evidence.
-
-## Architecture fitness functions
-Machine-checkable rules should be added where feasible:
-- no-cycle checks,
-- dependency direction checks,
-- forbidden import checks,
-- public-boundary checks,
-- contract presence checks,
-- module-documentation presence checks.
-
-If a rule cannot be fully automated:
-- do not fake it,
-- document the limitation,
-- implement the strongest practical fallback,
-- mark the remainder as manual verification.
-
-## Policy defaults
-Repository-specific thresholds are policy defaults, not universal standards.
-Prefer thresholds on:
-- direct module dependencies,
-- public interfaces,
-- synchronous hops,
-- ADR triggers,
-- test and quality gates.
+This document references ADR touchpoints only.
+It does not contain ADR history.

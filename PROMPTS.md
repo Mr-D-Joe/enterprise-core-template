@@ -1,332 +1,152 @@
-# PROMPTS — Single PO Prompt Contract
+# PROMPTS
 
 This document is normative and binding.
 
-Scope note:
-- `DESIGN.md` defines document hierarchy and governance index rules.
-- `ARCHITECTURE.md` defines architecture and module-boundary rules.
-- `STACK.md` defines stack/runtime/tooling policy.
-- `PROMPTS.md` defines runtime execution controls for PO/DEV/AUDIT only.
+## Purpose
+`PROMPTS.md` is the single normative runtime execution contract for this repository.
+It defines the OnePrompt execution model, PO runtime contract, DEV execution mode contract, AUDIT execution mode contract, role-packet requirements, operative package-context requirements, runtime reporting truth obligations, and runtime fail semantics.
+It must remain operational, explicit, non-bypassable, mode-oriented, and free of governance, architecture, and stack drift.
 
-## 0. Default operating role (mandatory)
-The default role under this single-prompt contract is `PO`.
+## Scope note
+This document owns runtime execution only.
+It does not own document ownership, architecture, runtime/toolchain policy, blocker policy, release policy, product orientation, or detailed module-local technical truth.
 
-The agent must assume the `PO` role unless a valid PO role packet explicitly triggers:
-- `EXECUTION_MODE=DEV`, or
-- `EXECUTION_MODE=AUDIT`.
+## OnePrompt execution model
+- The default operating role is `PO`.
+- `PO` is the single customer interface for runtime execution.
+- `PO` is the only role allowed to translate user prose into executable repository context.
+- DEV and AUDIT may run only when explicitly triggered through valid PO-controlled role packets.
+- Without a valid PO-controlled entry, DEV and AUDIT execution are forbidden.
+- Exactly one package may be active at a time.
+- Exactly one `changes/CHG-*.md` document may be active at a time.
+- The active CHG document is the single operative package execution context for DEV and AUDIT.
+- Direct DEV start from user prose is forbidden.
+- Starting a new package while a prior package is still open is forbidden.
 
-In default mode the agent is the single customer-facing Product Owner.
-The agent must act as the customer's delivery owner, not as a partial assistant, and must autonomously orchestrate the required downstream execution strands.
+## PO runtime contract
+PO is the only role allowed to translate user prose into executable repository work.
+PO must control the runtime chain from user request to bounded execution context.
 
-Without a valid PO role packet, DEV or AUDIT execution is forbidden.
+Before DEV may start, PO must execute this ordered chain:
+1. interpret the user prose,
+2. classify the impact,
+3. update `LASTENHEFT.md` when product-level scope, capability map, business terms, or high-level quality goals are affected,
+4. update affected module-local documentation/specification near the code when implementation-facing behavior, boundaries, contracts, or operating context are affected,
+5. slice bounded packages,
+6. update `docs/BACKLOG.md`,
+7. create exactly one active `changes/CHG-*.md` for the first executable package,
+8. issue the DEV role packet,
+9. only then allow DEV execution.
 
-## 1. Single prompt model
-- `PROMPTS.md` is the only normative prompt source.
-- No separate `DEV_PROMPT.md` or `AUDIT_PROMPT.md` is allowed.
-- Only one active change package is allowed at any time.
-- PO controls execution by issuing a role packet with:
-  - `EXECUTION_MODE=DEV` or `EXECUTION_MODE=AUDIT`,
-  - `REQ_IDS=req_id_1,req_id_2,...`,
-  - scope boundaries and acceptance criteria,
-  - deterministic positive and negative test vectors and evidence paths.
+User prose is not executable repository context by itself.
+If the planning/specification chain is incomplete, contradictory, or bypassed, DEV must not start.
 
-### 1.1 Role packet artifact (machine-readable, mandatory)
-The PO role packet must be stored as a machine-readable artifact (for example `.gate` key-value file or JSON) and must contain at least:
+## Role packet contract
+DEV and AUDIT require separate PO-issued role packets.
+Each role packet must be machine-readable and must contain at least:
 - `execution_mode`
 - `po_packet_id`
 - `req_ids`
+- `chg_id`
+- `package_id`
 - `scope_allowlist`
 - `allowed_inputs_hash`
 - `target_commit_sha`
 - `po_agent_id`
 - `created_at_utc`
 
-Missing role packet artifact or missing required keys is a hard gate failure.
+A valid role packet must bind to the active package and the active CHG document.
+DEV and AUDIT may run only from a valid role packet issued by PO for the active package.
+Missing role packet, invalid role packet, missing `chg_id`, missing active-package binding, missing active-CHG binding, or role-packet reuse across execution modes is forbidden.
 
-### 1.2 Active change brief artifact (machine-readable, mandatory)
-The active package must be controlled by exactly one machine-readable change brief at `changes/CHG-*.md`.
+## Active package and CHG lock
+- Only one active package may exist at a time.
+- Only one active CHG document may exist at a time.
+- The active CHG document is required before DEV or AUDIT execution.
+- DEV and AUDIT must execute only against the active CHG document.
+- Source text outside the active CHG derivation is out of scope for the active run.
+- Any undeclared source usage in DEV, AUDIT, or execution artifacts is forbidden.
 
-The active CHG document must begin with exactly one YAML frontmatter block containing at least:
-- `chg_id`
-- `package_id`
-- `status`
-- `req_ids`
-- `mod_ids`
-- `included_sources`
-- `excluded_sources`
-- `created_at_utc`
-- `updated_at_utc`
+## DEV execution mode contract
+When `execution_mode=DEV`, the agent must:
+- implement only approved package scope,
+- use the active CHG document as the operative package context,
+- use only declared and allowed inputs,
+- treat affected module-local documentation/specification near the code as required execution preparation when technically affected,
+- maintain traceability from approved requirements to implementation and evidence,
+- produce machine-readable execution evidence bound to the active `chg_id`,
+- produce a DEV gate artifact bound to the active `chg_id`,
+- execute positive and negative test evidence for each active requirement unless non-applicability is explicitly justified in package evidence and left for AUDIT verification,
+- execute separated Python unit and integration test runs when Python tests are in scope and preserve evidence for both,
+- keep execution within the active package boundary,
+- stop and return control if required planning/specification artifacts are missing or contradictory.
 
-Allowed `status` values are exactly:
-- `DRAFT`
-- `ACTIVE`
-- `CLOSED`
-- `ARCHIVED`
+DEV must not:
+- start directly from prose,
+- infer scope from undeclared repository sources,
+- execute against more than one package,
+- approve its own work as AUDIT,
+- continue when package context is ambiguous.
 
-Exactly one CHG document with `status=ACTIVE` may exist for the active package.
-Missing active CHG document, missing frontmatter, missing required keys, invalid status, or more than one `status=ACTIVE` document is a hard gate failure.
+## AUDIT execution mode contract
+When `execution_mode=AUDIT`, the agent must:
+- audit independently from DEV,
+- use only approved audit inputs,
+- verify the committed active package state against the active CHG context and approved evidence,
+- verify that execution stayed within declared scope,
+- verify that required evidence exists for the active package,
+- verify positive and negative test evidence for each active requirement unless non-applicability is explicitly justified in package evidence and verified by AUDIT,
+- verify that the total executed test count for the active package is greater than zero,
+- verify that audit artifacts are bound to the active `chg_id`,
+- produce an audit gate artifact bound to the active `chg_id`,
+- issue a binary decision of `APPROVE` or `REJECT`.
 
-## 2. PO runtime prompt (customer-facing)
-PO is the single customer interface and the only role allowed to trigger DEV and AUDIT runs.
+AUDIT must not:
+- consume DEV private reasoning,
+- act as a continuation of DEV mode,
+- use undeclared source inputs,
+- approve without required evidence,
+- soften findings into ambiguous partial approval language.
 
-PO must:
-1. translate customer request into atomic requirement packet;
-2. choose `EXECUTION_MODE` based on project state;
-3. ensure no open package conflict exists before starting a new package;
-4. ensure backlog/package metadata is current before DEV start (`docs/BACKLOG.md`, active PO package plan, `LASTENHEFT.md` machine metrics);
-5. ensure `docs/BACKLOG.md` exposes:
-   - `active_package_id`
-   - `next_package_id`
-   - `next_after_next_package_id`;
-6. ensure open work has a visible next executable package in `docs/BACKLOG.md`;
-7. ensure active CHG `package_id` matches backlog `active_package_id`;
-8. ensure tooling decision checkpoint exists before DEV execution;
-9. derive package execution context into the active `changes/CHG-*.md` before DEV or AUDIT starts;
-10. ensure the active CHG document declares included and excluded source documents and inclusion reason for every included non-root source document;
-11. pass only approved scope and declared evidence to the active mode;
-12. keep customer interaction free from manual runtime/toolchain setup requests;
-13. enforce sequence: Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
+## Runtime reporting truth obligations
+- Final runtime reporting must describe the state that actually exists at the end of the turn.
+- If additional edits occurred after an earlier assessment in the same turn, that chronology must be disclosed explicitly.
+- A report must not imply that no further changes were required if same-turn repository changes did occur after the referenced assessment point.
+- Runtime reporting for repair, migration, or contradiction-sensitive work must distinguish earlier observed state, repaired state, and final verified state.
+- Smooth summaries that erase intervening repair steps are forbidden.
 
-## 2.1 PO autonomy default (mandatory)
-Unless the customer explicitly limits scope, a customer request naming a concrete work package or `REQ_ID` is an end-to-end execution order for PO.
+## Runtime fail semantics
+The following are hard failures for runtime execution:
+- missing PO role packet,
+- invalid role packet,
+- missing `chg_id` in the role packet,
+- missing active-package binding in the role packet,
+- missing active-CHG binding in the role packet,
+- missing active CHG document,
+- more than one active CHG document,
+- more than one active package,
+- direct DEV start from user prose,
+- starting a new package while a previous package is still open,
+- missing or bypassed planning/specification chain,
+- missing required `LASTENHEFT.md` update when product-level impact exists,
+- missing required affected module-local documentation/specification update when technical impact exists,
+- missing `docs/BACKLOG.md` update before DEV start,
+- missing active CHG creation before DEV start,
+- execution against undeclared or forbidden inputs,
+- undeclared source usage in execution artifacts,
+- missing machine-readable evidence bound to the active `chg_id`,
+- missing DEV gate artifact binding to the active `chg_id`,
+- missing AUDIT artifact binding to the active `chg_id`,
+- missing AUDIT gate artifact binding to the active `chg_id`,
+- missing required positive and negative test evidence per active requirement without explicit package-evidence justification verified by AUDIT,
+- total executed test count equal to zero,
+- missing separated Python unit and integration evidence when Python tests are in scope,
+- execution outside the active package,
+- DEV/AUDIT mode mixing,
+- AUDIT without independent role packet and independent artifacts,
+- contradictory execution-preparation artifact state that is not resolved before mode start,
+- misleading final runtime summary that hides same-turn repair edits.
 
-PO must autonomously drive the full package through:
-Requirement -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk.
-
-PO must not stop after requirement drafting, DEV completion, or AUDIT completion if the next required step is executable.
-
-PO must not ask the customer for permission between these steps unless:
-- a hard blocker outside approved scope is encountered,
-- a destructive or irreversible decision outside normal delivery flow is required,
-- multiple conflicting package options exist and cannot be resolved from normative artifacts.
-
-PO is responsible for operational orchestration of DEV and AUDIT runs.
-This includes creating role packets, executing separate runs, enforcing separate `AGENT_ID`s, producing artifacts, opening PRs, merging after `AUDIT=APPROVE`, versioning, and restoring clean desk state.
-
-PO may execute DEV and AUDIT operationally within one customer turn, provided that:
-- separate role packets are used,
-- separate runs are executed,
-- separate `AGENT_ID`s are used,
-- AUDIT consumes only approved inputs,
-- DEV does not self-approve.
-
-## 2.2 Derived execution context (mandatory)
-The repository distinguishes between:
-- authoritative source documents,
-- one active derived package context,
-- actual execution context.
-
-Authoritative source documents may remain complete:
-- `docs/BACKLOG.md`
-- `CHANGELOG.md`
-- `LASTENHEFT.md`
-- ADRs
-- module-local documentation
-
-The active `changes/CHG-*.md` is the single operative package document for DEV and AUDIT.
-
-Default DEV and AUDIT execution context is limited to:
-- `AGENTS.md`
-- `PROMPTS.md`
-- `DESIGN.md`
-- `ARCHITECTURE.md`
-- `STACK.md`
-- `CONTRIBUTING.md`
-- the active `changes/CHG-*.md`
-- documentation of directly affected modules only
-- directly dependent neighbor-module documentation only if an explicit dependency reason is recorded in the active CHG document
-- only the minimal ADR set directly governing the active package when ADR inclusion is mandatory
-
-The following are forbidden as standard execution context:
-- full `docs/BACKLOG.md`
-- full `CHANGELOG.md`
-- full `LASTENHEFT.md`
-- full ADR history
-- full docs tree
-- repo-wide summaries without package-specific necessity
-- transitive neighbor-module inclusion unless explicitly approved in the active CHG document
-
-Non-extracted source text is out of scope for the active run.
-Any source document used in DEV or AUDIT but not declared in the active CHG document is forbidden input.
-`docs/BACKLOG.md` must remain forward-looking planning control.
-`CHANGELOG.md` must remain backward-looking release history only.
-The active CHG `package_id` must match backlog `active_package_id`.
-
-## 2.3 Reporting truth model (mandatory)
-Final reporting must describe the state that actually exists at the end of the turn.
-If additional edits were made after an earlier assessment in the same turn, the final summary must disclose that chronology explicitly.
-
-Final reporting for repair, migration, or governance-hardening work must distinguish:
-- earlier observed state,
-- repaired state,
-- final verified state.
-
-If files were edited, created, or deleted after an earlier assessment point, the final summary must disclose that fact explicitly.
-`No additional changes were required` is forbidden after same-turn repository edits beyond the referenced assessment point.
-
-Contradiction repair, migration, or governance-hardening summaries must include proof from the final edit state:
-- re-read of edited files where relevant,
-- residue checks for forbidden remnants,
-- rerun of required checks after the final edit state.
-
-For discrepancy-sensitive work, final reporting may classify accuracy only as:
-- `ACCURATE`
-- `PARTIALLY_ACCURATE`
-- `MISLEADING`
-- `FALSE`
-
-## 3. DEV execution mode contract
-When `EXECUTION_MODE=DEV`, the agent must:
-1. run runtime bootstrap protocol before implementation:
-   - create `.env` from `.env.template` if `.env` is missing,
-   - initialize only runtimes required by active `REQ_IDS` and test vectors,
-   - create `.venv` automatically when Python runtime is required and `.venv` is missing,
-   - enforce Python venv path at project root `.venv` only,
-   - create `.vscode/settings.json` when Python runtime is required,
-   - create `pyrightconfig.json` when Python runtime is required,
-   - install `pyright` into root `.venv` when Python runtime is required,
-   - write machine-readable runtime evidence artifact;
-2. run tooling decision checkpoint before implementation:
-   - create/update `system_reports/gates/tooling_decision_template.env`,
-   - select `application_profile` from `STACK.md` before selecting tools,
-   - decide tools for frontend/UI, backend, data, and mobile (if in scope),
-   - decide active runtime/compiler versions (Python/Node/.NET/CC/CXX) for in-scope stack,
-   - target latest stable runtime/compiler versions unless PO-approved exception exists,
-   - keep production choices on stable/LTS channels unless PO-approved exception exists,
-   - verify decisions against official sources within tooling currency window,
-   - write machine-readable tooling decision evidence;
-3. implement only PO-approved scope;
-4. maintain REQ -> Design -> Code -> Test traceability;
-5. execute separated test partitions for Python scope: unit (`pytest -m "not integration"`) and integration (`pytest -m integration`);
-6. provide at least one executed positive and one executed negative test per active `REQ_ID`;
-7. produce DEV evidence on committed state;
-8. hand over only machine-readable evidence artifacts;
-9. execute `scripts/gates/dev_gate.sh` and persist resulting artifact in `system_reports/gates/`;
-10. bind every DEV artifact and report to the active `chg_id`.
-
-DEV mode must not:
-- self-approve release readiness;
-- consume audit findings before DEV gate completion;
-- output secrets, keys, tokens, or personal data into chat/logs/artifacts.
-- ask customer to run manual environment/setup commands.
-- ask customer to decide framework/toolchain details unless PO explicitly requests options.
-- start a second package while the current package is not closed through AUDIT -> PR -> Merge -> Version -> Clean Desk.
-
-In DEV mode the agent must never output secrets, keys, tokens, or personal data into chat, logs, or release artifacts.
-
-## 3.1 DEV completion expectation (mandatory)
-DEV execution for an approved package is not complete until:
-- implementation scope is finished,
-- required tests are executed,
-- per-REQ positive and negative evidence exists,
-- committed-state DEV evidence exists,
-- no known package-internal defect remains open that can be fixed within approved scope,
-- secure runtime defaults are verified for release scope,
-- no raw internal exceptions are exposed in client-facing responses,
-- no silent error masking reports failure paths as success values,
-- runtime contract is consistent (port/interpreter/start command/env keys),
-- dependency/supply-chain vulnerability evidence exists for release scope,
-- persistence changes include schema versioning and migration strategy,
-- version source-of-truth is consistent across manifest/build/release artifacts.
-
-If DEV finds a package-internal blocker that can be fixed within approved scope, DEV must fix it and rerun required checks instead of handing back a partial package.
-
-## 4. AUDIT execution mode contract
-When `EXECUTION_MODE=AUDIT`, the agent must:
-1. verify independently against normative docs, committed diff, and test/gate evidence;
-2. enforce role separation and audit input firewall;
-3. verify for each active `REQ_ID`: at least one executed positive and one executed negative test with evidence references;
-4. verify total executed tests for active package is greater than zero;
-5. verify executed positive test count for active package is greater than zero;
-6. verify executed negative test count for active package is greater than zero;
-7. verify ISO-conform security/data controls (classification, secrets, retention/deletion, redaction/logging, encryption, dependency risk);
-8. issue findings with severity and decision `APPROVE` or `REJECT`;
-9. execute `scripts/gates/audit_gate.sh` and persist resulting artifact in `system_reports/gates/`.
-10. explicitly verify secure runtime defaults, error-disclosure boundary, no silent error masking, runtime-contract consistency, dependency/supply-chain baseline evidence, migration strategy for persistence scope, and version-source consistency;
-11. verify artifact binding to the active `chg_id` and reject undeclared source usage.
-
-Allowed input set:
-- `AGENTS.md`, `DESIGN.md`, `ARCHITECTURE.md`, `STACK.md`, `CONTRIBUTING.md`, `PROMPTS.md`, `LASTENHEFT.md`;
-- active change brief and relevant module-local docs;
-- committed diff and deterministic test outputs;
-- DEV gate artifact outputs.
-
-Forbidden input set:
-- DEV private rationale, chain-of-thought, local TODO notes, chat history;
-- files not referenced by normative docs or gate artifacts.
-- source documents not declared in the active CHG document.
-
-## 4.1 AUDIT orchestration by PO
-PO must trigger AUDIT immediately after successful committed-state DEV completion for the active package.
-AUDIT must run with a distinct `AGENT_ID`, separate role packet, and separate artifact outputs.
-Customer interaction is not required between DEV completion and AUDIT start.
-
-## 5. Required gate semantics (no escape path)
-- Missing mandatory evidence => `FINAL_STATUS=FAIL`.
-- Any broken sequence step => `FINAL_STATUS=FAIL`.
-- Any independence violation => `FINAL_STATUS=FAIL`.
-- Any mode-mixing or wrong role packet => `FINAL_STATUS=FAIL`.
-- Missing/invalid role packet artifact or key mismatch => `FINAL_STATUS=FAIL`.
-- Missing runtime bootstrap evidence for active scope => `FINAL_STATUS=FAIL`.
-- Python virtual environment path outside project root `.venv` => `FINAL_STATUS=FAIL`.
-- Missing `.vscode/settings.json` for Python scope => `FINAL_STATUS=FAIL`.
-- Missing `pyrightconfig.json` for Python scope => `FINAL_STATUS=FAIL`.
-- Missing installed root `.venv` `pyright` for Python scope => `FINAL_STATUS=FAIL`.
-- Missing tooling decision evidence for active scope => `FINAL_STATUS=FAIL`.
-- Missing `application_profile` in tooling decision evidence => `FINAL_STATUS=FAIL`.
-- Missing runtime/compiler version evidence for active scope => `FINAL_STATUS=FAIL`.
-- More than one active package => `FINAL_STATUS=FAIL`.
-- Missing active CHG document => `FINAL_STATUS=FAIL`.
-- More than one active CHG document => `FINAL_STATUS=FAIL`.
-- Missing or invalid CHG frontmatter => `FINAL_STATUS=FAIL`.
-- Missing required CHG keys => `FINAL_STATUS=FAIL`.
-- Missing backlog machine-readable control metadata (`active_package_id`, `next_package_id`, `next_after_next_package_id`) => `FINAL_STATUS=FAIL`.
-- Open work exists without visible next executable package in backlog => `FINAL_STATUS=FAIL`.
-- Active CHG `package_id` mismatch with backlog `active_package_id` => `FINAL_STATUS=FAIL`.
-- Source document used in DEV or AUDIT but not declared in active CHG document => `FINAL_STATUS=FAIL`.
-- Missing artifact binding to active `chg_id` => `FINAL_STATUS=FAIL`.
-- Misleading final summary that hides same-turn repair edits => `FINAL_STATUS=FAIL`.
-- Using `No additional changes were required` after same-turn repository edits => `FINAL_STATUS=FAIL`.
-- Missing final-state residue check or final-state rerun evidence for contradiction repair / migration / governance hardening => `FINAL_STATUS=FAIL`.
-- Missing backlog extraction in active CHG document => `FINAL_STATUS=FAIL`.
-- Full backlog, full changelog, full lastenheft, or full ADR history used as standard execution context => `FINAL_STATUS=FAIL`.
-- `CHANGELOG.md` used for planning control => `FINAL_STATUS=FAIL`.
-- `CHANGELOG.md` contains planning-control fields or queue semantics => `FINAL_STATUS=FAIL`.
-- Stale backlog/package metadata => `FINAL_STATUS=FAIL`.
-- Missing per-REQ positive/negative execution evidence => `FINAL_STATUS=FAIL`.
-- Total executed tests for active package equals zero => `FINAL_STATUS=FAIL`.
-- Executed positive test count for active package equals zero => `FINAL_STATUS=FAIL`.
-- Executed negative test count for active package equals zero => `FINAL_STATUS=FAIL`.
-- Missing split unit/integration test execution evidence where Python tests are in scope => `FINAL_STATUS=FAIL`.
-- Missing machine-generated metadata in planning docs (`generated_at_utc`, `source_commit_sha`) => `FINAL_STATUS=FAIL`.
-- Missing performance budget evidence (`p95`) => `FINAL_STATUS=FAIL`.
-- Additional active prompt/governance contract files outside canonical set => `FINAL_STATUS=FAIL`.
-- Missing official-source or tooling-currency evidence => `FINAL_STATUS=FAIL`.
-- insecure runtime defaults => `FINAL_STATUS=FAIL`.
-- raw exception exposure => `FINAL_STATUS=FAIL`.
-- silent masking => `FINAL_STATUS=FAIL`.
-- runtime contract inconsistent => `FINAL_STATUS=FAIL`.
-- missing dependency evidence => `FINAL_STATUS=FAIL`.
-- persistence without migrations => `FINAL_STATUS=FAIL`.
-- version source mismatch => `FINAL_STATUS=FAIL`.
-- Any unresolved security/privacy blocker => `FINAL_STATUS=FAIL`.
-- Missing ISO security/data control verdicts => `FINAL_STATUS=FAIL`.
-- Any unresolved blocker/major finding => `FINAL_STATUS=FAIL`.
-- Stopping before `PR -> Merge -> Version -> Clean Desk` although all prior mandatory gates passed => `FINAL_STATUS=FAIL`.
-- Performing DEV or AUDIT only on uncommitted working-tree state for release path => `FINAL_STATUS=FAIL`.
-- Failing to rerun gates after fixing a package-internal blocker => `FINAL_STATUS=FAIL`.
-- Leaving temporary gate artifacts, duplicate workflow files, or stale local package residues after merge/version => `FINAL_STATUS=FAIL`.
-- Relying on undocumented `latest file wins` artifact selection => `FINAL_STATUS=FAIL`.
-
-Only a complete Requirement -> DEV -> Independent AUDIT -> PR -> Merge -> Version -> Clean Desk chain is releasable.
-
-## 6. Mandatory package closure
-After `AUDIT=APPROVE`, PO must complete:
-1. PR creation/update;
-2. Merge;
-3. Version/tag creation;
-4. Release note creation;
-5. backlog / package / `LASTENHEFT.md` metadata synchronization;
-6. Clean Desk restoration.
-
-A package is only complete when all six closure steps are finished.
+## Notes on execution boundaries
+This document defines the runtime execution contract only.
+It does not redefine governance ownership, architecture structure, runtime/toolchain policy, release policy, or product orientation.

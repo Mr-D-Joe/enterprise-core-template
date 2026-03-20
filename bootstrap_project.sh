@@ -75,16 +75,48 @@ fi
 
 mkdir -p "$TARGET_DIR"
 
-# Copy full template tree into the new project.
-while IFS= read -r -d '' src; do
-  cp -R "$src" "$TARGET_DIR/"
-done < <(
-  find "$TEMPLATE_ROOT" -mindepth 1 -maxdepth 1 \
-    ! -name ".git" \
-    ! -name ".DS_Store" \
-    ! -name "prompts" \
-    -print0
+# Copy only the canonical template baseline into the new project.
+BASELINE_ENTRIES=(
+  ".github"
+  ".vscode"
+  "AGENTS.md"
+  "ARCHITECTURE.md"
+  "CHANGELOG.md"
+  "CONTRIBUTING.md"
+  "DESIGN.md"
+  "LASTENHEFT.md"
+  "PROMPTS.md"
+  "README.md"
+  "STACK.md"
+  "bootstrap_project.sh"
+  "bootstrap_project.sh.HOWTO.md"
+  "bootstrap_project_picker.command"
+  "changes"
+  "docs"
+  "pyrightconfig.json"
+  "scripts"
 )
+
+NON_CANONICAL_EXCLUDES=(
+  ".git"
+  ".DS_Store"
+  "codex_outputs"
+  "reports"
+  "system_reports"
+  "review_outputs"
+  "transient_reviews"
+)
+
+for entry in "${BASELINE_ENTRIES[@]}"; do
+  if [[ -e "$TEMPLATE_ROOT/$entry" ]]; then
+    cp -R "$TEMPLATE_ROOT/$entry" "$TARGET_DIR/"
+  fi
+done
+
+# Remove copied non-canonical working-state locations if they exist and recreate only neutral startup dirs.
+for entry in "${NON_CANONICAL_EXCLUDES[@]}"; do
+  rm -rf "$TARGET_DIR/$entry"
+done
 
 # Create runtime artifact folders for gate outputs.
 mkdir -p \
@@ -106,144 +138,22 @@ while IFS= read -r -d '' file; do
   tmp_file="${file}.tmp"
   sed \
     -e "s/<PROJECT_NAME>/$ESCAPED_PROJECT_NAME/g" \
-    -e "s/Template Project/$ESCAPED_PROJECT_NAME/g" \
     -e "s/<YYYY-MM-DD>/$ESCAPED_TODAY_UTC/g" \
     "$file" > "$tmp_file"
   mv "$tmp_file" "$file"
 done < <(find "$TARGET_DIR" -type f \( -name "*.md" -o -name "*.txt" \) -print0)
 
-# Refresh machine-generated planning metadata for the new project copy.
-for planning_file in "$TARGET_DIR/LASTENHEFT.md" "$TARGET_DIR/docs/BACKLOG.md"; do
-  if [[ -f "$planning_file" ]]; then
-    sed -E \
-      -e "s|^(- generated_at_utc=).*|\\1$NOW_UTC_TS|" \
-      -e "s|^(- source_commit_sha=).*|\\1$TEMPLATE_SOURCE_SHA|" \
-      "$planning_file" > "${planning_file}.tmp"
-    mv "${planning_file}.tmp" "$planning_file"
-  fi
-done
-
 # Reset copied template history so a new project starts in a neutral state.
 rm -f "$TARGET_DIR/changes"/CHG-*.md
-cp changes/CHG-TEMPLATE.md "$TARGET_DIR/changes/CHG-TEMPLATE.md"
-
-cat > "$TARGET_DIR/docs/BACKLOG.md" <<EOF
-# BACKLOG — $PROJECT_NAME
-
-Status: Active
-
-## Metadata (machine-generated, mandatory)
-- generated_at_utc=$NOW_UTC_TS
-- source_commit_sha=$TEMPLATE_SOURCE_SHA
-- planning_sync_state=ready_for_first_package
-- active_package_id=none
-- next_package_id=none
-- next_after_next_package_id=none
-
-## Active package board
-| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
-|---|---|---|---|---|---|
-| none | none | archived | PO | none | $NOW_UTC_TS |
-
-## Ordered pending package queue
-| sequence | package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
-|---|---|---|---|---|---|
-| none | none | none | archived | PO | none | $NOW_UTC_TS |
-
-## Compact closed package ledger
-| package_id | req_ids | status | owner | evidence_paths | updated_at_utc |
-|---|---|---|---|---|---|
-| none | none | archived | PO | none | $NOW_UTC_TS |
-
-## Rules
-1. Exactly one package may be active at a time.
-2. Backlog metadata must be refreshed before each DEV start.
-3. Manual estimate fields are forbidden in active backlog state.
-4. Every active package row must include evidence paths.
-5. \`docs/BACKLOG.md\` is authoritative portfolio overview and is never default execution context.
-6. Before DEV or AUDIT starts, PO must derive the active package backlog slice into the active \`changes/CHG-*.md\`.
-7. Older completed-package detail must be compacted or archived under \`docs/archive/backlog/\` when repository policy thresholds are exceeded.
-8. Backlog must expose \`active_package_id\`, \`next_package_id\`, and \`next_after_next_package_id\`.
-9. If open work exists, the next executable package must be visible in machine-readable metadata and queue order.
-EOF
-
-cat > "$TARGET_DIR/LASTENHEFT.md" <<EOF
-# LASTENHEFT — $PROJECT_NAME
-
-This document is normative.
-It is the orientation-only project overview for humans and AI.
-It is not the default coding context and must not become an operational implementation container.
-It may enter active execution context only when the active package changes scope/non-scope, key business terms, capability/module map, product-level functional intent, or high-level quality goals, and then only as a bounded excerpt derived into the active \`changes/CHG-*.md\`.
-
-Version: 1.0.0
-Date: $TODAY_UTC
-Status: Active
-
-## Planning metadata (machine-generated, mandatory)
-- generated_at_utc=$NOW_UTC_TS
-- source_commit_sha=$TEMPLATE_SOURCE_SHA
-- metrics_generation_mode=machine_only
-- last_closed_package_id=none
-
-## Purpose
-- Project goal:
-- Target users:
-- Platform target:
-
-## Scope
-- In scope:
-- Out of scope:
-
-## Key terms
-- Primary business terms:
-- Critical domain concepts:
-
-## Capability and module map
-| Capability | MOD_ID | Primary path | Public interfaces | Notes |
-|---|---|---|---|---|
-| Governance root | MOD-GOV-ROOT | \`AGENTS.md\`, \`DESIGN.md\`, \`ARCHITECTURE.md\`, \`STACK.md\`, \`CONTRIBUTING.md\`, \`PROMPTS.md\` | root governance docs | canonical repository governance |
-| Template scaffolds | MOD-GOV-TEMPLATE | \`docs/templates/\`, \`changes/\`, \`bootstrap_project.sh\` | bootstrap and scaffolds | reusable neutral template assets |
-| Gates and audits | MOD-GOV-GATES | \`scripts/\`, \`docs/governance/\` | gate scripts, CI, audit artifacts | enforcement and evidence support |
-
-## High-level quality goals
-- Atomic requirements and bounded change packages.
-- Independent audit before release.
-- Security-by-default and privacy-by-design.
-- Token-efficient AI working context.
-- Structural alignment between code, documentation, and contracts.
-
-## Orientation rules
-- Detailed implementation guidance belongs in module-local documentation.
-- Concrete change execution belongs in \`changes/CHG-*.md\`.
-- Release history belongs in \`CHANGELOG.md\`.
-- Active package control belongs in \`docs/BACKLOG.md\`.
-EOF
-
-cat > "$TARGET_DIR/CHANGELOG.md" <<EOF
-# CHANGELOG — $PROJECT_NAME
-
-All notable changes to this project are documented in this file.
-\`CHANGELOG.md\` is authoritative release history and is never default DEV or AUDIT execution context.
-Only the minimal package-relevant changelog slice may be derived into the active \`changes/CHG-*.md\` when history is materially relevant.
-Older release detail must be compacted or archived under \`docs/archive/changelog/\` when repository policy thresholds are exceeded.
-\`CHANGELOG.md\` is release-history only and must not be used for planning control, queue semantics, or next-step steering.
-
-## [Unreleased]
-### Added
-- Initial project created from Enterprise Core Template $TEMPLATE_SOURCE_SHA.
-
-## [0.1.0] - $TODAY_UTC
-### Added
-- Initial governance baseline from enterprise core template.
-- Mandatory PO -> DEV -> AUDIT -> PR -> Merge -> Version -> Clean Desk sequence.
-- Independent audit controls and machine-readable gate artifacts.
-EOF
+cp "$TEMPLATE_ROOT/changes/CHG-TEMPLATE.md" "$TARGET_DIR/changes/CHG-TEMPLATE.md"
 
 # Create an initial machine-readable PO role packet skeleton.
 cat > "$TARGET_DIR/system_reports/gates/po_role_packet_template.env" <<EOF
 execution_mode=DEV
 po_packet_id=PO-PACKET-001
 req_ids=
+chg_id=
+package_id=
 scope_allowlist=
 allowed_inputs_hash=
 target_commit_sha=
@@ -403,10 +313,10 @@ echo "Project created: $TARGET_DIR"
 echo "Next steps:"
 echo "1) cd \"$TARGET_DIR\""
 echo "2) Review AGENTS.md, DESIGN.md, ARCHITECTURE.md, STACK.md, CONTRIBUTING.md, PROMPTS.md"
-echo "3) Keep LASTENHEFT.md orientation-only and docs/BACKLOG.md package metadata current"
+echo "3) Keep LASTENHEFT.md orientation-only and use docs/BACKLOG.md as compact package control only"
 echo "4) Use changes/CHG-TEMPLATE.md for your first bounded change brief"
-echo "5) Use docs/templates/module-docs/ for module-local documentation scaffolding"
+echo "5) Create module-local documentation/specification near the code for technically affected modules"
 echo "6) Runtime bootstrap already executed (.env + optional .venv + runtime_bootstrap.env)"
 echo "7) Tooling decision template is ready (set application_profile first in system_reports/gates/tooling_decision_template.env)"
-echo "8) Start your first PO packet with system_reports/gates/po_role_packet_template.env"
+echo "8) Start your first PO packet with system_reports/gates/po_role_packet_template.env (including chg_id and package_id)"
 echo "9) Run gate chain: ./scripts/gates/dev_gate.sh then ./scripts/gates/audit_gate.sh"

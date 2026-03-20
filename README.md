@@ -11,7 +11,7 @@ A production-ready, AI-agent-safe enterprise template with modular governance, b
 5. `CONTRIBUTING.md` (delivery workflow and hard blockers)
 6. `PROMPTS.md` (single PO prompt contract with DEV/AUDIT execution modes)
 7. `LASTENHEFT.md` (orientation-only project overview)
-8. `docs/BACKLOG.md` (machine-generated package/backlog metadata)
+8. `docs/BACKLOG.md` (compact package control)
 
 Supportive templates/checklists live in `docs/governance/*.md`, `docs/templates/*`, and `changes/*`.
 Release history is tracked in `CHANGELOG.md`.
@@ -46,9 +46,9 @@ Release history is tracked in `CHANGELOG.md`.
    - `CONTRIBUTING.md`
    - `PROMPTS.md`
 3. Fill `LASTENHEFT.md` as orientation-only overview.
-5. Sync `docs/BACKLOG.md` metadata before each DEV start.
+5. Keep `docs/BACKLOG.md` aligned with the active package/control state before each DEV start.
 6. Use `changes/CHG-TEMPLATE.md` to create bounded change briefs under `changes/`.
-7. Use `docs/templates/module-docs/` as the canonical module-doc scaffold.
+7. Use `docs/templates/module-docs/` only as starter scaffolds; the active technical truth belongs in module-local documentation/specification near the code.
 8. Runtime bootstrap runs automatically (`.env`, optional `.venv`, `.vscode/settings.json`, `pyrightconfig.json`, `system_reports/gates/runtime_bootstrap.env`).
 9. Tooling decision checkpoint starts with `system_reports/gates/tooling_decision_template.env` (agent-maintained):
    - set `application_profile` first,
