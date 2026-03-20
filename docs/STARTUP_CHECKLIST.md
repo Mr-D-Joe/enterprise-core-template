@@ -5,11 +5,11 @@
 - [ ] Confirm governance support docs: `docs/governance/FOUR_EYES_GATING.md`, `CHANGELOG.md`.
 - [ ] Confirm no redundant active prompt contracts exist (`QA-Test-Prompt.md`, `docs/PROMPTS.md`, `docs/prompts/*`).
 - [ ] Confirm one active package maximum.
-- [ ] Confirm `changes/CHG-TEMPLATE.md` and `docs/templates/module-docs/` exist in canonical paths.
+- [ ] Confirm `changes/CHG-TEMPLATE.md` and `docs/templates/module-docs/` starter scaffolds exist in canonical paths.
 
-## Planning metadata
-- [ ] Update `docs/BACKLOG.md` metadata (`generated_at_utc`, `source_commit_sha`, `planning_sync_state`).
-- [ ] Update `LASTENHEFT.md` metadata (`generated_at_utc`, `source_commit_sha`).
+## Package control and execution preparation
+- [ ] Keep `docs/BACKLOG.md` aligned with the current package-control state.
+- [ ] Keep `LASTENHEFT.md` orientation-only and out of implementation detail.
 - [ ] Confirm backlog/package status is current.
 - [ ] Confirm `docs/BACKLOG.md` exposes `active_package_id`, `next_package_id`, and `next_after_next_package_id`.
 - [ ] Confirm the next executable package is visible when open work exists.
@@ -21,6 +21,7 @@
 - [ ] Confirm backlog extraction exists in the active CHG document.
 - [ ] Confirm only declared and allowed source documents are loaded into execution context.
 - [ ] Confirm `CHANGELOG.md` is release-history only and contains no planning-control structures.
+- [ ] Confirm module-local documentation/specification near the code is created or updated when technically affected.
 
 ## Test and quality baseline
 - [ ] Confirm Python editor/runtime bootstrap files when Python scope is active:
